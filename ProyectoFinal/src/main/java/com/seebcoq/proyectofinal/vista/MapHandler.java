@@ -15,10 +15,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 
-/**
- *
- * @author miguel
- */
 @ManagedBean
 @ViewScoped
 public class MapHandler {
