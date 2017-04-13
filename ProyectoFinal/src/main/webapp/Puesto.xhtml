@@ -12,20 +12,29 @@
         <h:outputText value="#{puestoIH.nombre}" />
 
         <p:growl id="messages" showDetail="true" />
-        <p:gmap  id="map" center="19.3241474, -99.1799942" zoom="18" type="TERRAIN" style="width:100%;height:400px" model="#{mapHandler.emptyModel}" onPointClick="handlePointClick(event);" widgetVar="map">
-          <p:ajax event="overlaySelect" listener="#{mapHandler.onMarkerSelect}" />
+        <p:gmap id="gmap" center="19.324328359583355,-99.17934268712997" zoom="20"
+                type="TERRAIN" model="#{mapHandler.advancedModel}"
+                style="width:100%;height:400px" onPointClick="handlePointClick(event);"
+                widgetVar="map">
+
+          <p:ajax event="overlaySelect" listener="#{mapHandler.onMarkerSelect}"/>
 
           <p:gmapInfoWindow id="infoWindow">
-              <p:outputPanel style="text-align: center; display: block; margin: auto">
-                      <h:outputText value="Esto debe de hacer algo." />
-                    </p:outputPanel>
-                  </p:gmapInfoWindow>
-                </p:gmap>
+            <p:outputPanel style="text-align: center; display: block; margin: auto">
+
+              <h:outputText value="#{mapHandler.marker.title}" />
+              <br/>
+              <h:outputText value="#{mapHandler.marker.data}"/>
+
+            </p:outputPanel>
+          </p:gmapInfoWindow>
+        </p:gmap>
+
         <p:dialog widgetVar="dlg" showEffect="fade">
           <h:form prependId="false">
             <h:panelGrid columns="2">
-              <h:outputLabel for="title" value="Title:" />
-              <p:inputText id="title" value="#{mapHandler.title}" />
+              <h:outputLabel for="nombre" value="Title:" />
+              <p:inputText id="nombre" value="#{mapHandler.nombre}" />
 
               <f:facet name="footer">
                 <p:commandButton value="Add" actionListener="#{mapHandler.addMarker}" update=":messages" oncomplete="markerAddComplete()" />
@@ -37,8 +46,7 @@
             <h:inputHidden id="lng" value="#{mapHandler.lng}" />
           </h:form>
       </p:dialog>
-
-<script src="mapHandler.js"></script>
+      <script src="mapHandler.js"></script>
         <h:form>
             <p:dataScroller value="#{puestoIH.comentarios}" var="com" chunkSize="10">
                 <f:facet name="header">
