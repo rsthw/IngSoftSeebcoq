@@ -4,13 +4,42 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwJznevf6eTmR8HzMtXkrurOkthth1G1s"></script>
         <title>Puesto</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <h:body>
         <h:outputText value="#{puestoIH.nombre}" />
-        
-        <h:form> 
+
+        <p:growl id="messages" showDetail="true" />
+        <p:gmap  id="map" center="19.3241474, -99.1799942" zoom="18" type="TERRAIN" style="width:100%;height:400px" model="#{mapHandler.emptyModel}" onPointClick="handlePointClick(event);" widgetVar="map">
+          <p:ajax event="overlaySelect" listener="#{mapHandler.onMarkerSelect}" />
+
+          <p:gmapInfoWindow id="infoWindow">
+              <p:outputPanel style="text-align: center; display: block; margin: auto">
+                      <h:outputText value="Esto debe de hacer algo." />
+                    </p:outputPanel>
+                  </p:gmapInfoWindow>
+                </p:gmap>
+        <p:dialog widgetVar="dlg" showEffect="fade">
+          <h:form prependId="false">
+            <h:panelGrid columns="2">
+              <h:outputLabel for="title" value="Title:" />
+              <p:inputText id="title" value="#{mapHandler.title}" />
+
+              <f:facet name="footer">
+                <p:commandButton value="Add" actionListener="#{mapHandler.addMarker}" update=":messages" oncomplete="markerAddComplete()" />
+                <p:commandButton value="Cancel" onclick="return cancel()" />
+              </f:facet>
+            </h:panelGrid>
+
+            <h:inputHidden id="lat" value="#{mapHandler.lat}" />
+            <h:inputHidden id="lng" value="#{mapHandler.lng}" />
+          </h:form>
+      </p:dialog>
+
+<script src="mapHandler.js"></script>
+        <h:form>
             <p:dataScroller value="#{puestoIH.comentarios}" var="com" chunkSize="10">
                 <f:facet name="header">
                     Comentarios
@@ -32,6 +61,6 @@
                 </h:panelGrid>
             </p:dataScroller>
         </h:form>
-        
+
     </h:body>
 </html>
