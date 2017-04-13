@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Puesto</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <h:outputText value="#{puestoIH.nombre}" />
+        calificacion<h:outputText value="#{puestoIH.calificacion}"  style="font-weight: bold"/>
+
+
+        <h:form>
+            <p:dataScroller value="#{puestoIH.comentarios}" var="com" chunkSize="10">
+                <f:facet name="header">
+                    Comentarios
+                </f:facet>
+
+                <f:facet name="loader">
+                    <p:commandButton type="button" value="More" icon="ui-icon-circle-triangle-s"/>
+                </f:facet>
+
+                <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
+                    <p:outputPanel>
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputText value ="Usuario:"/>
+                            <h:outputText value ="#{com.idPersona.apPaterno}"/>
+                            <h:outputText value="Comentario:" />
+                            <h:outputText value="#{com.comentario}" style="font-weight: bold"/>
+                        </h:panelGrid>
+                    </p:outputPanel>
+                </h:panelGrid>
+            </p:dataScroller>
+        </h:form>
+
+    </h:body>
+</html>
