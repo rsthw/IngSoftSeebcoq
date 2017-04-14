@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Crear Cuenta</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+    <h:form>
+  <p:growl showDetail="true"/>
+
+  <p:panel header="Validate">
+      <h:panelGrid columns="4" cellpadding="5">
+      <h:outputLabel for="email1" value="Email 1: (JSF Validation)" />
+          <p:inputText id="email1" value="#{validacionCorreo.text}">
+              <f:validator validatorId="crearCuenta.emailValidador" />
+          </p:inputText>
+          <p:message for="email1" display="tooltip" />
+          <h:outputText value="#{validacionCorreo.text}" />
+      </h:panelGrid>
+
+      <p:commandButton value="Save" ajax="false" icon="ui-icon-check" validateClient="true"/>
+  </p:panel>
+</h:form>
+<script>
+    /**
+     * Faces Validator
+     */
+    PrimeFaces.validator['crearCuenta.emailValidador'] = {
+
+        pattern: /\S+@\S+/,
+
+        validate: function(element, value) {
+            //use element.data() to access validation metadata, in this case there is none.
+            if(!this.pattern.test(value)) {
+                throw {
+                    summary: 'Validation Error',
+                    detail: value + ' is not a valid email.'
+                }
+            }
+        }
+    };
+
+
+</script>
+    </h:body>
+</html>
