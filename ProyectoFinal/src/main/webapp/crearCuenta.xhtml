@@ -10,40 +10,45 @@
     <h:body>
     <h:form>
   <p:growl showDetail="true"/>
+  <p:panel header="Crear Cuenta">
+        <h:panelGrid id="grid" columns="2" cellpadding="5">
+            <h:outputLabel for="nombreDeUsuario" value="Nombre de Usuario " style="font-weight:bold"/>
+            <p:inputText id="nombreDeUsuario" value="#{validacion.nombreDeUsuario}" required="true" label="NombreDeUsuario"/>
+            <p:message for="nombreDeUsuario" />
+            <h:outputText value="#{validacion.nombreDeUsuario}" />
 
-  <p:panel header="Validate">
-      <h:panelGrid columns="4" cellpadding="5">
-      <h:outputLabel for="email1" value="Email 1: (JSF Validation)" />
-          <p:inputText id="email1" value="#{validacionCorreo.text}">
+            <h:outputLabel for="nombre" value="Nombre " style="font-weight:bold"/>
+            <p:inputText id="nombre" value="#{validacion.nombre}" required="true" label="Nombre"/>
+            <p:message for="nombre" />
+            <h:outputText value="#{validacion.nombre}" />
+
+            <h:outputLabel for="apellidoP" value="Apellido Paterno " style="font-weight:bold"/>
+            <p:inputText id="apellidoP" value="#{validacion.apellidoP}" required="true" label="ApellidoP"/>
+            <p:message for="apellidoP" />
+            <h:outputText value="#{validacion.apellidoP}" />
+
+            <h:outputLabel for="apellidoM" value="ApellidoM " style="font-weight:bold"/>
+            <p:inputText id="apellidoM" value="#{validacion.apellidoM}" required="true" label="ApellidoM"/>
+            <p:message for="apellidoM" />
+            <h:outputText value="#{validacion.apellidoM}" />
+
+            <h:outputLabel for="email1" value="Correo de Ciencias" style="font-weight:bold"/>
+            <p:inputText id="email1" value="#{validacion.email}" required="true">
               <f:validator validatorId="crearCuenta.emailValidador" />
-          </p:inputText>
-          <p:message for="email1" display="tooltip" />
-          <h:outputText value="#{validacionCorreo.text}" />
-      </h:panelGrid>
+            </p:inputText>
+            <p:message for="email1" display="tooltip" />
+            <h:outputText value="#{validacion.email}" />
 
-      <p:commandButton value="Save" ajax="false" icon="ui-icon-check" validateClient="true"/>
+            <h:outputLabel for="pwd1" value="Contraseña " style="font-weight:bold"/>
+            <p:password id="pwd1" value="#{validacion.password}" match="pwd2" label="Password 1" required="true" feedback="true" />
+
+            <h:outputLabel for="pwd2" value="Repetir la contraseña " style="font-weight:bold"/>
+            <p:password id="pwd2" value="#{validacion.password}" label="Password 2" required="true" />
+        </h:panelGrid>
+          <br/>
+      <p:commandButton value="Crear Cuenta" ajax="false" icon="ui-icon-check" validateClient="true"/>
   </p:panel>
 </h:form>
-<script>
-    /**
-     * Faces Validator
-     */
-    PrimeFaces.validator['crearCuenta.emailValidador'] = {
 
-        pattern: /\S+@\S+/,
-
-        validate: function(element, value) {
-            //use element.data() to access validation metadata, in this case there is none.
-            if(!this.pattern.test(value)) {
-                throw {
-                    summary: 'Validation Error',
-                    detail: value + ' is not a valid email.'
-                }
-            }
-        }
-    };
-
-
-</script>
     </h:body>
 </html>
