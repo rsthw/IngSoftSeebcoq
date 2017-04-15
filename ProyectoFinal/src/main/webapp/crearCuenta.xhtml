@@ -13,37 +13,37 @@
   <p:panel header="Crear Cuenta">
         <h:panelGrid id="grid" columns="2" cellpadding="5">
             <h:outputLabel for="nombreDeUsuario" value="Nombre de Usuario " style="font-weight:bold"/>
-            <p:inputText id="nombreDeUsuario" value="#{validacion.nombreDeUsuario}" required="true" label="NombreDeUsuario"/>
+            <p:inputText id="nombreDeUsuario" value="#{creaSesionIH.nombreDeUsuario}" required="true" label="NombreDeUsuario"/>
             <p:message for="nombreDeUsuario" />
-            <h:outputText value="#{validacion.nombreDeUsuario}" />
+            <h:outputText value="#{creaSesionIH.nombreDeUsuario}" />
 
             <h:outputLabel for="nombre" value="Nombre " style="font-weight:bold"/>
-            <p:inputText id="nombre" value="#{validacion.nombre}" required="true" label="Nombre"/>
+            <p:inputText id="nombre" value="#{creaSesionIH.nombre}" required="true" label="Nombre"/>
             <p:message for="nombre" />
-            <h:outputText value="#{validacion.nombre}" />
+            <h:outputText value="#{creaSesionIH.nombre}" />
 
             <h:outputLabel for="apellidoP" value="Apellido Paterno " style="font-weight:bold"/>
-            <p:inputText id="apellidoP" value="#{validacion.apellidoP}" required="true" label="ApellidoP"/>
+            <p:inputText id="apellidoP" value="#{creaSesionIH.apellidoP}" required="true" label="ApellidoP"/>
             <p:message for="apellidoP" />
-            <h:outputText value="#{validacion.apellidoP}" />
+            <h:outputText value="#{creaSesionIH.apellidoP}" />
 
             <h:outputLabel for="apellidoM" value="ApellidoM " style="font-weight:bold"/>
-            <p:inputText id="apellidoM" value="#{validacion.apellidoM}" required="true" label="ApellidoM"/>
+            <p:inputText id="apellidoM" value="#{creaSesionIH.apellidoM}" required="true" label="ApellidoM"/>
             <p:message for="apellidoM" />
-            <h:outputText value="#{validacion.apellidoM}" />
+            <h:outputText value="#{creaSesionIH.apellidoM}" />
 
             <h:outputLabel for="email1" value="Correo de Ciencias" style="font-weight:bold"/>
-            <p:inputText id="email1" value="#{validacion.email}" required="true">
+            <p:inputText id="email1" value="#{creaSesionIH.email}" required="true">
               <f:validator validatorId="crearCuenta.emailValidador" />
             </p:inputText>
             <p:message for="email1" display="tooltip" />
-            <h:outputText value="#{validacion.email}" />
+            <h:outputText value="#{creaSesionIH.email}" />
 
             <h:outputLabel for="pwd1" value="Contraseña " style="font-weight:bold"/>
-            <p:password id="pwd1" value="#{validacion.password}" match="pwd2" label="Password 1" required="true" feedback="true" />
+            <p:password id="pwd1" value="#{creaSesionIH.password}" match="pwd2" label="Password 1" required="true" feedback="true" />
 
             <h:outputLabel for="pwd2" value="Repetir la contraseña " style="font-weight:bold"/>
-            <p:password id="pwd2" value="#{validacion.password}" label="Password 2" required="true" />
+            <p:password id="pwd2" value="#{creaSesionIH.password}" label="Password 2" required="true" />
         </h:panelGrid>
           <br/>
       <p:commandButton value="Crear Cuenta" ajax="false" icon="ui-icon-check" validateClient="true"/>

@@ -3,7 +3,7 @@ package com.seebcoq.proyectofinal.vista;
 import javax.faces.bean.ManagedBean;
 
 @ManagedBean
-public class Validacion {
+public class CreaSesionIH {
 
     private String nombreDeUsuario;
 
