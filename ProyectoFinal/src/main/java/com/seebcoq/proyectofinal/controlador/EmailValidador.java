@@ -1,4 +1,4 @@
-package com.seebcoq.proyectofinal.vista;
+package com.seebcoq.proyectofinal.controlador;
 
 import java.util.Map;
 import java.util.regex.Pattern;

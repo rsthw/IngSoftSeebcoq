@@ -1,5 +1,6 @@
 package com.seebcoq.proyectofinal.vista;
 
+import com.seebcoq.proyectofinal.controlador.EmailValidador;
 import javax.faces.bean.ManagedBean;
 
 @ManagedBean
