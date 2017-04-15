@@ -9,6 +9,7 @@ and open the template in the editor.
       xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
+     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwJznevf6eTmR8HzMtXkrurOkthth1G1s"></script>
         <title>Fast Food</title>
         <link rel="stylesheet" type="text/css" href="css/829.css" />
     </h:head>
@@ -29,9 +30,11 @@ and open the template in the editor.
                     <span class="titulo">  <h:outputText value="#{puestoIH.nombre}" /></span>
                     <a href="Puesto.xhtml"> Puesto ejemplo </a>
                     <div id ="fotos" >
-                        <img src="imgs/chilaquiles.jpg" />
-                        <img src="imgs/gordas.jpg" />
-                        <img src="imgs/tacos.jpg" />
+                      <p:lightBox styleClass="imagebox" id="lighbox1">
+  <h:outputLink value="http://www.actitudfem.com/media/files/styles/large/public/images/2013/09/chilaquiles1.jpg" title="#{PuestoIH.nombre}">
+      <h:graphicImage name="http://www.actitudfem.com/media/files/styles/large/public/images/2013/09/chilaquiles1.jpg" id="chilaquiles1" style="width: 200px" />
+  </h:outputLink>
+  </p:lightBox>
                     </div>
 
                     <span class="titulo2">¡Califica este puesto!</span> <br></br>
@@ -40,8 +43,20 @@ and open the template in the editor.
 
                         <h:panelGrid columns="2" cellpadding="5">
                             <h:outputText value="Basic:" />
-                            <p:rating value="#{PuestoIH.rating1}" /></h:panelGrid>
+                            <p:rating value="#{PuestoIH.rating1}" >
+                             <p:ajax event="rate" listener="#{PuestoIH.calificar()}" />
+                    </p:rating>
+                        </h:panelGrid>
+                         <p:commandButton value="Calificar" update="display" oncomplete="PF('dlg').show()" style="margin:5px" />
+                             <p:dialog header="Values" widgetVar="dlg" showEffect="fade" hideEffect="fade">
+        <h:panelGrid id="display" columns="2" cellpadding="5">
+            <h:outputText value="Rating 1:" />
+            <h:outputText value="#{PuestoIH.rating1}" />
+        </h:panelGrid>
+    </p:dialog>
+
                     </h:form>
+
 
 
                     <img style="width: 400px; margin: 10px;" src="imgs/stars.png" />
@@ -75,9 +90,9 @@ and open the template in the editor.
                                         </h:panelGrid>
                                     </p:dataScroller>
                                 </h:form>
-
+                                <!--coment
                                 <h:form>
-                                    <p:dataScroller value="#{puestoIH.calificaciones}" var="com" chunkSize="10">
+                                    <p:dataScroller value="{puestoIH.calificaciones}" var="com" chunkSize="10">
                                         <f:facet name="header">
                                             calificaciones
                                         </f:facet>
@@ -90,20 +105,33 @@ and open the template in the editor.
                                             <p:outputPanel>
                                                 <h:panelGrid columns="2" cellpadding="5">
                                                     <h:outputText value ="Usuario:"/>
-                                                    <h:outputText value ="#{com.idPersona.apPaterno}"/>
+                                                    <h:outputText value ="{com.idPersona.apPaterno}"/>
                                                     <h:outputText value="Calificacion:" />
-                                                    <h:outputText value="#{com.calificacion}" style="font-weight: bold"/>
+                                                    <h:outputText value="{com.calificacion}" style="font-weight: bold"/>
                                                 </h:panelGrid>
                                             </p:outputPanel>
                                         </h:panelGrid>
                                     </p:dataScroller>
                                 </h:form>
+                                -->
                     </p>
                 </div>
 
                 <div id ="der">
                     <span class="titulo2">Localización:</span> <br></br>
-                    <img style="width: 400px; margin: 0 auto;" src="imgs/mapa.png" />
+                    <p:growl id="messages" showDetail="true" />
+                    <p:gmap id="gmap" center="19.324328359583355,-99.17934268712997" zoom="20"
+                            type="TERRAIN" model="#{mapHandler.advancedModel}"
+                            style="width:100%;height:400px" onPointClick="handlePointClick(event);"
+                            widgetVar="map">
+
+
+
+
+                    </p:gmap>
+
+
+
                     <span class="titulo2"> Horario:</span> <br></br>
                     7:00 - 20:00 hrs <br></br>
                     Lunes - Sábado  <br></br>
@@ -115,10 +143,28 @@ and open the template in the editor.
 
                     <span class="titulo2">Menu:</span> <br></br>
                     <ul>
-                        <li>Tortas</li>
-                        <li>chilaquiles</li>
-                        <li>Tacos dorados</li>
-                        <li>Hamburguesas</li>
+                      <h:form>
+                          <p:dataScroller value="#{puestoIH.menu}" var="com" chunkSize="10">
+                              <f:facet name="header">
+                                  Comentarios
+                              </f:facet>
+
+                              <f:facet name="loader">
+                                  <p:commandButton type="button" value="More" icon="ui-icon-circle-triangle-s"/>
+                              </f:facet>
+
+                              <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
+                                  <p:outputPanel>
+                                      <h:panelGrid columns="2" cellpadding="5">
+                                          <h:outputText value ="Dia de la Semana:"/>
+                                          <h:outputText value ="#{com.diaDeLaSemana}"/>
+                                          <h:outputText value="Desayuno o Comida:" />
+                                          <h:outputText value="#{com.desayunoOComida}" style="font-weight: bold"/>
+                                      </h:panelGrid>
+                                  </p:outputPanel>
+                              </h:panelGrid>
+                          </p:dataScroller>
+                      </h:form>
 
                     </ul>
 
