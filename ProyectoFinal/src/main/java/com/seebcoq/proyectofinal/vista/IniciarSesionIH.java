@@ -18,10 +18,19 @@ public class IniciarSesionIH implements Serializable {
     private static final long serialVersionUID = 1L;
     private String uname;
     private String password;
+    private Integer valid;
 
 
     public String getPassword() {
         return password;
+    }
+
+    public void setValid(Integer valid) {
+        this.valid = valid;
+    }
+
+    public Integer getValid() {
+        return valid;
     }
 
     public void setPassword(String password) {
@@ -38,7 +47,7 @@ public class IniciarSesionIH implements Serializable {
 
 
     public String iniciarSesion() {
-		    int valid = UsuarioDAO.iniciarSesion(uname, password);
+		    valid = UsuarioDAO.iniciarSesion(uname, password);
         String valor = "";
         HttpSession session = null;
         switch (valid){
@@ -65,6 +74,7 @@ public class IniciarSesionIH implements Serializable {
     public String cerrarSesion() {
 		    HttpSession session = UtilidadesSesion.getSession();
 		    session.invalidate();
+        valid = null;
 		    return "logout";
 	}
 }

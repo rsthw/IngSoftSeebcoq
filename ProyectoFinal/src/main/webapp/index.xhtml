@@ -13,5 +13,23 @@
         <a href="crearCuenta.xhtml"> Crear cuenta ejemplo</a>
         <br/>
         <a href="iniciarSesion.xhtml"> Crear cuenta ejemplo</a>
+<br/>
+
+        <h:panelGroup rendered="#{not empty iniciarSesionIH.valid}">
+        <h:panelGrid columns="3">
+            <h:outputText value="Welcome, " />
+            <h:outputLink value="index.xhtml">
+                <h:outputText value="holllllllli" />
+            </h:outputLink>
+
+            <h:form>
+                <h:commandLink action="#{iniciarSesionIH.cerrarSesion}" onclick="window.location.reload();" >Log out</h:commandLink>
+            </h:form>
+        </h:panelGrid>
+    </h:panelGroup>
+
+    <h:panelGroup rendered="#{empty iniciarSesionIH.valid}">
+       <h:outputLink value="iniciarSesion.xhtml">Iniciar Sesion</h:outputLink>
+   </h:panelGroup>
     </h:body>
 </html>

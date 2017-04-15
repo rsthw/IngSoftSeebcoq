@@ -33,7 +33,7 @@ public class FiltroSesion implements Filter {
 			HttpSession ses = reqt.getSession(false);
 
 			String reqURI = reqt.getRequestURI();
-                        System.out.println(reqURI);
+                        
 			if (reqURI.indexOf("/iniciarSesion.xhtml") >= 0
 					|| (ses != null && ses.getAttribute("username") != null)
 					|| reqURI.indexOf("/public/") >= 0
