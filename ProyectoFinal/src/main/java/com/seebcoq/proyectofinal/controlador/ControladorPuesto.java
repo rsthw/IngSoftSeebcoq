@@ -32,10 +32,13 @@ public class ControladorPuesto {
     
     public List<Comentario> buscarComentarios(Puesto puesto){
         return puesto.getComentarioList();
+<<<<<<< HEAD
     }
     
     public List<Puesto> buscarPuestos (){
         PuestoJpaController pjc = new PuestoJpaController(emf);
         return pjc.findPuestoEntities();
+=======
+>>>>>>> e5d481299f16115bf1c85003a502b0757ade855b
     }
 }
