@@ -5,8 +5,11 @@
  */
 package com.seebcoq.proyectofinal.controlador;
 import com.seebcoq.proyectofinal.modelo.Comentario;
-import com.seebcoq.proyectofinal.modelo.Calificacion;
+//import com.seebcoq.proyectofinal.modelo.CalificacionJpaController;
+import com.seebcoq.proyectofinal.modelo.Menu;
+//import com.seebcoq.proyectofinal.modelo.Calificacion;
 import com.seebcoq.proyectofinal.modelo.Puesto;
+import com.seebcoq.proyectofinal.modelo.Persona;
 import java.util.List;
 import java.util.ArrayList;
 import javax.persistence.Persistence;
@@ -37,21 +40,37 @@ public class ControladorPuesto {
         return comentarios;
     }
 
+    public List<Menu> buscarMenu(Puesto puesto){
+        List<Menu> menus = new ArrayList<Menu>();
+        menus.addAll(puesto.getMenuCollection());
+        return menus;
+    }
+/*
     public List<Calificacion> buscarCalificaciones(Puesto puesto){
         List<Calificacion> calificaciones = new ArrayList<Calificacion>();
         calificaciones.addAll(puesto.getCalificacionCollection());
         return calificaciones;
-    }
+    }*/
 
     public Double buscarCalificacion(Puesto puesto){
       Double cal = puesto.getCalificacion();
       return cal;
     }
 /*
-    public void guardarCalificacion(Double c){
-      Double actual = puesto.getCalificacion();
-      actual = (actual + c)/6;
+    public String buscarImagen(Puesto puesto){
+      String imagen = puesto.getImagen();
+      return imagen;
     }*/
 
+/*
+    public void guardarCalificacion(Double c, Puesto puesto, Persona persona){
+      Double actual = puesto.getCalificacion();
+      Long idPuesto = puesto.getIdPuesto();
+      Long idUsuario = persona.getIdPersona();
+      actual = (actual + c)/6;
+      Calificacion nueva = Calificacion(c, idPuesto, idUsuario);
+      create(nueva);
+    }
+*/
 
 }
