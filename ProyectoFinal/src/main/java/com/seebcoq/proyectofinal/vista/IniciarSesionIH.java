@@ -1,5 +1,7 @@
 package com.seebcoq.proyectofinal.vista;
 
+
+import com.seebcoq.proyectofinal.controlador.dao.UsuarioDAO;
 import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -8,8 +10,7 @@ import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
 
 @ManagedBean(name = "iniciarSesionIH")
-//@SessionScoped
-
+@SessionScoped
 public class IniciarSesionIH implements Serializable {
 
     private static final long serialVersionUID = 1L;
