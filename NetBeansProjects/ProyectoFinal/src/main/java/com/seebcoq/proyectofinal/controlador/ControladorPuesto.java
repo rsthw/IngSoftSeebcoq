@@ -5,11 +5,13 @@
  */
 package com.seebcoq.proyectofinal.controlador;
 import com.seebcoq.proyectofinal.modelo.Comentario;
-//import com.seebcoq.proyectofinal.modelo.CalificacionJpaController;
+import com.seebcoq.proyectofinal.modelo.jpaControllers.CalificacionJpaController;
+import com.seebcoq.proyectofinal.modelo.jpaControllers.PuestoJpaController;
 import com.seebcoq.proyectofinal.modelo.Menu;
-//import com.seebcoq.proyectofinal.modelo.Calificacion;
+import com.seebcoq.proyectofinal.modelo.Calificacion;
+import com.seebcoq.proyectofinal.modelo.CalificacionPK;
 import com.seebcoq.proyectofinal.modelo.Puesto;
-import com.seebcoq.proyectofinal.modelo.Persona;
+import com.seebcoq.proyectofinal.modelo.*;
 import java.util.List;
 import java.util.ArrayList;
 import javax.persistence.Persistence;
@@ -36,41 +38,64 @@ public class ControladorPuesto {
 
     public List<Comentario> buscarComentarios(Puesto puesto){
         List<Comentario> comentarios = new ArrayList<Comentario>();
-        comentarios.addAll(puesto.getComentarioCollection());
+        comentarios.addAll(puesto.getComentarioList());
         return comentarios;
     }
 
     public List<Menu> buscarMenu(Puesto puesto){
         List<Menu> menus = new ArrayList<Menu>();
-        menus.addAll(puesto.getMenuCollection());
+        menus.addAll(puesto.getMenuList());
         return menus;
     }
-/*
+
+    public List<Platillo> buscarPlatillos(Puesto puesto){
+        List<Platillo> platillos = new ArrayList<Platillo>();
+        platillos.addAll(puesto.getPlatilloList());
+        return platillos;
+    }
+
+    
     public List<Calificacion> buscarCalificaciones(Puesto puesto){
         List<Calificacion> calificaciones = new ArrayList<Calificacion>();
-        calificaciones.addAll(puesto.getCalificacionCollection());
+        calificaciones.addAll(puesto.getCalificacionList());
         return calificaciones;
-    }*/
+    }
 
     public Double buscarCalificacion(Puesto puesto){
       Double cal = puesto.getCalificacion();
       return cal;
     }
-/*
+
     public String buscarImagen(Puesto puesto){
       String imagen = puesto.getImagen();
       return imagen;
-    }*/
+    }
 
-/*
-    public void guardarCalificacion(Double c, Puesto puesto, Persona persona){
-      Double actual = puesto.getCalificacion();
+
+    public void guardarCalificacion(int c, Puesto puesto, Persona persona){
+      CalificacionJpaController controlador = new CalificacionJpaController(emf);
+      PuestoJpaController ctrl_puesto = new PuestoJpaController(emf);
       Long idPuesto = puesto.getIdPuesto();
       Long idUsuario = persona.getIdPersona();
-      actual = (actual + c)/6;
-      Calificacion nueva = Calificacion(c, idPuesto, idUsuario);
-      create(nueva);
+      CalificacionPK pk = new CalificacionPK(idPuesto, idUsuario);
+      Calificacion nueva = new Calificacion(pk, c);
+      try{
+      controlador.create(nueva);
+      }
+      catch(Exception ex){
+      
+      }
+      Double actual = puesto.getCalificacion();
+      int totalCalfs = buscarCalificaciones(puesto).size();
+      actual = (actual + c)/totalCalfs;
+      puesto.setCalificacion(actual);
+       try{
+      ctrl_puesto.edit(puesto);
+       } catch(Exception ex){
+       }
+       }
+      
     }
-*/
 
-}
+
+
