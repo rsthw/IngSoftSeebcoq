@@ -5,13 +5,13 @@
  */
 package com.seebcoq.proyectofinal.modelo.jpaControllers;
 
+import com.seebcoq.proyectofinal.modelo.Platillo;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.seebcoq.proyectofinal.modelo.Alimento;
-import com.seebcoq.proyectofinal.modelo.Platillo;
+import com.seebcoq.proyectofinal.modelo.Puesto;
 import com.seebcoq.proyectofinal.modelo.jpaControllers.exceptions.NonexistentEntityException;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -37,15 +37,15 @@ public class PlatilloJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Alimento idAlimento = platillo.getIdAlimento();
-            if (idAlimento != null) {
-                idAlimento = em.getReference(idAlimento.getClass(), idAlimento.getNIdAlimento());
-                platillo.setIdAlimento(idAlimento);
+            Puesto idPuesto = platillo.getIdPuesto();
+            if (idPuesto != null) {
+                idPuesto = em.getReference(idPuesto.getClass(), idPuesto.getIdPuesto());
+                platillo.setIdPuesto(idPuesto);
             }
             em.persist(platillo);
-            if (idAlimento != null) {
-                idAlimento.getPlatilloCollection().add(platillo);
-                idAlimento = em.merge(idAlimento);
+            if (idPuesto != null) {
+                idPuesto.getPlatilloList().add(platillo);
+                idPuesto = em.merge(idPuesto);
             }
             em.getTransaction().commit();
         } finally {
@@ -61,20 +61,20 @@ public class PlatilloJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Platillo persistentPlatillo = em.find(Platillo.class, platillo.getIdPlatillo());
-            Alimento idAlimentoOld = persistentPlatillo.getIdAlimento();
-            Alimento idAlimentoNew = platillo.getIdAlimento();
-            if (idAlimentoNew != null) {
-                idAlimentoNew = em.getReference(idAlimentoNew.getClass(), idAlimentoNew.getNIdAlimento());
-                platillo.setIdAlimento(idAlimentoNew);
+            Puesto idPuestoOld = persistentPlatillo.getIdPuesto();
+            Puesto idPuestoNew = platillo.getIdPuesto();
+            if (idPuestoNew != null) {
+                idPuestoNew = em.getReference(idPuestoNew.getClass(), idPuestoNew.getIdPuesto());
+                platillo.setIdPuesto(idPuestoNew);
             }
             platillo = em.merge(platillo);
-            if (idAlimentoOld != null && !idAlimentoOld.equals(idAlimentoNew)) {
-                idAlimentoOld.getPlatilloCollection().remove(platillo);
-                idAlimentoOld = em.merge(idAlimentoOld);
+            if (idPuestoOld != null && !idPuestoOld.equals(idPuestoNew)) {
+                idPuestoOld.getPlatilloList().remove(platillo);
+                idPuestoOld = em.merge(idPuestoOld);
             }
-            if (idAlimentoNew != null && !idAlimentoNew.equals(idAlimentoOld)) {
-                idAlimentoNew.getPlatilloCollection().add(platillo);
-                idAlimentoNew = em.merge(idAlimentoNew);
+            if (idPuestoNew != null && !idPuestoNew.equals(idPuestoOld)) {
+                idPuestoNew.getPlatilloList().add(platillo);
+                idPuestoNew = em.merge(idPuestoNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -105,10 +105,10 @@ public class PlatilloJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The platillo with id " + id + " no longer exists.", enfe);
             }
-            Alimento idAlimento = platillo.getIdAlimento();
-            if (idAlimento != null) {
-                idAlimento.getPlatilloCollection().remove(platillo);
-                idAlimento = em.merge(idAlimento);
+            Puesto idPuesto = platillo.getIdPuesto();
+            if (idPuesto != null) {
+                idPuesto.getPlatilloList().remove(platillo);
+                idPuesto = em.merge(idPuesto);
             }
             em.remove(platillo);
             em.getTransaction().commit();

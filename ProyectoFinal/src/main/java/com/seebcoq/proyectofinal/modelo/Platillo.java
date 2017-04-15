@@ -6,7 +6,6 @@
 package com.seebcoq.proyectofinal.modelo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Platillo.findAll", query = "SELECT p FROM Platillo p")
     , @NamedQuery(name = "Platillo.findByIdPlatillo", query = "SELECT p FROM Platillo p WHERE p.idPlatillo = :idPlatillo")
-    , @NamedQuery(name = "Platillo.findByPrecio", query = "SELECT p FROM Platillo p WHERE p.precio = :precio")})
+    , @NamedQuery(name = "Platillo.findByNombre", query = "SELECT p FROM Platillo p WHERE p.nombre = :nombre")})
 public class Platillo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,12 +39,12 @@ public class Platillo implements Serializable {
     @Basic(optional = false)
     @Column(name = "idPlatillo")
     private Long idPlatillo;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "precio")
-    private BigDecimal precio;
-    @JoinColumn(name = "idAlimento", referencedColumnName = "nIdAlimento")
+    @Size(max = 64)
+    @Column(name = "nombre")
+    private String nombre;
+    @JoinColumn(name = "idPuesto", referencedColumnName = "idPuesto")
     @ManyToOne
-    private Alimento idAlimento;
+    private Puesto idPuesto;
 
     public Platillo() {
     }
@@ -61,20 +61,20 @@ public class Platillo implements Serializable {
         this.idPlatillo = idPlatillo;
     }
 
-    public BigDecimal getPrecio() {
-        return precio;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setPrecio(BigDecimal precio) {
-        this.precio = precio;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public Alimento getIdAlimento() {
-        return idAlimento;
+    public Puesto getIdPuesto() {
+        return idPuesto;
     }
 
-    public void setIdAlimento(Alimento idAlimento) {
-        this.idAlimento = idAlimento;
+    public void setIdPuesto(Puesto idPuesto) {
+        this.idPuesto = idPuesto;
     }
 
     @Override

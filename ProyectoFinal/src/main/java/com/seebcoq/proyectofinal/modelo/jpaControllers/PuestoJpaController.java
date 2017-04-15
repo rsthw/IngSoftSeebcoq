@@ -10,14 +10,15 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import com.seebcoq.proyectofinal.modelo.Comentario;
+import com.seebcoq.proyectofinal.modelo.Platillo;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
+import com.seebcoq.proyectofinal.modelo.Calificacion;
+import com.seebcoq.proyectofinal.modelo.Comentario;
 import com.seebcoq.proyectofinal.modelo.Menu;
 import com.seebcoq.proyectofinal.modelo.Puesto;
 import com.seebcoq.proyectofinal.modelo.jpaControllers.exceptions.IllegalOrphanException;
 import com.seebcoq.proyectofinal.modelo.jpaControllers.exceptions.NonexistentEntityException;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -37,45 +38,81 @@ public class PuestoJpaController implements Serializable {
     }
 
     public void create(Puesto puesto) {
-        if (puesto.getComentarioCollection() == null) {
-            puesto.setComentarioCollection(new ArrayList<Comentario>());
+        if (puesto.getPlatilloList() == null) {
+            puesto.setPlatilloList(new ArrayList<Platillo>());
         }
-        if (puesto.getMenuCollection() == null) {
-            puesto.setMenuCollection(new ArrayList<Menu>());
+        if (puesto.getCalificacionList() == null) {
+            puesto.setCalificacionList(new ArrayList<Calificacion>());
+        }
+        if (puesto.getComentarioList() == null) {
+            puesto.setComentarioList(new ArrayList<Comentario>());
+        }
+        if (puesto.getMenuList() == null) {
+            puesto.setMenuList(new ArrayList<Menu>());
         }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Collection<Comentario> attachedComentarioCollection = new ArrayList<Comentario>();
-            for (Comentario comentarioCollectionComentarioToAttach : puesto.getComentarioCollection()) {
-                comentarioCollectionComentarioToAttach = em.getReference(comentarioCollectionComentarioToAttach.getClass(), comentarioCollectionComentarioToAttach.getIdComentario());
-                attachedComentarioCollection.add(comentarioCollectionComentarioToAttach);
+            List<Platillo> attachedPlatilloList = new ArrayList<Platillo>();
+            for (Platillo platilloListPlatilloToAttach : puesto.getPlatilloList()) {
+                platilloListPlatilloToAttach = em.getReference(platilloListPlatilloToAttach.getClass(), platilloListPlatilloToAttach.getIdPlatillo());
+                attachedPlatilloList.add(platilloListPlatilloToAttach);
             }
-            puesto.setComentarioCollection(attachedComentarioCollection);
-            Collection<Menu> attachedMenuCollection = new ArrayList<Menu>();
-            for (Menu menuCollectionMenuToAttach : puesto.getMenuCollection()) {
-                menuCollectionMenuToAttach = em.getReference(menuCollectionMenuToAttach.getClass(), menuCollectionMenuToAttach.getIdMenu());
-                attachedMenuCollection.add(menuCollectionMenuToAttach);
+            puesto.setPlatilloList(attachedPlatilloList);
+            List<Calificacion> attachedCalificacionList = new ArrayList<Calificacion>();
+            for (Calificacion calificacionListCalificacionToAttach : puesto.getCalificacionList()) {
+                calificacionListCalificacionToAttach = em.getReference(calificacionListCalificacionToAttach.getClass(), calificacionListCalificacionToAttach.getCalificacionPK());
+                attachedCalificacionList.add(calificacionListCalificacionToAttach);
             }
-            puesto.setMenuCollection(attachedMenuCollection);
+            puesto.setCalificacionList(attachedCalificacionList);
+            List<Comentario> attachedComentarioList = new ArrayList<Comentario>();
+            for (Comentario comentarioListComentarioToAttach : puesto.getComentarioList()) {
+                comentarioListComentarioToAttach = em.getReference(comentarioListComentarioToAttach.getClass(), comentarioListComentarioToAttach.getIdComentario());
+                attachedComentarioList.add(comentarioListComentarioToAttach);
+            }
+            puesto.setComentarioList(attachedComentarioList);
+            List<Menu> attachedMenuList = new ArrayList<Menu>();
+            for (Menu menuListMenuToAttach : puesto.getMenuList()) {
+                menuListMenuToAttach = em.getReference(menuListMenuToAttach.getClass(), menuListMenuToAttach.getIdMenu());
+                attachedMenuList.add(menuListMenuToAttach);
+            }
+            puesto.setMenuList(attachedMenuList);
             em.persist(puesto);
-            for (Comentario comentarioCollectionComentario : puesto.getComentarioCollection()) {
-                Puesto oldIdPuestoOfComentarioCollectionComentario = comentarioCollectionComentario.getIdPuesto();
-                comentarioCollectionComentario.setIdPuesto(puesto);
-                comentarioCollectionComentario = em.merge(comentarioCollectionComentario);
-                if (oldIdPuestoOfComentarioCollectionComentario != null) {
-                    oldIdPuestoOfComentarioCollectionComentario.getComentarioCollection().remove(comentarioCollectionComentario);
-                    oldIdPuestoOfComentarioCollectionComentario = em.merge(oldIdPuestoOfComentarioCollectionComentario);
+            for (Platillo platilloListPlatillo : puesto.getPlatilloList()) {
+                Puesto oldIdPuestoOfPlatilloListPlatillo = platilloListPlatillo.getIdPuesto();
+                platilloListPlatillo.setIdPuesto(puesto);
+                platilloListPlatillo = em.merge(platilloListPlatillo);
+                if (oldIdPuestoOfPlatilloListPlatillo != null) {
+                    oldIdPuestoOfPlatilloListPlatillo.getPlatilloList().remove(platilloListPlatillo);
+                    oldIdPuestoOfPlatilloListPlatillo = em.merge(oldIdPuestoOfPlatilloListPlatillo);
                 }
             }
-            for (Menu menuCollectionMenu : puesto.getMenuCollection()) {
-                Puesto oldIdPuestoOfMenuCollectionMenu = menuCollectionMenu.getIdPuesto();
-                menuCollectionMenu.setIdPuesto(puesto);
-                menuCollectionMenu = em.merge(menuCollectionMenu);
-                if (oldIdPuestoOfMenuCollectionMenu != null) {
-                    oldIdPuestoOfMenuCollectionMenu.getMenuCollection().remove(menuCollectionMenu);
-                    oldIdPuestoOfMenuCollectionMenu = em.merge(oldIdPuestoOfMenuCollectionMenu);
+            for (Calificacion calificacionListCalificacion : puesto.getCalificacionList()) {
+                Puesto oldPuestoOfCalificacionListCalificacion = calificacionListCalificacion.getPuesto();
+                calificacionListCalificacion.setPuesto(puesto);
+                calificacionListCalificacion = em.merge(calificacionListCalificacion);
+                if (oldPuestoOfCalificacionListCalificacion != null) {
+                    oldPuestoOfCalificacionListCalificacion.getCalificacionList().remove(calificacionListCalificacion);
+                    oldPuestoOfCalificacionListCalificacion = em.merge(oldPuestoOfCalificacionListCalificacion);
+                }
+            }
+            for (Comentario comentarioListComentario : puesto.getComentarioList()) {
+                Puesto oldIdPuestoOfComentarioListComentario = comentarioListComentario.getIdPuesto();
+                comentarioListComentario.setIdPuesto(puesto);
+                comentarioListComentario = em.merge(comentarioListComentario);
+                if (oldIdPuestoOfComentarioListComentario != null) {
+                    oldIdPuestoOfComentarioListComentario.getComentarioList().remove(comentarioListComentario);
+                    oldIdPuestoOfComentarioListComentario = em.merge(oldIdPuestoOfComentarioListComentario);
+                }
+            }
+            for (Menu menuListMenu : puesto.getMenuList()) {
+                Puesto oldIdPuestoOfMenuListMenu = menuListMenu.getIdPuesto();
+                menuListMenu.setIdPuesto(puesto);
+                menuListMenu = em.merge(menuListMenu);
+                if (oldIdPuestoOfMenuListMenu != null) {
+                    oldIdPuestoOfMenuListMenu.getMenuList().remove(menuListMenu);
+                    oldIdPuestoOfMenuListMenu = em.merge(oldIdPuestoOfMenuListMenu);
                 }
             }
             em.getTransaction().commit();
@@ -92,62 +129,116 @@ public class PuestoJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Puesto persistentPuesto = em.find(Puesto.class, puesto.getIdPuesto());
-            Collection<Comentario> comentarioCollectionOld = persistentPuesto.getComentarioCollection();
-            Collection<Comentario> comentarioCollectionNew = puesto.getComentarioCollection();
-            Collection<Menu> menuCollectionOld = persistentPuesto.getMenuCollection();
-            Collection<Menu> menuCollectionNew = puesto.getMenuCollection();
+            List<Platillo> platilloListOld = persistentPuesto.getPlatilloList();
+            List<Platillo> platilloListNew = puesto.getPlatilloList();
+            List<Calificacion> calificacionListOld = persistentPuesto.getCalificacionList();
+            List<Calificacion> calificacionListNew = puesto.getCalificacionList();
+            List<Comentario> comentarioListOld = persistentPuesto.getComentarioList();
+            List<Comentario> comentarioListNew = puesto.getComentarioList();
+            List<Menu> menuListOld = persistentPuesto.getMenuList();
+            List<Menu> menuListNew = puesto.getMenuList();
             List<String> illegalOrphanMessages = null;
-            for (Comentario comentarioCollectionOldComentario : comentarioCollectionOld) {
-                if (!comentarioCollectionNew.contains(comentarioCollectionOldComentario)) {
+            for (Calificacion calificacionListOldCalificacion : calificacionListOld) {
+                if (!calificacionListNew.contains(calificacionListOldCalificacion)) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Comentario " + comentarioCollectionOldComentario + " since its idPuesto field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Calificacion " + calificacionListOldCalificacion + " since its puesto field is not nullable.");
+                }
+            }
+            for (Comentario comentarioListOldComentario : comentarioListOld) {
+                if (!comentarioListNew.contains(comentarioListOldComentario)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Comentario " + comentarioListOldComentario + " since its idPuesto field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            Collection<Comentario> attachedComentarioCollectionNew = new ArrayList<Comentario>();
-            for (Comentario comentarioCollectionNewComentarioToAttach : comentarioCollectionNew) {
-                comentarioCollectionNewComentarioToAttach = em.getReference(comentarioCollectionNewComentarioToAttach.getClass(), comentarioCollectionNewComentarioToAttach.getIdComentario());
-                attachedComentarioCollectionNew.add(comentarioCollectionNewComentarioToAttach);
+            List<Platillo> attachedPlatilloListNew = new ArrayList<Platillo>();
+            for (Platillo platilloListNewPlatilloToAttach : platilloListNew) {
+                platilloListNewPlatilloToAttach = em.getReference(platilloListNewPlatilloToAttach.getClass(), platilloListNewPlatilloToAttach.getIdPlatillo());
+                attachedPlatilloListNew.add(platilloListNewPlatilloToAttach);
             }
-            comentarioCollectionNew = attachedComentarioCollectionNew;
-            puesto.setComentarioCollection(comentarioCollectionNew);
-            Collection<Menu> attachedMenuCollectionNew = new ArrayList<Menu>();
-            for (Menu menuCollectionNewMenuToAttach : menuCollectionNew) {
-                menuCollectionNewMenuToAttach = em.getReference(menuCollectionNewMenuToAttach.getClass(), menuCollectionNewMenuToAttach.getIdMenu());
-                attachedMenuCollectionNew.add(menuCollectionNewMenuToAttach);
+            platilloListNew = attachedPlatilloListNew;
+            puesto.setPlatilloList(platilloListNew);
+            List<Calificacion> attachedCalificacionListNew = new ArrayList<Calificacion>();
+            for (Calificacion calificacionListNewCalificacionToAttach : calificacionListNew) {
+                calificacionListNewCalificacionToAttach = em.getReference(calificacionListNewCalificacionToAttach.getClass(), calificacionListNewCalificacionToAttach.getCalificacionPK());
+                attachedCalificacionListNew.add(calificacionListNewCalificacionToAttach);
             }
-            menuCollectionNew = attachedMenuCollectionNew;
-            puesto.setMenuCollection(menuCollectionNew);
+            calificacionListNew = attachedCalificacionListNew;
+            puesto.setCalificacionList(calificacionListNew);
+            List<Comentario> attachedComentarioListNew = new ArrayList<Comentario>();
+            for (Comentario comentarioListNewComentarioToAttach : comentarioListNew) {
+                comentarioListNewComentarioToAttach = em.getReference(comentarioListNewComentarioToAttach.getClass(), comentarioListNewComentarioToAttach.getIdComentario());
+                attachedComentarioListNew.add(comentarioListNewComentarioToAttach);
+            }
+            comentarioListNew = attachedComentarioListNew;
+            puesto.setComentarioList(comentarioListNew);
+            List<Menu> attachedMenuListNew = new ArrayList<Menu>();
+            for (Menu menuListNewMenuToAttach : menuListNew) {
+                menuListNewMenuToAttach = em.getReference(menuListNewMenuToAttach.getClass(), menuListNewMenuToAttach.getIdMenu());
+                attachedMenuListNew.add(menuListNewMenuToAttach);
+            }
+            menuListNew = attachedMenuListNew;
+            puesto.setMenuList(menuListNew);
             puesto = em.merge(puesto);
-            for (Comentario comentarioCollectionNewComentario : comentarioCollectionNew) {
-                if (!comentarioCollectionOld.contains(comentarioCollectionNewComentario)) {
-                    Puesto oldIdPuestoOfComentarioCollectionNewComentario = comentarioCollectionNewComentario.getIdPuesto();
-                    comentarioCollectionNewComentario.setIdPuesto(puesto);
-                    comentarioCollectionNewComentario = em.merge(comentarioCollectionNewComentario);
-                    if (oldIdPuestoOfComentarioCollectionNewComentario != null && !oldIdPuestoOfComentarioCollectionNewComentario.equals(puesto)) {
-                        oldIdPuestoOfComentarioCollectionNewComentario.getComentarioCollection().remove(comentarioCollectionNewComentario);
-                        oldIdPuestoOfComentarioCollectionNewComentario = em.merge(oldIdPuestoOfComentarioCollectionNewComentario);
+            for (Platillo platilloListOldPlatillo : platilloListOld) {
+                if (!platilloListNew.contains(platilloListOldPlatillo)) {
+                    platilloListOldPlatillo.setIdPuesto(null);
+                    platilloListOldPlatillo = em.merge(platilloListOldPlatillo);
+                }
+            }
+            for (Platillo platilloListNewPlatillo : platilloListNew) {
+                if (!platilloListOld.contains(platilloListNewPlatillo)) {
+                    Puesto oldIdPuestoOfPlatilloListNewPlatillo = platilloListNewPlatillo.getIdPuesto();
+                    platilloListNewPlatillo.setIdPuesto(puesto);
+                    platilloListNewPlatillo = em.merge(platilloListNewPlatillo);
+                    if (oldIdPuestoOfPlatilloListNewPlatillo != null && !oldIdPuestoOfPlatilloListNewPlatillo.equals(puesto)) {
+                        oldIdPuestoOfPlatilloListNewPlatillo.getPlatilloList().remove(platilloListNewPlatillo);
+                        oldIdPuestoOfPlatilloListNewPlatillo = em.merge(oldIdPuestoOfPlatilloListNewPlatillo);
                     }
                 }
             }
-            for (Menu menuCollectionOldMenu : menuCollectionOld) {
-                if (!menuCollectionNew.contains(menuCollectionOldMenu)) {
-                    menuCollectionOldMenu.setIdPuesto(null);
-                    menuCollectionOldMenu = em.merge(menuCollectionOldMenu);
+            for (Calificacion calificacionListNewCalificacion : calificacionListNew) {
+                if (!calificacionListOld.contains(calificacionListNewCalificacion)) {
+                    Puesto oldPuestoOfCalificacionListNewCalificacion = calificacionListNewCalificacion.getPuesto();
+                    calificacionListNewCalificacion.setPuesto(puesto);
+                    calificacionListNewCalificacion = em.merge(calificacionListNewCalificacion);
+                    if (oldPuestoOfCalificacionListNewCalificacion != null && !oldPuestoOfCalificacionListNewCalificacion.equals(puesto)) {
+                        oldPuestoOfCalificacionListNewCalificacion.getCalificacionList().remove(calificacionListNewCalificacion);
+                        oldPuestoOfCalificacionListNewCalificacion = em.merge(oldPuestoOfCalificacionListNewCalificacion);
+                    }
                 }
             }
-            for (Menu menuCollectionNewMenu : menuCollectionNew) {
-                if (!menuCollectionOld.contains(menuCollectionNewMenu)) {
-                    Puesto oldIdPuestoOfMenuCollectionNewMenu = menuCollectionNewMenu.getIdPuesto();
-                    menuCollectionNewMenu.setIdPuesto(puesto);
-                    menuCollectionNewMenu = em.merge(menuCollectionNewMenu);
-                    if (oldIdPuestoOfMenuCollectionNewMenu != null && !oldIdPuestoOfMenuCollectionNewMenu.equals(puesto)) {
-                        oldIdPuestoOfMenuCollectionNewMenu.getMenuCollection().remove(menuCollectionNewMenu);
-                        oldIdPuestoOfMenuCollectionNewMenu = em.merge(oldIdPuestoOfMenuCollectionNewMenu);
+            for (Comentario comentarioListNewComentario : comentarioListNew) {
+                if (!comentarioListOld.contains(comentarioListNewComentario)) {
+                    Puesto oldIdPuestoOfComentarioListNewComentario = comentarioListNewComentario.getIdPuesto();
+                    comentarioListNewComentario.setIdPuesto(puesto);
+                    comentarioListNewComentario = em.merge(comentarioListNewComentario);
+                    if (oldIdPuestoOfComentarioListNewComentario != null && !oldIdPuestoOfComentarioListNewComentario.equals(puesto)) {
+                        oldIdPuestoOfComentarioListNewComentario.getComentarioList().remove(comentarioListNewComentario);
+                        oldIdPuestoOfComentarioListNewComentario = em.merge(oldIdPuestoOfComentarioListNewComentario);
+                    }
+                }
+            }
+            for (Menu menuListOldMenu : menuListOld) {
+                if (!menuListNew.contains(menuListOldMenu)) {
+                    menuListOldMenu.setIdPuesto(null);
+                    menuListOldMenu = em.merge(menuListOldMenu);
+                }
+            }
+            for (Menu menuListNewMenu : menuListNew) {
+                if (!menuListOld.contains(menuListNewMenu)) {
+                    Puesto oldIdPuestoOfMenuListNewMenu = menuListNewMenu.getIdPuesto();
+                    menuListNewMenu.setIdPuesto(puesto);
+                    menuListNewMenu = em.merge(menuListNewMenu);
+                    if (oldIdPuestoOfMenuListNewMenu != null && !oldIdPuestoOfMenuListNewMenu.equals(puesto)) {
+                        oldIdPuestoOfMenuListNewMenu.getMenuList().remove(menuListNewMenu);
+                        oldIdPuestoOfMenuListNewMenu = em.merge(oldIdPuestoOfMenuListNewMenu);
                     }
                 }
             }
@@ -181,20 +272,32 @@ public class PuestoJpaController implements Serializable {
                 throw new NonexistentEntityException("The puesto with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            Collection<Comentario> comentarioCollectionOrphanCheck = puesto.getComentarioCollection();
-            for (Comentario comentarioCollectionOrphanCheckComentario : comentarioCollectionOrphanCheck) {
+            List<Calificacion> calificacionListOrphanCheck = puesto.getCalificacionList();
+            for (Calificacion calificacionListOrphanCheckCalificacion : calificacionListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Puesto (" + puesto + ") cannot be destroyed since the Comentario " + comentarioCollectionOrphanCheckComentario + " in its comentarioCollection field has a non-nullable idPuesto field.");
+                illegalOrphanMessages.add("This Puesto (" + puesto + ") cannot be destroyed since the Calificacion " + calificacionListOrphanCheckCalificacion + " in its calificacionList field has a non-nullable puesto field.");
+            }
+            List<Comentario> comentarioListOrphanCheck = puesto.getComentarioList();
+            for (Comentario comentarioListOrphanCheckComentario : comentarioListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Puesto (" + puesto + ") cannot be destroyed since the Comentario " + comentarioListOrphanCheckComentario + " in its comentarioList field has a non-nullable idPuesto field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            Collection<Menu> menuCollection = puesto.getMenuCollection();
-            for (Menu menuCollectionMenu : menuCollection) {
-                menuCollectionMenu.setIdPuesto(null);
-                menuCollectionMenu = em.merge(menuCollectionMenu);
+            List<Platillo> platilloList = puesto.getPlatilloList();
+            for (Platillo platilloListPlatillo : platilloList) {
+                platilloListPlatillo.setIdPuesto(null);
+                platilloListPlatillo = em.merge(platilloListPlatillo);
+            }
+            List<Menu> menuList = puesto.getMenuList();
+            for (Menu menuListMenu : menuList) {
+                menuListMenu.setIdPuesto(null);
+                menuListMenu = em.merge(menuListMenu);
             }
             em.remove(puesto);
             em.getTransaction().commit();

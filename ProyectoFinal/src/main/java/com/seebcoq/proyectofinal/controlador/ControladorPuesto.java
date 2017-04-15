@@ -7,7 +7,6 @@ package com.seebcoq.proyectofinal.controlador;
 import com.seebcoq.proyectofinal.modelo.Comentario;
 import com.seebcoq.proyectofinal.modelo.Puesto;
 import java.util.List;
-import java.util.ArrayList;
 import javax.persistence.Persistence;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityManager;
@@ -31,8 +30,6 @@ public class ControladorPuesto {
     }
     
     public List<Comentario> buscarComentarios(Puesto puesto){
-        List<Comentario> comentarios = new ArrayList<Comentario>();
-        comentarios.addAll(puesto.getComentarioCollection());
-        return comentarios;
+        return puesto.getComentarioList();
     }
 }
