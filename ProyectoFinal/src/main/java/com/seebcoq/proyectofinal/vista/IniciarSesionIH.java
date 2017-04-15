@@ -2,6 +2,8 @@ package com.seebcoq.proyectofinal.vista;
 
 
 import com.seebcoq.proyectofinal.controlador.dao.UsuarioDAO;
+import com.seebcoq.proyectofinal.controlador.UtilidadesSesion;
+import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -36,31 +38,32 @@ public class IniciarSesionIH implements Serializable {
 
 
     public String iniciarSesion() {
-		    int valid = UsuarioDAO.login(user, pwd);
-        string valor = "";
+		    int valid = UsuarioDAO.iniciarSesion(uname, password);
+        String valor = "";
+        HttpSession session = null;
         switch (valid){
           case 1:
-          HttpSession session = SessionUtils.getSession();
-          session.setAttribute("username", user);
+          session = UtilidadesSesion.getSession();
+          session.setAttribute("username", uname);
           valor = "user";
           break;
           case 2:
-          HttpSession session = SessionUtils.getSession();
-          session.setAttribute("username", user);
+          session = UtilidadesSesion.getSession();
+          session.setAttribute("username", uname);
           valor = "admin";
           break;
           default:
           FacesContext.getCurrentInstance().addMessage(null,
 					            new FacesMessage(FacesMessage.SEVERITY_WARN,
-							        "Incorrect Username and Passowrd",
-							        "Please enter correct username and Password"));
+							        "Correo o contrasenia incorrectos.",
+							        "Por favor, intente nuevamente."));
 			    valor = "error";
         }
-      return valor;
-	}
+        return valor;
+}
 
     public String cerrarSesion() {
-		    HttpSession session = SessionUtils.getSession();
+		    HttpSession session = UtilidadesSesion.getSession();
 		    session.invalidate();
 		    return "logout";
 	}

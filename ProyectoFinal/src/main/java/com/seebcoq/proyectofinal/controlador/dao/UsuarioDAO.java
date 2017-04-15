@@ -2,7 +2,7 @@ package com.seebcoq.proyectofinal.controlador.dao;
 //import java.sql.*;
 
 public class UsuarioDAO {
-     public static boolean login(String user, String password) {
+     public static int iniciarSesion(String user, String password) {
 
 
         /*Connection con = null;
