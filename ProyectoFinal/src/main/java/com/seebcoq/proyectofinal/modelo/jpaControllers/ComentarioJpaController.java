@@ -50,11 +50,11 @@ public class ComentarioJpaController implements Serializable {
             }
             em.persist(comentario);
             if (idPuesto != null) {
-                idPuesto.getComentarioCollection().add(comentario);
+                idPuesto.getComentarioList().add(comentario);
                 idPuesto = em.merge(idPuesto);
             }
             if (idPersona != null) {
-                idPersona.getComentarioCollection().add(comentario);
+                idPersona.getComentarioList().add(comentario);
                 idPersona = em.merge(idPersona);
             }
             em.getTransaction().commit();
@@ -85,19 +85,19 @@ public class ComentarioJpaController implements Serializable {
             }
             comentario = em.merge(comentario);
             if (idPuestoOld != null && !idPuestoOld.equals(idPuestoNew)) {
-                idPuestoOld.getComentarioCollection().remove(comentario);
+                idPuestoOld.getComentarioList().remove(comentario);
                 idPuestoOld = em.merge(idPuestoOld);
             }
             if (idPuestoNew != null && !idPuestoNew.equals(idPuestoOld)) {
-                idPuestoNew.getComentarioCollection().add(comentario);
+                idPuestoNew.getComentarioList().add(comentario);
                 idPuestoNew = em.merge(idPuestoNew);
             }
             if (idPersonaOld != null && !idPersonaOld.equals(idPersonaNew)) {
-                idPersonaOld.getComentarioCollection().remove(comentario);
+                idPersonaOld.getComentarioList().remove(comentario);
                 idPersonaOld = em.merge(idPersonaOld);
             }
             if (idPersonaNew != null && !idPersonaNew.equals(idPersonaOld)) {
-                idPersonaNew.getComentarioCollection().add(comentario);
+                idPersonaNew.getComentarioList().add(comentario);
                 idPersonaNew = em.merge(idPersonaNew);
             }
             em.getTransaction().commit();
@@ -131,12 +131,12 @@ public class ComentarioJpaController implements Serializable {
             }
             Puesto idPuesto = comentario.getIdPuesto();
             if (idPuesto != null) {
-                idPuesto.getComentarioCollection().remove(comentario);
+                idPuesto.getComentarioList().remove(comentario);
                 idPuesto = em.merge(idPuesto);
             }
             Persona idPersona = comentario.getIdPersona();
             if (idPersona != null) {
-                idPersona.getComentarioCollection().remove(comentario);
+                idPersona.getComentarioList().remove(comentario);
                 idPersona = em.merge(idPersona);
             }
             em.remove(comentario);

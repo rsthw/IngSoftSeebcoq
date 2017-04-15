@@ -6,7 +6,7 @@
 package com.seebcoq.proyectofinal.modelo;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -78,8 +78,10 @@ public class Persona implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "nombreDeUsuario")
     private String nombreDeUsuario;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona")
+    private List<Calificacion> calificacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPersona")
-    private Collection<Comentario> comentarioCollection;
+    private List<Comentario> comentarioList;
 
     public Persona() {
     }
@@ -162,12 +164,21 @@ public class Persona implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Comentario> getComentarioCollection() {
-        return comentarioCollection;
+    public List<Calificacion> getCalificacionList() {
+        return calificacionList;
     }
 
-    public void setComentarioCollection(Collection<Comentario> comentarioCollection) {
-        this.comentarioCollection = comentarioCollection;
+    public void setCalificacionList(List<Calificacion> calificacionList) {
+        this.calificacionList = calificacionList;
+    }
+
+    @XmlTransient
+    public List<Comentario> getComentarioList() {
+        return comentarioList;
+    }
+
+    public void setComentarioList(List<Comentario> comentarioList) {
+        this.comentarioList = comentarioList;
     }
 
     @Override
