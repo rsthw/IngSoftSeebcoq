@@ -21,18 +21,19 @@ and open the template in the editor.
 
             </div>
             <div id="navigation">
-                <span class="titulo">FAST FOOD</span>
+                <span class="titulo">FAST FOODS</span>
                 <i> <br></br>Encuentra la mejor comida en la Facultad de Ciencias, UNAM.</i>
             </div>
 
             <div id="content">
                 <div id ="izq">
                     <span class="titulo">  <h:outputText value="#{puestoIH.nombre}" /></span>
-                    <a href="Puesto.xhtml"> Puesto ejemplo </a>
+
+
                     <div id ="fotos" >
                       <p:lightBox styleClass="imagebox" id="lighbox1">
-  <h:outputLink value="http://www.actitudfem.com/media/files/styles/large/public/images/2013/09/chilaquiles1.jpg" title="#{PuestoIH.nombre}">
-      <h:graphicImage name="http://www.actitudfem.com/media/files/styles/large/public/images/2013/09/chilaquiles1.jpg" id="chilaquiles1" style="width: 200px" />
+  <h:outputLink value="#{puestoIH.imagen}" title="#{PuestoIH.nombre}">
+      <h:graphicImage name="#{puestoIH.imagen}" id="chilaquiles1" style="width: 200px" />
   </h:outputLink>
   </p:lightBox>
                     </div>
@@ -44,7 +45,7 @@ and open the template in the editor.
                         <h:panelGrid columns="2" cellpadding="5">
                             <h:outputText value="Basic:" />
                             <p:rating value="#{PuestoIH.rating1}" >
-                             <p:ajax event="rate" listener="#{PuestoIH.calificar()}" />
+                             <p:ajax event="rate" listener="#{PuestoIH.calificar(PuestoIH.rating1)}" />
                     </p:rating>
                         </h:panelGrid>
                          <p:commandButton value="Calificar" update="display" oncomplete="PF('dlg').show()" style="margin:5px" />
@@ -90,7 +91,7 @@ and open the template in the editor.
                                         </h:panelGrid>
                                     </p:dataScroller>
                                 </h:form>
-                                <!--coment
+
                                 <h:form>
                                     <p:dataScroller value="{puestoIH.calificaciones}" var="com" chunkSize="10">
                                         <f:facet name="header">
@@ -113,7 +114,9 @@ and open the template in the editor.
                                         </h:panelGrid>
                                     </p:dataScroller>
                                 </h:form>
-                                -->
+
+
+
                     </p>
                 </div>
 
@@ -142,7 +145,7 @@ and open the template in the editor.
                       calificacion<h:outputText value="#{puestoIH.calificacion}"  style="font-weight: bold"/>
 
                     <span class="titulo2">Menu:</span> <br></br>
-                    <ul>
+                    
                       <h:form>
                           <p:dataScroller value="#{puestoIH.menu}" var="com" chunkSize="10">
                               <f:facet name="header">
@@ -166,7 +169,32 @@ and open the template in the editor.
                           </p:dataScroller>
                       </h:form>
 
-                    </ul>
+
+                                          <span class="titulo2">Platillos:</span> <br></br>
+                                          
+                                            <h:form>
+                                                <p:dataScroller value="#{puestoIH.platillos}" var="com" chunkSize="10">
+                                                    <f:facet name="header">
+                                                        Comentarios
+                                                    </f:facet>
+
+                                                    <f:facet name="loader">
+                                                        <p:commandButton type="button" value="More" icon="ui-icon-circle-triangle-s"/>
+                                                    </f:facet>
+
+                                                    <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
+                                                        <p:outputPanel>
+                                                            <h:panelGrid columns="2" cellpadding="5">
+                                                                <h:outputText value ="Platillo:"/>
+                                                                <h:outputText value ="#{com.nombre}"/>
+
+                                                            </h:panelGrid>
+                                                        </p:outputPanel>
+                                                    </h:panelGrid>
+                                                </p:dataScroller>
+                                            </h:form>
+
+                    
 
                 </div>
 
