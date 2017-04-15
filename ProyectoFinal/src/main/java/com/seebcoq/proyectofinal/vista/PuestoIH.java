@@ -43,4 +43,7 @@ public class PuestoIH {
     public void setNombre(String n){
         nombre =  n;
     }
+    public List<Puesto> getPuestos(){
+        return puestoCtrl.buscarPuestos();
+    }
 }

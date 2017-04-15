@@ -6,6 +6,7 @@
 package com.seebcoq.proyectofinal.controlador;
 import com.seebcoq.proyectofinal.modelo.Comentario;
 import com.seebcoq.proyectofinal.modelo.Puesto;
+import com.seebcoq.proyectofinal.modelo.jpaControllers.PuestoJpaController;
 import java.util.List;
 import java.util.ArrayList;
 import javax.persistence.Persistence;
@@ -34,5 +35,10 @@ public class ControladorPuesto {
         List<Comentario> comentarios = new ArrayList<Comentario>();
         comentarios.addAll(puesto.getComentarioCollection());
         return comentarios;
+    }
+    
+    public List<Puesto> buscarPuestos (){
+        PuestoJpaController pjc = new PuestoJpaController(emf);
+        return pjc.findPuestoEntities();
     }
 }
