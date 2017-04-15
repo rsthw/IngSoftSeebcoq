@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <h:body>
-        <h:outputText value="#{puestoIH.nombre}" />
+  
 
         <p:growl id="messages" showDetail="true" />
         <p:gmap id="gmap" center="19.324328359583355,-99.17934268712997" zoom="20"
@@ -47,28 +47,6 @@
           </h:form>
       </p:dialog>
       <script src="mapHandler.js"></script>
-        <h:form>
-            <p:dataScroller value="#{puestoIH.comentarios}" var="com" chunkSize="10">
-                <f:facet name="header">
-                    Comentarios
-                </f:facet>
-
-                <f:facet name="loader">
-                    <p:commandButton type="button" value="More" icon="ui-icon-circle-triangle-s"/>
-                </f:facet>
-
-                <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
-                    <p:outputPanel>
-                        <h:panelGrid columns="2" cellpadding="5">
-                            <h:outputText value ="Usuario:"/>
-                            <h:outputText value ="#{com.idPersona.nombreDeUsuario}"/>
-                            <h:outputText value="Comentario:" />
-                            <h:outputText value="#{com.comentario}" style="font-weight: bold"/>
-                        </h:panelGrid>
-                    </p:outputPanel>
-                </h:panelGrid>
-            </p:dataScroller>
-        </h:form>
 
     </h:body>
 </html>

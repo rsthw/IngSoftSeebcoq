@@ -3,6 +3,8 @@ package com.seebcoq.proyectofinal.controlador.dao;
 
 public class UsuarioDAO {
      public static boolean login(String user, String password) {
+
+
         /*Connection con = null;
         PreparedStatement ps = null;
         try {
@@ -27,6 +29,6 @@ public class UsuarioDAO {
         } finally {
             Database.close(con);
         }*/
-        return true;
+        return 2;
     }
 }
