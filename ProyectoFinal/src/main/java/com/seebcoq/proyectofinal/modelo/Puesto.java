@@ -6,7 +6,7 @@
 package com.seebcoq.proyectofinal.modelo;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,8 +34,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Puesto.findAll", query = "SELECT p FROM Puesto p")
     , @NamedQuery(name = "Puesto.findByIdPuesto", query = "SELECT p FROM Puesto p WHERE p.idPuesto = :idPuesto")
     , @NamedQuery(name = "Puesto.findByNombre", query = "SELECT p FROM Puesto p WHERE p.nombre = :nombre")
-    , @NamedQuery(name = "Puesto.findByPosX", query = "SELECT p FROM Puesto p WHERE p.posX = :posX")
-    , @NamedQuery(name = "Puesto.findByPosY", query = "SELECT p FROM Puesto p WHERE p.posY = :posY")
+    , @NamedQuery(name = "Puesto.findByImagen", query = "SELECT p FROM Puesto p WHERE p.imagen = :imagen")
+    , @NamedQuery(name = "Puesto.findByLatitud", query = "SELECT p FROM Puesto p WHERE p.latitud = :latitud")
+    , @NamedQuery(name = "Puesto.findByLongitud", query = "SELECT p FROM Puesto p WHERE p.longitud = :longitud")
     , @NamedQuery(name = "Puesto.findByCalificacion", query = "SELECT p FROM Puesto p WHERE p.calificacion = :calificacion")})
 public class Puesto implements Serializable {
 
@@ -50,17 +51,24 @@ public class Puesto implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "nombre")
     private String nombre;
+    @Size(max = 255)
+    @Column(name = "imagen")
+    private String imagen;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "posX")
-    private Double posX;
-    @Column(name = "posY")
-    private Double posY;
+    @Column(name = "latitud")
+    private Double latitud;
+    @Column(name = "longitud")
+    private Double longitud;
     @Column(name = "calificacion")
     private Double calificacion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPuesto")
-    private Collection<Comentario> comentarioCollection;
     @OneToMany(mappedBy = "idPuesto")
-    private Collection<Menu> menuCollection;
+    private List<Platillo> platilloList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "puesto")
+    private List<Calificacion> calificacionList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPuesto")
+    private List<Comentario> comentarioList;
+    @OneToMany(mappedBy = "idPuesto")
+    private List<Menu> menuList;
 
     public Puesto() {
     }
@@ -90,20 +98,28 @@ public class Puesto implements Serializable {
         this.nombre = nombre;
     }
 
-    public Double getPosX() {
-        return posX;
+    public String getImagen() {
+        return imagen;
     }
 
-    public void setPosX(Double posX) {
-        this.posX = posX;
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
-    public Double getPosY() {
-        return posY;
+    public Double getLatitud() {
+        return latitud;
     }
 
-    public void setPosY(Double posY) {
-        this.posY = posY;
+    public void setLatitud(Double latitud) {
+        this.latitud = latitud;
+    }
+
+    public Double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(Double longitud) {
+        this.longitud = longitud;
     }
 
     public Double getCalificacion() {
@@ -115,21 +131,39 @@ public class Puesto implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Comentario> getComentarioCollection() {
-        return comentarioCollection;
+    public List<Platillo> getPlatilloList() {
+        return platilloList;
     }
 
-    public void setComentarioCollection(Collection<Comentario> comentarioCollection) {
-        this.comentarioCollection = comentarioCollection;
+    public void setPlatilloList(List<Platillo> platilloList) {
+        this.platilloList = platilloList;
     }
 
     @XmlTransient
-    public Collection<Menu> getMenuCollection() {
-        return menuCollection;
+    public List<Calificacion> getCalificacionList() {
+        return calificacionList;
     }
 
-    public void setMenuCollection(Collection<Menu> menuCollection) {
-        this.menuCollection = menuCollection;
+    public void setCalificacionList(List<Calificacion> calificacionList) {
+        this.calificacionList = calificacionList;
+    }
+
+    @XmlTransient
+    public List<Comentario> getComentarioList() {
+        return comentarioList;
+    }
+
+    public void setComentarioList(List<Comentario> comentarioList) {
+        this.comentarioList = comentarioList;
+    }
+
+    @XmlTransient
+    public List<Menu> getMenuList() {
+        return menuList;
+    }
+
+    public void setMenuList(List<Menu> menuList) {
+        this.menuList = menuList;
     }
 
     @Override

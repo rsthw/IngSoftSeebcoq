@@ -5,17 +5,14 @@
  */
 package com.seebcoq.proyectofinal.modelo.jpaControllers;
 
+import com.seebcoq.proyectofinal.modelo.Menu;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import com.seebcoq.proyectofinal.modelo.Puesto;
-import com.seebcoq.proyectofinal.modelo.Alimento;
-import com.seebcoq.proyectofinal.modelo.Menu;
 import com.seebcoq.proyectofinal.modelo.jpaControllers.exceptions.NonexistentEntityException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -36,9 +33,6 @@ public class MenuJpaController implements Serializable {
     }
 
     public void create(Menu menu) {
-        if (menu.getAlimentoCollection() == null) {
-            menu.setAlimentoCollection(new ArrayList<Alimento>());
-        }
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -48,20 +42,10 @@ public class MenuJpaController implements Serializable {
                 idPuesto = em.getReference(idPuesto.getClass(), idPuesto.getIdPuesto());
                 menu.setIdPuesto(idPuesto);
             }
-            Collection<Alimento> attachedAlimentoCollection = new ArrayList<Alimento>();
-            for (Alimento alimentoCollectionAlimentoToAttach : menu.getAlimentoCollection()) {
-                alimentoCollectionAlimentoToAttach = em.getReference(alimentoCollectionAlimentoToAttach.getClass(), alimentoCollectionAlimentoToAttach.getNIdAlimento());
-                attachedAlimentoCollection.add(alimentoCollectionAlimentoToAttach);
-            }
-            menu.setAlimentoCollection(attachedAlimentoCollection);
             em.persist(menu);
             if (idPuesto != null) {
-                idPuesto.getMenuCollection().add(menu);
+                idPuesto.getMenuList().add(menu);
                 idPuesto = em.merge(idPuesto);
-            }
-            for (Alimento alimentoCollectionAlimento : menu.getAlimentoCollection()) {
-                alimentoCollectionAlimento.getMenuCollection().add(menu);
-                alimentoCollectionAlimento = em.merge(alimentoCollectionAlimento);
             }
             em.getTransaction().commit();
         } finally {
@@ -79,39 +63,18 @@ public class MenuJpaController implements Serializable {
             Menu persistentMenu = em.find(Menu.class, menu.getIdMenu());
             Puesto idPuestoOld = persistentMenu.getIdPuesto();
             Puesto idPuestoNew = menu.getIdPuesto();
-            Collection<Alimento> alimentoCollectionOld = persistentMenu.getAlimentoCollection();
-            Collection<Alimento> alimentoCollectionNew = menu.getAlimentoCollection();
             if (idPuestoNew != null) {
                 idPuestoNew = em.getReference(idPuestoNew.getClass(), idPuestoNew.getIdPuesto());
                 menu.setIdPuesto(idPuestoNew);
             }
-            Collection<Alimento> attachedAlimentoCollectionNew = new ArrayList<Alimento>();
-            for (Alimento alimentoCollectionNewAlimentoToAttach : alimentoCollectionNew) {
-                alimentoCollectionNewAlimentoToAttach = em.getReference(alimentoCollectionNewAlimentoToAttach.getClass(), alimentoCollectionNewAlimentoToAttach.getNIdAlimento());
-                attachedAlimentoCollectionNew.add(alimentoCollectionNewAlimentoToAttach);
-            }
-            alimentoCollectionNew = attachedAlimentoCollectionNew;
-            menu.setAlimentoCollection(alimentoCollectionNew);
             menu = em.merge(menu);
             if (idPuestoOld != null && !idPuestoOld.equals(idPuestoNew)) {
-                idPuestoOld.getMenuCollection().remove(menu);
+                idPuestoOld.getMenuList().remove(menu);
                 idPuestoOld = em.merge(idPuestoOld);
             }
             if (idPuestoNew != null && !idPuestoNew.equals(idPuestoOld)) {
-                idPuestoNew.getMenuCollection().add(menu);
+                idPuestoNew.getMenuList().add(menu);
                 idPuestoNew = em.merge(idPuestoNew);
-            }
-            for (Alimento alimentoCollectionOldAlimento : alimentoCollectionOld) {
-                if (!alimentoCollectionNew.contains(alimentoCollectionOldAlimento)) {
-                    alimentoCollectionOldAlimento.getMenuCollection().remove(menu);
-                    alimentoCollectionOldAlimento = em.merge(alimentoCollectionOldAlimento);
-                }
-            }
-            for (Alimento alimentoCollectionNewAlimento : alimentoCollectionNew) {
-                if (!alimentoCollectionOld.contains(alimentoCollectionNewAlimento)) {
-                    alimentoCollectionNewAlimento.getMenuCollection().add(menu);
-                    alimentoCollectionNewAlimento = em.merge(alimentoCollectionNewAlimento);
-                }
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -144,13 +107,8 @@ public class MenuJpaController implements Serializable {
             }
             Puesto idPuesto = menu.getIdPuesto();
             if (idPuesto != null) {
-                idPuesto.getMenuCollection().remove(menu);
+                idPuesto.getMenuList().remove(menu);
                 idPuesto = em.merge(idPuesto);
-            }
-            Collection<Alimento> alimentoCollection = menu.getAlimentoCollection();
-            for (Alimento alimentoCollectionAlimento : alimentoCollection) {
-                alimentoCollectionAlimento.getMenuCollection().remove(menu);
-                alimentoCollectionAlimento = em.merge(alimentoCollectionAlimento);
             }
             em.remove(menu);
             em.getTransaction().commit();

@@ -10,13 +10,13 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import com.seebcoq.proyectofinal.modelo.Calificacion;
+import java.util.ArrayList;
+import java.util.List;
 import com.seebcoq.proyectofinal.modelo.Comentario;
 import com.seebcoq.proyectofinal.modelo.Persona;
 import com.seebcoq.proyectofinal.modelo.jpaControllers.exceptions.IllegalOrphanException;
 import com.seebcoq.proyectofinal.modelo.jpaControllers.exceptions.NonexistentEntityException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
@@ -36,27 +36,45 @@ public class PersonaJpaController implements Serializable {
     }
 
     public void create(Persona persona) {
-        if (persona.getComentarioCollection() == null) {
-            persona.setComentarioCollection(new ArrayList<Comentario>());
+        if (persona.getCalificacionList() == null) {
+            persona.setCalificacionList(new ArrayList<Calificacion>());
+        }
+        if (persona.getComentarioList() == null) {
+            persona.setComentarioList(new ArrayList<Comentario>());
         }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Collection<Comentario> attachedComentarioCollection = new ArrayList<Comentario>();
-            for (Comentario comentarioCollectionComentarioToAttach : persona.getComentarioCollection()) {
-                comentarioCollectionComentarioToAttach = em.getReference(comentarioCollectionComentarioToAttach.getClass(), comentarioCollectionComentarioToAttach.getIdComentario());
-                attachedComentarioCollection.add(comentarioCollectionComentarioToAttach);
+            List<Calificacion> attachedCalificacionList = new ArrayList<Calificacion>();
+            for (Calificacion calificacionListCalificacionToAttach : persona.getCalificacionList()) {
+                calificacionListCalificacionToAttach = em.getReference(calificacionListCalificacionToAttach.getClass(), calificacionListCalificacionToAttach.getCalificacionPK());
+                attachedCalificacionList.add(calificacionListCalificacionToAttach);
             }
-            persona.setComentarioCollection(attachedComentarioCollection);
+            persona.setCalificacionList(attachedCalificacionList);
+            List<Comentario> attachedComentarioList = new ArrayList<Comentario>();
+            for (Comentario comentarioListComentarioToAttach : persona.getComentarioList()) {
+                comentarioListComentarioToAttach = em.getReference(comentarioListComentarioToAttach.getClass(), comentarioListComentarioToAttach.getIdComentario());
+                attachedComentarioList.add(comentarioListComentarioToAttach);
+            }
+            persona.setComentarioList(attachedComentarioList);
             em.persist(persona);
-            for (Comentario comentarioCollectionComentario : persona.getComentarioCollection()) {
-                Persona oldIdPersonaOfComentarioCollectionComentario = comentarioCollectionComentario.getIdPersona();
-                comentarioCollectionComentario.setIdPersona(persona);
-                comentarioCollectionComentario = em.merge(comentarioCollectionComentario);
-                if (oldIdPersonaOfComentarioCollectionComentario != null) {
-                    oldIdPersonaOfComentarioCollectionComentario.getComentarioCollection().remove(comentarioCollectionComentario);
-                    oldIdPersonaOfComentarioCollectionComentario = em.merge(oldIdPersonaOfComentarioCollectionComentario);
+            for (Calificacion calificacionListCalificacion : persona.getCalificacionList()) {
+                Persona oldPersonaOfCalificacionListCalificacion = calificacionListCalificacion.getPersona();
+                calificacionListCalificacion.setPersona(persona);
+                calificacionListCalificacion = em.merge(calificacionListCalificacion);
+                if (oldPersonaOfCalificacionListCalificacion != null) {
+                    oldPersonaOfCalificacionListCalificacion.getCalificacionList().remove(calificacionListCalificacion);
+                    oldPersonaOfCalificacionListCalificacion = em.merge(oldPersonaOfCalificacionListCalificacion);
+                }
+            }
+            for (Comentario comentarioListComentario : persona.getComentarioList()) {
+                Persona oldIdPersonaOfComentarioListComentario = comentarioListComentario.getIdPersona();
+                comentarioListComentario.setIdPersona(persona);
+                comentarioListComentario = em.merge(comentarioListComentario);
+                if (oldIdPersonaOfComentarioListComentario != null) {
+                    oldIdPersonaOfComentarioListComentario.getComentarioList().remove(comentarioListComentario);
+                    oldIdPersonaOfComentarioListComentario = em.merge(oldIdPersonaOfComentarioListComentario);
                 }
             }
             em.getTransaction().commit();
@@ -73,36 +91,64 @@ public class PersonaJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Persona persistentPersona = em.find(Persona.class, persona.getIdPersona());
-            Collection<Comentario> comentarioCollectionOld = persistentPersona.getComentarioCollection();
-            Collection<Comentario> comentarioCollectionNew = persona.getComentarioCollection();
+            List<Calificacion> calificacionListOld = persistentPersona.getCalificacionList();
+            List<Calificacion> calificacionListNew = persona.getCalificacionList();
+            List<Comentario> comentarioListOld = persistentPersona.getComentarioList();
+            List<Comentario> comentarioListNew = persona.getComentarioList();
             List<String> illegalOrphanMessages = null;
-            for (Comentario comentarioCollectionOldComentario : comentarioCollectionOld) {
-                if (!comentarioCollectionNew.contains(comentarioCollectionOldComentario)) {
+            for (Calificacion calificacionListOldCalificacion : calificacionListOld) {
+                if (!calificacionListNew.contains(calificacionListOldCalificacion)) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Comentario " + comentarioCollectionOldComentario + " since its idPersona field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Calificacion " + calificacionListOldCalificacion + " since its persona field is not nullable.");
+                }
+            }
+            for (Comentario comentarioListOldComentario : comentarioListOld) {
+                if (!comentarioListNew.contains(comentarioListOldComentario)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Comentario " + comentarioListOldComentario + " since its idPersona field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            Collection<Comentario> attachedComentarioCollectionNew = new ArrayList<Comentario>();
-            for (Comentario comentarioCollectionNewComentarioToAttach : comentarioCollectionNew) {
-                comentarioCollectionNewComentarioToAttach = em.getReference(comentarioCollectionNewComentarioToAttach.getClass(), comentarioCollectionNewComentarioToAttach.getIdComentario());
-                attachedComentarioCollectionNew.add(comentarioCollectionNewComentarioToAttach);
+            List<Calificacion> attachedCalificacionListNew = new ArrayList<Calificacion>();
+            for (Calificacion calificacionListNewCalificacionToAttach : calificacionListNew) {
+                calificacionListNewCalificacionToAttach = em.getReference(calificacionListNewCalificacionToAttach.getClass(), calificacionListNewCalificacionToAttach.getCalificacionPK());
+                attachedCalificacionListNew.add(calificacionListNewCalificacionToAttach);
             }
-            comentarioCollectionNew = attachedComentarioCollectionNew;
-            persona.setComentarioCollection(comentarioCollectionNew);
+            calificacionListNew = attachedCalificacionListNew;
+            persona.setCalificacionList(calificacionListNew);
+            List<Comentario> attachedComentarioListNew = new ArrayList<Comentario>();
+            for (Comentario comentarioListNewComentarioToAttach : comentarioListNew) {
+                comentarioListNewComentarioToAttach = em.getReference(comentarioListNewComentarioToAttach.getClass(), comentarioListNewComentarioToAttach.getIdComentario());
+                attachedComentarioListNew.add(comentarioListNewComentarioToAttach);
+            }
+            comentarioListNew = attachedComentarioListNew;
+            persona.setComentarioList(comentarioListNew);
             persona = em.merge(persona);
-            for (Comentario comentarioCollectionNewComentario : comentarioCollectionNew) {
-                if (!comentarioCollectionOld.contains(comentarioCollectionNewComentario)) {
-                    Persona oldIdPersonaOfComentarioCollectionNewComentario = comentarioCollectionNewComentario.getIdPersona();
-                    comentarioCollectionNewComentario.setIdPersona(persona);
-                    comentarioCollectionNewComentario = em.merge(comentarioCollectionNewComentario);
-                    if (oldIdPersonaOfComentarioCollectionNewComentario != null && !oldIdPersonaOfComentarioCollectionNewComentario.equals(persona)) {
-                        oldIdPersonaOfComentarioCollectionNewComentario.getComentarioCollection().remove(comentarioCollectionNewComentario);
-                        oldIdPersonaOfComentarioCollectionNewComentario = em.merge(oldIdPersonaOfComentarioCollectionNewComentario);
+            for (Calificacion calificacionListNewCalificacion : calificacionListNew) {
+                if (!calificacionListOld.contains(calificacionListNewCalificacion)) {
+                    Persona oldPersonaOfCalificacionListNewCalificacion = calificacionListNewCalificacion.getPersona();
+                    calificacionListNewCalificacion.setPersona(persona);
+                    calificacionListNewCalificacion = em.merge(calificacionListNewCalificacion);
+                    if (oldPersonaOfCalificacionListNewCalificacion != null && !oldPersonaOfCalificacionListNewCalificacion.equals(persona)) {
+                        oldPersonaOfCalificacionListNewCalificacion.getCalificacionList().remove(calificacionListNewCalificacion);
+                        oldPersonaOfCalificacionListNewCalificacion = em.merge(oldPersonaOfCalificacionListNewCalificacion);
+                    }
+                }
+            }
+            for (Comentario comentarioListNewComentario : comentarioListNew) {
+                if (!comentarioListOld.contains(comentarioListNewComentario)) {
+                    Persona oldIdPersonaOfComentarioListNewComentario = comentarioListNewComentario.getIdPersona();
+                    comentarioListNewComentario.setIdPersona(persona);
+                    comentarioListNewComentario = em.merge(comentarioListNewComentario);
+                    if (oldIdPersonaOfComentarioListNewComentario != null && !oldIdPersonaOfComentarioListNewComentario.equals(persona)) {
+                        oldIdPersonaOfComentarioListNewComentario.getComentarioList().remove(comentarioListNewComentario);
+                        oldIdPersonaOfComentarioListNewComentario = em.merge(oldIdPersonaOfComentarioListNewComentario);
                     }
                 }
             }
@@ -136,12 +182,19 @@ public class PersonaJpaController implements Serializable {
                 throw new NonexistentEntityException("The persona with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            Collection<Comentario> comentarioCollectionOrphanCheck = persona.getComentarioCollection();
-            for (Comentario comentarioCollectionOrphanCheckComentario : comentarioCollectionOrphanCheck) {
+            List<Calificacion> calificacionListOrphanCheck = persona.getCalificacionList();
+            for (Calificacion calificacionListOrphanCheckCalificacion : calificacionListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Persona (" + persona + ") cannot be destroyed since the Comentario " + comentarioCollectionOrphanCheckComentario + " in its comentarioCollection field has a non-nullable idPersona field.");
+                illegalOrphanMessages.add("This Persona (" + persona + ") cannot be destroyed since the Calificacion " + calificacionListOrphanCheckCalificacion + " in its calificacionList field has a non-nullable persona field.");
+            }
+            List<Comentario> comentarioListOrphanCheck = persona.getComentarioList();
+            for (Comentario comentarioListOrphanCheckComentario : comentarioListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Persona (" + persona + ") cannot be destroyed since the Comentario " + comentarioListOrphanCheckComentario + " in its comentarioList field has a non-nullable idPersona field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
