@@ -7,30 +7,35 @@ package com.seebcoq.proyectofinal.vista;
 import com.seebcoq.proyectofinal.modelo.Comentario;
 import com.seebcoq.proyectofinal.modelo.Puesto;
 import com.seebcoq.proyectofinal.controlador.ControladorPuesto;
+import com.seebcoq.proyectofinal.controlador.UtilidadesSesion;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author slf
  */
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class PuestoIH {
     private ControladorPuesto puestoCtrl;
     private Puesto puesto;
-    private String nombre;
+    private Long id;
+    
+    
     
     public PuestoIH(){
-        nombre = "tacosCiencias";
+        HttpSession hs = UtilidadesSesion.getSession();
+        id = (Long) hs.getAttribute("puestoId");
     }
     
     @PostConstruct
     public void init() {
         puestoCtrl = new ControladorPuesto();
-        puesto = puestoCtrl.buscarPuesto(nombre);
+        puesto = puestoCtrl.buscarPuesto(id);
     }
     
     public List<Comentario> getComentarios(){
@@ -38,10 +43,7 @@ public class PuestoIH {
     }
     
     public String getNombre(){
-        return nombre;
-    }
-    public void setNombre(String n){
-        nombre =  n;
+        return puesto.getNombre();
     }
     public List<Puesto> getPuestos(){
         return puestoCtrl.buscarPuestos();

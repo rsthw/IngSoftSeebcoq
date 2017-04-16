@@ -1,9 +1,10 @@
 package com.seebcoq.proyectofinal.vista;
 
-
-import com.seebcoq.proyectofinal.controlador.dao.UsuarioDAO;
+import com.seebcoq.proyectofinal.controlador.ControladorPersona;
 import com.seebcoq.proyectofinal.controlador.UtilidadesSesion;
+import com.seebcoq.proyectofinal.modelo.Persona;
 import java.io.Serializable;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -16,65 +17,86 @@ import javax.servlet.http.HttpSession;
 public class IniciarSesionIH implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private String uname;
+    private Persona persona;
+    
+    private String correo;
     private String password;
+    
     private Integer valid;
+    
+    public void setValid(Integer valid) {
+        this.valid = valid;
+    }
+    public Integer getValid() {
+        return valid;
+    }
 
+    
+    public String getUsuario(){
+        return persona.getNombreDeUsuario();
+    }
+    
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getPassword() {
         return password;
     }
 
-    public void setValid(Integer valid) {
-        this.valid = valid;
+    public String getCorreo() {
+        return correo;
     }
 
-    public Integer getValid() {
-        return valid;
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getUname() {
-        return uname;
-    }
-
-    public void setUname(String uname) {
-        this.uname = uname;
-    }
-
 
     public String iniciarSesion() {
-		    valid = UsuarioDAO.iniciarSesion(uname, password);
+        ControladorPersona personaCtrl = new ControladorPersona();
+        persona = personaCtrl.iniciarSesion(correo, password);
+        
+        int estado;
+        if(persona == null){
+            estado = 0;
+        } else{
+            boolean admin = persona.getEsAdministrador();
+            if(admin) estado = 2;
+            else estado = 1;
+        }
+        personaCtrl.ControladorPersonaCerrar();
+        
+        valid = estado;
+        
         String valor = "";
         HttpSession session = null;
-        switch (valid){
-          case 1:
-          session = UtilidadesSesion.getSession();
-          session.setAttribute("username", uname);
-          valor = "user";
-          break;
-          case 2:
-          session = UtilidadesSesion.getSession();
-          session.setAttribute("username", uname);
-          valor = "admin";
-          break;
-          default:
-          FacesContext.getCurrentInstance().addMessage(null,
-					            new FacesMessage(FacesMessage.SEVERITY_WARN,
-							        "Correo o contrasenia incorrectos.",
-							        "Por favor, intente nuevamente."));
-			    valor = "error";
+        
+        switch (estado){
+            case 1: // usuario
+                session = UtilidadesSesion.getSession();
+                session.setAttribute("correo", correo);
+                valor = "user";
+                break;
+            case 2: // admin
+                session = UtilidadesSesion.getSession();
+                session.setAttribute("correo", correo);
+                valor = "admin";
+                break;
+            default: // error
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_WARN,
+                                "Correo o contrasenia incorrectos.",
+                                "Por favor, intente nuevamente."));
+                valor = "error";
         }
-        return valor;
+        return "index.xhtml?faces-redirect=true";
 }
 
     public String cerrarSesion() {
-		    HttpSession session = UtilidadesSesion.getSession();
-		    session.invalidate();
+        HttpSession session = UtilidadesSesion.getSession();
+        session.removeAttribute("correo");
+        persona = null;
         valid = null;
-		    return "logout";
-	}
+        return "logout";
+    }
 }

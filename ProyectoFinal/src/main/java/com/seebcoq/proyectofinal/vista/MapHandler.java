@@ -6,38 +6,48 @@ import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import com.seebcoq.proyectofinal.modelo.jpaControllers.PuestoJpaController;
+import com.seebcoq.proyectofinal.modelo.Puesto;
+import com.seebcoq.proyectofinal.controlador.UtilidadesSesion;
+import javax.servlet.http.HttpSession;
+import org.primefaces.context.RequestContext;
+
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class MapHandler {
 
     private MapModel advancedModel;
-
+    private PuestoJpaController puestoCtrl;
     private Marker marker;
-
     private String nombre;
-
     private double lat;
-
     private double lng;
+    
 
     @PostConstruct
     public void init() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("comidaCienciasPersistentUnit");
         advancedModel = new DefaultMapModel();
-//        Lat:19.324499386445776, Lng:-99.17937085032463
-//        Lat:19.324328359583355, Lng:-99.17934268712997
+        puestoCtrl = new PuestoJpaController(emf);
 
-        //Shared coordinates
-        //con ayuda de una lista puedes sacar los lugares conocidos de la base de datos y
-        //crear marcadores con dicha info, ojo no usar el addMarker() que ese sirve para agregar lugares a la db.
+        List<Puesto> puestos = puestoCtrl.findPuestoEntities();
+        for (Puesto puesto : puestos) {
+            Double latitud = puesto.getLatitud();
+            Double longitud = puesto.getLongitud();
+            String nombre = puesto.getNombre();
+            
+            advancedModel.addOverlay(new Marker(new LatLng(latitud, longitud), nombre, puesto.getIdPuesto()));
+        }
     }
 
     public MapModel getAdvancedModel() {
@@ -47,6 +57,9 @@ public class MapHandler {
     public void onMarkerSelect(OverlaySelectEvent event) {
         marker = (Marker) event.getOverlay();
         System.out.println(marker.getTitle());
+        
+        HttpSession hs = UtilidadesSesion.getSession();
+        hs.setAttribute("puestoId", (Long)marker.getData());
     }
 
     public Marker getMarker() {

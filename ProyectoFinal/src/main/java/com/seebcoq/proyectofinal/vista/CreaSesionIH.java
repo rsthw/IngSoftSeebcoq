@@ -66,7 +66,7 @@ public class CreaSesionIH {
 
     public String creaCuenta(){
       ControladorPersona cp = new ControladorPersona();
-      if(cp.buscarCorreo(email)){
+      if(cp.existeCorreo(email)){
         FacesContext.getCurrentInstance().addMessage(null,
                   new FacesMessage(FacesMessage.SEVERITY_WARN,
                   "El correo con el que intenta crear cuenta ya existe.",

@@ -4,32 +4,64 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwJznevf6eTmR8HzMtXkrurOkthth1G1s"></script>
         <title>Start Page</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     </h:head>
     <h:body>
-        <a href="Puesto.xhtml"> Puesto ejemplo </a>
-        <br/>
-        <a href="crearCuenta.xhtml"> Crear cuenta ejemplo</a>
-        <br/>
-        <a href="iniciarSesion.xhtml"> Crear cuenta ejemplo</a>
-<br/>
+        <p:growl id="messages" showDetail="true" />
+        <h:form id = "menu">
+            <p:menubar>
+                <f:facet name="options" >
+                    <h:outputText value="Bienvenido, "
+                                  rendered="#{not empty iniciarSesionIH.valid}" />
+                    <h:outputText value="#{iniciarSesionIH.usuario}"
+                                  rendered="#{not empty iniciarSesionIH.valid}" />
+                    <h:outputText value="   "
+                                  rendered="#{not empty iniciarSesionIH.valid}" />
+                    <p:commandButton value="Cerrar Sesión" 
+                                     action="#{iniciarSesionIH.cerrarSesion}" 
+                                     rendered="#{not empty iniciarSesionIH.valid}" 
+                                     onclick = "$( #menu ).load( index.xhtml #menu );"/>
+                </f:facet>
+                <f:facet name="options">
+                    <p:commandButton type="submit" 
+                                     value="Crear Nuevo Usuario" 
+                                     ajax = "false" 
+                                     action="crearCuenta.xhtml?faces-redirect=true"
+                                     rendered="#{empty iniciarSesionIH.valid}"/>
+                    <p:commandButton type="submit" 
+                                     value="Iniciar Sesión" 
+                                     ajax = "false" 
+                                     action="iniciarSesion.xhtml?faces-redirect=true"
+                                     rendered="#{empty iniciarSesionIH.valid}"/>
+                </f:facet>
+            </p:menubar>
+         </h:form>
+        <h:form>
+            <p:gmap id="gmap" center="19.324328359583355,-99.17934268712997" zoom="18"
+                    type="TERRAIN" model="#{mapHandler.advancedModel}"
+                    style="width:100%;height:500px"
+                    widgetVar="map">
 
-        <h:panelGroup rendered="#{not empty iniciarSesionIH.valid}">
-        <h:panelGrid columns="3">
-            <h:outputText value="Welcome, " />
-            <h:outputLink value="index.xhtml">
-                <h:outputText value="holllllllli" />
-            </h:outputLink>
+              <p:ajax event="overlaySelect" listener="#{mapHandler.onMarkerSelect}"/>
 
-            <h:form>
-                <h:commandLink action="#{iniciarSesionIH.cerrarSesion}" onclick="window.location.reload();" >Log out</h:commandLink>
-            </h:form>
-        </h:panelGrid>
-    </h:panelGroup>
+              <p:gmapInfoWindow id="infoWindow">
+                <p:outputPanel style="text-align: center; display: block; margin: auto">
 
-    <h:panelGroup rendered="#{empty iniciarSesionIH.valid}">
-       <h:outputLink value="iniciarSesion.xhtml">Iniciar Sesion</h:outputLink>
-   </h:panelGroup>
+                  <h:outputText value="#{mapHandler.marker.title}" />
+                   <br/>
+                    <p:commandButton type="submit" 
+                                         value="Ir al puesto" 
+                                         ajax = "false" 
+                                         action="Puesto.xhtml?faces-redirect=true" />
+
+                </p:outputPanel>
+              </p:gmapInfoWindow>  
+            </p:gmap>
+        </h:form>
+        
+        <h:outputLabel for="nombre" value="#{IniciarSesionIH.sesionIniciada}" />
+        <script src="mapHandler.js"></script>
     </h:body>
 </html>

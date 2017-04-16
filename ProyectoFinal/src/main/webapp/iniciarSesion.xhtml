@@ -9,8 +9,6 @@
     </h:head>
     <h:body>
         <h:form id="loginForm">
-
-
             <p:growl id="msg" showDetail="true" life="3000" />
             <p:panel header="Login" style="width: 360px;">
 
@@ -18,11 +16,11 @@
 
                     <h:outputText value="Correo" />
 
-                    <p:inputText id="username" value="#{iniciarSesionIH.uname}" required="true"></p:inputText>
+                    <p:inputText id="correo" value="#{iniciarSesionIH.correo}" required="true"></p:inputText>
 
                     <p:spacer></p:spacer>
 
-                    <p:message for="username" ></p:message>
+                    <p:message for="correo" ></p:message>
 
                     <h:outputText value="Contrasenia" />
 
@@ -34,7 +32,7 @@
 
                     <p:spacer></p:spacer>
 
-                    <p:commandButton action="#{iniciarSesionIH.iniciarSesion}" value="Login" update="loginForm" ajax="true"></p:commandButton>
+                    <p:commandButton action="#{iniciarSesionIH.iniciarSesion}" value="Login" update="loginForm" ajax="false"></p:commandButton>
 
                 </h:panelGrid>
 
