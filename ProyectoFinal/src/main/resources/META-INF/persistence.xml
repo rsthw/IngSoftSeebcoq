@@ -5,9 +5,10 @@
     <class>com.seebcoq.proyectofinal.modelo.Comentario</class>
     <class>com.seebcoq.proyectofinal.modelo.Puesto</class>
     <class>com.seebcoq.proyectofinal.modelo.Persona</class>
-    <class>com.seebcoq.proyectofinal.modelo.Alimento</class>
     <class>com.seebcoq.proyectofinal.modelo.Platillo</class>
     <class>com.seebcoq.proyectofinal.modelo.Menu</class>
+    <class>com.seebcoq.proyectofinal.modelo.Calificacion</class>
+    <class>com.seebcoq.proyectofinal.modelo.CalificacionPK</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ComidaCienciasDB?zeroDateTimeBehavior=convertToNull"/>
