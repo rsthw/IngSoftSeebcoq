@@ -62,8 +62,22 @@ public class ControladorPuesto {
     }
 
     public Double buscarCalificacion(Puesto puesto){
-      Double cal = puesto.getCalificacion();
-      return cal;
+      Double actual = puesto.getCalificacion();
+      int totalCalfs = buscarCalificaciones(puesto).size();
+      List<Calificacion> calfs = buscarCalificaciones(puesto);
+      for(Calificacion c: calfs){
+          actual = (actual + c.getCalificacion());
+          System.out.println(actual);
+      }
+      actual = (actual)/totalCalfs;
+      puesto.setCalificacion(actual);
+      PuestoJpaController ctrl_puesto = new PuestoJpaController(emf);
+      try{
+      ctrl_puesto.edit(puesto);
+      }catch(Exception e){
+          System.out.println("no se pudo actualizar la calificacion");
+      }
+      return actual;
     }
 
     public String buscarImagen(Puesto puesto){
@@ -77,21 +91,35 @@ public class ControladorPuesto {
       PuestoJpaController ctrl_puesto = new PuestoJpaController(emf);
       Long idPuesto = puesto.getIdPuesto();
       Long idUsuario = persona.getIdPersona();
+      System.out.println(idPuesto);
+      System.out.println(idUsuario);
+      System.out.println(c);
+      System.out.println("trabajando");
       CalificacionPK pk = new CalificacionPK(idPuesto, idUsuario);
       Calificacion nueva = new Calificacion(pk, c);
-      try{
-      controlador.create(nueva);
+      
+     /* try{
+      controlador.create(nueva2);
+      System.out.println("trabajando calificacion");
       }
       catch(Exception ex){
-      
-      }
+        System.out.println("no se pudo crear la calificacion 2");
+      }*/
+       EntityManager em = emf.createEntityManager();
+      em.getTransaction().begin();
+    
+      em.persist(nueva);
+      System.out.println("trabajando calificacion");
+      em.getTransaction().commit();
+      em.close();
       Double actual = puesto.getCalificacion();
-      int totalCalfs = buscarCalificaciones(puesto).size();
-      actual = (actual + c)/totalCalfs;
+      actual = (actual + c)/2;
       puesto.setCalificacion(actual);
+      System.out.println("sigo trabajando");
        try{
       ctrl_puesto.edit(puesto);
        } catch(Exception ex){
+             System.out.println("no se pudo actualizar el puesto");
        }
        }
       
