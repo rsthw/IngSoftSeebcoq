@@ -16,17 +16,17 @@
 
                 <h:panelGrid id="loginPanel" columns="2">
 
-                    <h:outputText value="Username" />
+                    <h:outputText value="Correo" />
 
-                    <p:inputText id="username" value="#{iniciarSesionIH.uname}" ></p:inputText>
+                    <p:inputText id="username" value="#{iniciarSesionIH.uname}" required="true"></p:inputText>
 
                     <p:spacer></p:spacer>
 
                     <p:message for="username" ></p:message>
 
-                    <h:outputText value="Password" />
+                    <h:outputText value="Contrasenia" />
 
-                    <p:password id="password" value="#{iniciarSesionIH.password}"  feedback="false"></p:password>
+                    <p:password id="password" value="#{iniciarSesionIH.password}"  feedback="false" required="true"></p:password>
 
                     <p:spacer></p:spacer>
 
