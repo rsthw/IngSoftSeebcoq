@@ -33,13 +33,14 @@ public class FiltroSesion implements Filter {
 			HttpSession ses = reqt.getSession(false);
 
 			String reqURI = reqt.getRequestURI();
-                        
+
 			if (reqURI.indexOf("/iniciarSesion.xhtml") >= 0
 					|| (ses != null && ses.getAttribute("username") != null)
 					|| reqURI.indexOf("/public/") >= 0
 					|| reqURI.contains("javax.faces.resource")
           || (reqURI.equals("/ProyectoFinal/"))
-          || reqURI.contains("crearCuenta")){
+          || reqURI.contains("crearCuenta")
+					|| reqURI.contains("puesto")){
 				chain.doFilter(request, response);
                         }
                         else{
