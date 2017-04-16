@@ -1,3 +1,5 @@
+/* global PF */
+
 var currentMarker = null;
 
 function handlePointClick(event) {
@@ -18,8 +20,7 @@ function handlePointClick(event) {
 function markerAddComplete() {
     var title = document.getElementById('title');
     currentMarker.setTitle(title.value);
-    title.value = "";
-
+    title.value = "";                                                  
     currentMarker = null;
     PF('dlg').hide();
 }

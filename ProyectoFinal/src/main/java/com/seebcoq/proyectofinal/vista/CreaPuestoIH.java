@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.seebcoq.proyectofinal.vista;
 
 import com.seebcoq.proyectofinal.controlador.ControladorPuesto;
@@ -9,38 +14,33 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
-import org.primefaces.event.map.OverlaySelectEvent;
-import org.primefaces.model.map.DefaultMapModel;
-import org.primefaces.model.map.LatLng;
-import org.primefaces.model.map.MapModel;
-import org.primefaces.model.map.Marker;
-
-import javax.annotation.PostConstruct;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import org.apache.commons.io.FilenameUtils;
 import org.primefaces.model.UploadedFile;
 
-
+/**
+ *
+ * @author Ulises
+ */
 @ManagedBean
-@ViewScoped
-public class MapHandler {
+public class CreaPuestoIH {
     
     private String nombre;
     private double lat;
     private double lng;
     private UploadedFile imagen;    
-    private MapModel advancedModel;
-    private Marker marker;
-    
-    
-    @PostConstruct
-    public void init() {
-        advancedModel = new DefaultMapModel();
+    private MapHandler mh;
+
+    public MapHandler getMh() {
+        return mh;
+    }
+
+    public void setMh(MapHandler mh) {
+        this.mh = mh;
     }
     
     public UploadedFile getImagen() {
@@ -84,15 +84,13 @@ public class MapHandler {
      * Añade un puesto con los parametros dados
      */
     public void agregarPuesto() throws IOException{
-        Marker marker = new Marker(new LatLng(lat, lng), nombre);
-        //aqui se agrega a la base de datos
-        advancedModel.addOverlay(marker);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Marker Added", "Lat:" + lat + ", Lng:" + lng));
         ControladorPuesto puestoCtrl = new ControladorPuesto();
         Puesto p = new Puesto();
         p.setNombre(nombre);
         p.setLatitud(lat);
         p.setLongitud(lng);
+        p.setLatitud(mh.getLat());
+        p.setLongitud(mh.getLng());
         //Ruta donde se guardará la imagen y ruta ue se guardará en la BD
         Path folder = Paths.get("/home/Ulises/GitHub/IngSoftSeebcoq/ProyectoFinal/src/main/resources");
         String filename = FilenameUtils.getBaseName(imagen.getFileName());
@@ -103,25 +101,5 @@ public class MapHandler {
         p.setImagen(file.toString());
         puestoCtrl.agregaPuesto(p);
     }
-
-
-    public MapModel getAdvancedModel() {
-        return advancedModel;
-    }
-
-    public void onMarkerSelect(OverlaySelectEvent event) {
-        marker = (Marker) event.getOverlay();
-        System.out.println(marker.getTitle());
-    }
-
-    public Marker getMarker() {
-        return marker;
-    }
-
-    public void addMarker() {
-        
-    }
-
-}
     
-
+}

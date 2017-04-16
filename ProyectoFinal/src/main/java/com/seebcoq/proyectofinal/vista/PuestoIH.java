@@ -32,10 +32,10 @@ public class PuestoIH {
         puestoCtrl = new ControladorPuesto();
         puesto = puestoCtrl.buscarPuesto(nombre);
     }
-    
+    /*
     public List<Comentario> getComentarios(){
         return puestoCtrl.buscarComentarios(puesto);
-    }
+    }*/
     
     public String getNombre(){
         return nombre;
@@ -45,5 +45,19 @@ public class PuestoIH {
     }
     public List<Puesto> getPuestos(){
         return puestoCtrl.buscarPuestos();
+    }
+    
+    /**
+     * Añade un puesto con los parametros dados
+     * @param nombre nombre del puesto
+     * @param lat latitud donde se encuentra
+     * @param lng longitud donde se enecuentra
+     */
+    public void AddPuesto(String nombre, double lat, double lng){
+        Puesto p = new Puesto();
+        p.setNombre(nombre);
+        p.setLatitud(lat);
+        p.setLongitud(lng);
+        puestoCtrl.agregaPuesto(puesto);
     }
 }
