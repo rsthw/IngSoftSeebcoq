@@ -99,6 +99,16 @@ public class Persona implements Serializable {
         this.nombreDeUsuario = nombreDeUsuario;
     }
 
+    public Persona(String nombre, String apPaterno, String apMaterno, String correo, String contraseña, String nombreDeUsuario) {
+        this.nombre = nombre;
+        this.apPaterno = apPaterno;
+        this.apMaterno = apMaterno;
+        this.correo = correo;
+        this.contraseña = contraseña;
+        this.nombreDeUsuario = nombreDeUsuario;
+        esAdministrador = false;
+    }
+
     public Long getIdPersona() {
         return idPersona;
     }
@@ -205,5 +215,5 @@ public class Persona implements Serializable {
     public String toString() {
         return "com.seebcoq.proyectofinal.modelo.Persona[ idPersona=" + idPersona + " ]";
     }
-    
+
 }
