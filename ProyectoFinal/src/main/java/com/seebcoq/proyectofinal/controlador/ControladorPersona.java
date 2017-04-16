@@ -36,4 +36,13 @@ public class ControladorPersona{
     return !ps.isEmpty();
   }
 
+  public List<Persona> buscarUsuario(String usuario, String pass){
+      EntityManager em = emf.createEntityManager();
+      TypedQuery<Persona> query = em.createQuery("SELECT p FROM Persona p WHERE p.correo = \'"+usuario+"\' AND p.contraseña = \'"+pass+"\'" , Persona.class);
+      List<Persona> results = query.getResultList();
+      if (results.isEmpty())
+        return null;
+      return results;
+  }
+
 }

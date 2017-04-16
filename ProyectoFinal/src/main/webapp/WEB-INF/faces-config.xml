@@ -17,10 +17,12 @@
             <from-outcome>error</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
         </navigation-case>
-        <from-view-id>/crearCuenta.xhtml</from-view-id>
-        <navigation-case>
-          <from-outcome>exito</from-outcome>
-          <to-view-id>/iniciarSesion.xhtml</to-view-id>
-        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+    <from-view-id>/crearCuenta.xhtml</from-view-id>
+      <navigation-case>
+        <from-outcome>exito</from-outcome>
+        <to-view-id>/iniciarSesion.xhtml</to-view-id>
+      </navigation-case>
     </navigation-rule>
 </faces-config>

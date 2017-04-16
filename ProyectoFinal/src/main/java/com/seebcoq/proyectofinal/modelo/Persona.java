@@ -106,6 +106,7 @@ public class Persona implements Serializable {
         this.correo = correo;
         this.contraseña = contraseña;
         this.nombreDeUsuario = nombreDeUsuario;
+        esAdministrador = false;
     }
 
     public Long getIdPersona() {
