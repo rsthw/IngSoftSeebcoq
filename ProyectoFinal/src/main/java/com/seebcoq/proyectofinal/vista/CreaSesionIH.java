@@ -1,7 +1,10 @@
 package com.seebcoq.proyectofinal.vista;
 
 import com.seebcoq.proyectofinal.controlador.EmailValidador;
+import com.seebcoq.proyectofinal.controlador.ControladorPersona;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 
 @ManagedBean
 public class CreaSesionIH {
@@ -61,4 +64,18 @@ public class CreaSesionIH {
         this.password = password;
     }
 
+    public String creaCuenta(){
+      ControladorPersona cp = new ControladorPersona();
+      if(cp.buscarCorreo(email)){
+        FacesContext.getCurrentInstance().addMessage(null,
+                  new FacesMessage(FacesMessage.SEVERITY_WARN,
+                  "El correo con el que intenta crear cuenta ya existe.",
+                  "Por favor, intente iniciar sesion con su correo y contasenia."));
+                  return "";
+      }else{
+        cp.guardarPersona(nombre,apellidoP,apellidoM,email,password,nombreDeUsuario);
+      }
+      cp.ControladorPersonaCerrar();
+      return "exito";
+    }
 }

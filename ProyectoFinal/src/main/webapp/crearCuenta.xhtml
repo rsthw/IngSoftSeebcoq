@@ -46,7 +46,7 @@
             <p:password id="pwd2" value="#{creaSesionIH.password}" label="Password 2" required="true" />
         </h:panelGrid>
           <br/>
-      <p:commandButton value="Crear Cuenta" ajax="false" icon="ui-icon-check" validateClient="true"/>
+      <p:commandButton value="Crear Cuenta" action="#{creaSesionIH.creaCuenta}" ajax="false" icon="ui-icon-check" validateClient="true"/>
   </p:panel>
 </h:form>
 
