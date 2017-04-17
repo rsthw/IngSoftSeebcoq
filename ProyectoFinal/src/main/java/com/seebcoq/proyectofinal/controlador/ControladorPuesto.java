@@ -5,7 +5,9 @@
  */
 package com.seebcoq.proyectofinal.controlador;
 import com.seebcoq.proyectofinal.modelo.Comentario;
+import com.seebcoq.proyectofinal.modelo.Platillo;
 import com.seebcoq.proyectofinal.modelo.Puesto;
+import com.seebcoq.proyectofinal.modelo.jpaControllers.PlatilloJpaController;
 import com.seebcoq.proyectofinal.modelo.jpaControllers.PuestoJpaController;
 import java.util.List;
 import javax.persistence.Persistence;
@@ -39,8 +41,18 @@ public class ControladorPuesto {
         return pjc.findPuestoEntities();
     }
     
+    public List<Platillo> buscarPlatillos(Puesto puesto){
+        PuestoJpaController pjc = new PuestoJpaController(emf);
+        return pjc.findPuesto(puesto.getIdPuesto()).getPlatilloList();
+    }
+    
     public void agregaPuesto(Puesto puesto){
         PuestoJpaController pjc = new PuestoJpaController(emf);
         pjc.create(puesto);
+    }
+    
+    public void agregaPlatillo(Platillo platillo){
+        PlatilloJpaController pjc = new PlatilloJpaController(emf);
+        pjc.create(platillo);
     }
 }

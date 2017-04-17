@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <f:view contentType="text/html">
+        <h:head>
+            <title>Puestos</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        </h:head>
+
+        <h:body>
+
+            <p:layout fullPage="true">
+
+                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                    Header
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
+                    Footer
+                </p:layoutUnit>
+                
+                <p:layoutUnit position="center" size="500" header="Puestos" collapsible="false">
+                    <p:dataScroller value="#{creaPlatilloIH.puestos}" var="psto" chunkSize="10">
+                        <f:facet name="loader">
+                            <p:commandButton type="button" value="Más" icon="ui-icon-circle-triangle-s"/>
+                        </f:facet>
+                        
+                        <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
+                    <p:outputPanel>
+                        <h:panelGrid columns="3" cellpadding="5">
+                            <h:outputText value ="Nombre: "/>
+                            <h:outputText value="#{psto.nombre}"/>
+                            <p:commandButton value="Agrega un Platillo" type="button" onclick="PF('dlg').show();"/>
+                        </h:panelGrid>
+                    </p:outputPanel>
+                </h:panelGrid>
+                    </p:dataScroller>
+                    
+                    <p:dialog header="Datos del platillo" widgetVar="dlg" showEffect="explode" hideEffect="bounce" height="400" width="400">
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel for="nombrePlatillo" value="Nombre del Platillo:  " style="font-weight:bold"/>
+                            <p:inputText id="nombrePlatillo" value="#{creaPlatilloIH.nombre}" required="true" label="NombrePlatillo"/>
+                            <p:commandButton value="Agregar" type="button" update="display" icon="ui-icon-check"
+                                             action="#{creaPlatilloIH.agregaPlatillo(psto)}" />
+                        </h:panelGrid>
+                    </p:dialog>
+                    
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:body>
+
+    </f:view>
+
+</html>
+<!--
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+     <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>CasoDeUso: Agregar Platillos</title>
+            </f:facet>
+        </h:head>
+         <h:body>
+             <p:layout>
+                  <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                    Header
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
+                    Footer
+                </p:layoutUnit>
+                
+                <p:layoutUnit position="center" size="500" header="Puestos" collapsible="false">
+                    <p:dataScroller value="#{creaPlatilloIH.puestos}" var="psto" chunkSize="10">
+                        <f:facet name="header">
+                            Lista de puestos
+                        </f:facet>
+
+                <f:facet name="loader">
+                    <p:commandButton type="button" value="Más" icon="ui-icon-circle-triangle-s"/>
+                </f:facet>
+
+                
+                    </p:dataScroller>
+                
+                 
+                 <p:dialog header="Datos del platillo" widgetVar="dlg" showEffect="explode" hideEffect="bounce" height="400" width="400">
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel for="nombrePlatillo" value="Nombre del Platillo:  " style="font-weight:bold"/>
+                            <p:inputText id="nombrePlatillo" value="#{creaPlatilloIH.nombre}" required="true" label="NombrePlatillo"/>
+                            <p:commandButton value="Agregar" type="button" update="display" icon="ui-icon-check"
+                                             action="#{creaPlatilloIH.agregaPlatillo(psto)}" />
+                        </h:panelGrid>
+             </p:dialog>
+                    </p:layoutUnit>
+        </p:layout>
+             </h:body>
+     </f:view>
+</html>
+-->

@@ -7,6 +7,7 @@ package com.seebcoq.proyectofinal.vista;
 import com.seebcoq.proyectofinal.modelo.Comentario;
 import com.seebcoq.proyectofinal.modelo.Puesto;
 import com.seebcoq.proyectofinal.controlador.ControladorPuesto;
+import com.seebcoq.proyectofinal.modelo.Platillo;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -46,7 +47,7 @@ public class PuestoIH {
     public List<Puesto> getPuestos(){
         return puestoCtrl.buscarPuestos();
     }
-    
+
     /**
      * Añade un puesto con los parametros dados
      * @param nombre nombre del puesto
