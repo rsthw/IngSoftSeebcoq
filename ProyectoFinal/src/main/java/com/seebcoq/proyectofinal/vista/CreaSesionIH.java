@@ -4,9 +4,10 @@ import com.seebcoq.proyectofinal.controlador.EmailValidador;
 import com.seebcoq.proyectofinal.controlador.ControladorPersona;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-@ManagedBean
+
 public class CreaSesionIH {
 
     private String nombreDeUsuario;

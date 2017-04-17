@@ -1,16 +1,29 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Borrar usuario</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+    </h:head>
+    <h:body>
+    <h:form>
+  <p:growl showDetail="true"/>
+  <p:panel header="Eliminar Usuario">
+        <h:panelGrid id="grid" columns="2" cellpadding="5">
+            
+            <h:outputLabel for="email1" value="Correo de Ciencias" style="font-weight:bold"/>
+            <p:inputText id="email1" value="#{borrarUsuarioIH.email}" required="true">
+              <f:validator validatorId="crearCuenta.emailValidador" />
+            </p:inputText>
+            <p:message for="email1" display="tooltip" />
+            <h:outputText value="#{borrarUsuarioIH.email}" />
+        </h:panelGrid>
+          <br/>
+      <p:commandButton value="Eliminar Usuario" action="#{borrarUsuarioIH.borrarPersona}" ajax="false" icon="ui-icon-check" validateClient="true"/>
+  </p:panel>
+</h:form>
+
+    </h:body>
 </html>
