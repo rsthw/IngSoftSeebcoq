@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwJznevf6eTmR8HzMtXkrurOkthth1G1s"></script>
+        <title>Fast Food</title>
+        <link rel="stylesheet" type="text/css" href="css/829.css" />
+    </h:head>
+    <h:body>
+        <div id="wrapper">
+            <div id="header">
+                <a href="#">Ajustes |</a>
+                <a href="#">Cerrar Sesión</a>
+
+            </div>
+            <div id="navigation">
+                <span class="titulo">FAST FOOD</span>
+                <i> <br></br>Encuentra la mejor comida en la Facultad de Ciencias, UNAM.</i>
+            </div>
+
+            <div id="content">
+               
+                    <span class="titulo"> Escoge un puesto</span>
+                   
+                    <p:growl id="messages" showDetail="true" />
+                    <p:gmap id="gmap" center="19.324328359583355,-99.17934268712997" zoom="20"
+                            type="TERRAIN" model="#{mapHandler.advancedModel}"
+                            style="width:100%;height:400px" onPointClick="handlePointClick(event);"
+                            widgetVar="map">
+
+                      <p:ajax event="overlaySelect" listener="#{mapHandler.onMarkerSelect}"/>
+
+                      <p:gmapInfoWindow id="infoWindow">
+                        <p:outputPanel style="text-align: center; display: block; margin: auto">
+
+                          <h:outputText value="#{mapHandler.marker.title}" />
+                          <br/>
+                          <h:outputText value="#{mapHandler.marker.data}"/>
+
+                        </p:outputPanel>
+                      </p:gmapInfoWindow>
+                    </p:gmap>
+
+                    <p:dialog widgetVar="dlg" showEffect="fade">
+                      <h:form prependId="false">
+                        <h:panelGrid columns="2">
+                          <h:outputLabel for="nombre" value="Title:" />
+                          <p:inputText id="nombre" value="#{mapHandler.nombre}" />
+
+                          <f:facet name="footer">
+                            <p:commandButton value="Add" actionListener="#{mapHandler.addMarker}" update=":messages" oncomplete="markerAddComplete()" />
+                            <p:commandButton value="Cancel" onclick="return cancel()" />
+                          </f:facet>
+                        </h:panelGrid>
+
+                        <h:inputHidden id="lat" value="#{mapHandler.lat}" />
+                        <h:inputHidden id="lng" value="#{mapHandler.lng}" />
+                      </h:form>
+                  </p:dialog>
+                  <script src="mapHandler.js"></script>
+                    
+
+
+            </div>
+            <div id="footer">
+                <ul>
+                    <li><a href="#">Sobre Fast Food </a></li>
+                    <li><a href="#">Contacto </a></li>
+                    <li><a href="#">Aviso de Privacidad</a></li>
+                </ul>
+                <div id="logo"><p>
+                        Creado por SéebCoq 2017 <br></br>
+                        <img src="3.png" /></p>
+
+                </div>
+            </div>
+        </div>
+    </h:body>
+</html>
