@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Crear Cuenta</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+    <h:form>
+  <p:growl showDetail="true"/>
+  <p:panel header="Crear Cuenta">
+        <h:panelGrid id="grid" columns="2" cellpadding="5">
+            <h:outputLabel for="nombreDeUsuario" value="Nombre de Usuario " style="font-weight:bold"/>
+            <p:inputText id="nombreDeUsuario" value="#{creaSesionIH.nombreDeUsuario}" required="true" label="NombreDeUsuario"/>
+            <p:message for="nombreDeUsuario" />
+            <h:outputText value="#{creaSesionIH.nombreDeUsuario}" />
+
+            <h:outputLabel for="nombre" value="Nombre " style="font-weight:bold"/>
+            <p:inputText id="nombre" value="#{creaSesionIH.nombre}" required="true" label="Nombre"/>
+            <p:message for="nombre" />
+            <h:outputText value="#{creaSesionIH.nombre}" />
+
+            <h:outputLabel for="apellidoP" value="Apellido Paterno " style="font-weight:bold"/>
+            <p:inputText id="apellidoP" value="#{creaSesionIH.apellidoP}" required="true" label="ApellidoP"/>
+            <p:message for="apellidoP" />
+            <h:outputText value="#{creaSesionIH.apellidoP}" />
+
+            <h:outputLabel for="apellidoM" value="ApellidoM " style="font-weight:bold"/>
+            <p:inputText id="apellidoM" value="#{creaSesionIH.apellidoM}" required="true" label="ApellidoM"/>
+            <p:message for="apellidoM" />
+            <h:outputText value="#{creaSesionIH.apellidoM}" />
+
+            <h:outputLabel for="email1" value="Correo de Ciencias" style="font-weight:bold"/>
+            <p:inputText id="email1" value="#{creaSesionIH.email}" required="true">
+              <f:validator validatorId="crearCuenta.emailValidador" />
+            </p:inputText>
+            <p:message for="email1" display="tooltip" />
+            <h:outputText value="#{creaSesionIH.email}" />
+
+            <h:outputLabel for="pwd1" value="Contraseña " style="font-weight:bold"/>
+            <p:password id="pwd1" value="#{creaSesionIH.password}" match="pwd2" label="Password 1" required="true" feedback="true" />
+
+            <h:outputLabel for="pwd2" value="Repetir la contraseña " style="font-weight:bold"/>
+            <p:password id="pwd2" value="#{creaSesionIH.password}" label="Password 2" required="true" />
+        </h:panelGrid>
+          <br/>
+      <p:commandButton value="Crear Cuenta" action="#{creaSesionIH.creaCuenta}" ajax="false" icon="ui-icon-check" validateClient="true"/>
+  </p:panel>
+</h:form>
+
+    </h:body>
+</html>
