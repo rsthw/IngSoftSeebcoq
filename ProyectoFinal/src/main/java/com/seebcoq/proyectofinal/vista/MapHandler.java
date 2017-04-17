@@ -130,7 +130,7 @@ public class MapHandler {
         p.setLatitud(lat);
         p.setLongitud(lng);
         //Ruta donde se guardará la imagen y ruta ue se guardará en la BD
-        Path folder = Paths.get("/home/Ulises/GitHub/IngSoftSeebcoq/ProyectoFinal/src/main/resources");
+        Path folder = Paths.get("/home/slf/Documents/Maven/ComidaCiencias/ProyectoFinal/src/main/resources");
         String filename = FilenameUtils.getBaseName(imagen.getFileName());
         String extension = FilenameUtils.getExtension(imagen.getFileName());
         Path file = Files.createTempFile(folder, filename + "-", "." + extension);
@@ -138,20 +138,6 @@ public class MapHandler {
         Files.copy(input, file, StandardCopyOption.REPLACE_EXISTING);
         p.setImagen(file.toString());
         puestoCtrl.agregaPuesto(p);
-    }
-
-
-    public MapModel getAdvancedModel() {
-        return advancedModel;
-    }
-
-    public void onMarkerSelect(OverlaySelectEvent event) {
-        marker = (Marker) event.getOverlay();
-        System.out.println(marker.getTitle());
-    }
-
-    public Marker getMarker() {
-        return marker;
     }
 
     public void addMarker() {

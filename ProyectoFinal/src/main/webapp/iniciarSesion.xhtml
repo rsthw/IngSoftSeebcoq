@@ -12,7 +12,7 @@
             <p:growl id="msg" showDetail="true" life="3000" />
             <p:panel header="Login" style="width: 360px;">
 
-                <h:panelGrid id="loginPanel" columns="2">
+                <h:panelGrid id="loginPanel" columns="2" >
 
                     <h:outputText value="Correo" />
 
@@ -29,11 +29,13 @@
                     <p:spacer></p:spacer>
 
                     <p:message for="password"></p:message>
-
                     <p:spacer></p:spacer>
+                    
+                    
+                        <p:commandButton action="#{iniciarSesionIH.iniciarSesion}" value="Login" update="loginForm" ajax="false"/>
 
-                    <p:commandButton action="#{iniciarSesionIH.iniciarSesion}" value="Login" update="loginForm" ajax="false"></p:commandButton>
-
+                        <p:commandButton action="index.xhtml?faces-redirect=true" value="Cancelar" ajax="false"/>
+                        
                 </h:panelGrid>
 
             </p:panel>

@@ -45,8 +45,10 @@ public class PuestoIH implements Serializable {
     @PostConstruct
     public void init() {
         puestoCtrl = new ControladorPuesto();
-        puesto = puestoCtrl.buscarPuesto(id);
-        comentarios = puestoCtrl.buscarComentarios(puesto);
+        if(id != null){
+            puesto = puestoCtrl.buscarPuesto(id);
+            comentarios = puestoCtrl.buscarComentarios(puesto);
+        }
     }
     
     public List<Comentario> getComentarios(){
@@ -73,9 +75,6 @@ public class PuestoIH implements Serializable {
     public void eliminarComentario(Comentario com){
         puestoCtrl.eliminarComentario(com);
         comentarios.remove(com);
-    }
-    public List<Puesto> getPuestos(){
-        return puestoCtrl.buscarPuestos();
     }
     
     /**

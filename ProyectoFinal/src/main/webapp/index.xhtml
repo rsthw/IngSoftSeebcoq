@@ -12,6 +12,16 @@
         <p:growl id="messages" showDetail="true" />
         <h:form id = "menu">
             <p:menubar>
+                
+                <f:facet name="options">
+                    <p:commandButton value="Lista de Puestos" 
+                                     action="DespliegaPuestos.xhtml?faces-redirect=true" 
+                                     rendered="#{iniciarSesionIH.valid eq 2}"/>
+                    <p:commandButton value="Agrega un Puesto" 
+                                     action="AgregaPuesto.xhtml?faces-redirect=true" 
+                                     rendered="#{iniciarSesionIH.valid eq 2}"/>
+                </f:facet>
+                
                 <f:facet name="options" >
                     <h:outputText value="Bienvenido, "
                                   rendered="#{not empty iniciarSesionIH.valid}" />
@@ -63,13 +73,6 @@
         
         <h:outputLabel for="nombre" value="#{IniciarSesionIH.sesionIniciada}" />
         <script src="mapHandler.js"></script>
-        
-
-        <a href="DespliegaPuestos.xhtml"> Muestra Puestos</a>
-        <p>
-            <a href="AgregaPuesto.xhtml"> Caso De Uso Agrega Puesto</a>
-        </p>
-        <a href="ManejaPuestos.xhtml"> Puesto ejemplo </a>
 
     </h:body>
 </html>
