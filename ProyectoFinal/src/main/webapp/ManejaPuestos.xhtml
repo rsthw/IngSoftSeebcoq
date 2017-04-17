@@ -43,14 +43,16 @@
             </h:panelGrid>
 
             <h:inputHidden id="lat" value="#{mapHandler.lat}" />
+            <h:outputText value="#{mapHandler.lat}" />
             <h:inputHidden id="lng" value="#{mapHandler.lng}" />
+            <h:outputText value="#{mapHandler.lng}" />
           </h:form>
       </p:dialog>
       <script src="mapHandler.js"></script>
       
       
         <h:form>
-            <p:dataScroller value="#{PuestoIH.puestos}" var="psto" chunkSize="10">
+            <p:dataScroller value="#{PuestoIH.comentarios}" var="psto" chunkSize="10">
                 <f:facet name="header">
                     Lista de puestos
                 </f:facet>
@@ -63,8 +65,7 @@
                     <p:outputPanel>
                         <h:panelGrid columns="2" cellpadding="5">
                             <h:outputText value ="Nombre: "/>
-                            <h:outputText value="#{psto.nombre}"\>
-                            
+                            <h:outputText value="#{psto.nombre}"/>
                             <!-- aquí va algún botón que edite éste bojeto puesto-->
                         </h:panelGrid>
                     </p:outputPanel>

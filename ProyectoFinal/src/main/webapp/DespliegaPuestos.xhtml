@@ -2,36 +2,97 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <title>Puestos</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </h:head>
-    <h:body>
-        <h:outputText value="#{puestoIH.nombre}" />java serve
-        
-        <h:form> 
-            <p:dataScroller value="#{puestoIH.comentarios}" var="com" chunkSize="10">
-                <f:facet name="header">
-                    Comentarios
-                </f:facet>
+      xmlns:p="http://primefaces.org/ui" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <f:view contentType="text/html">
+        <h:head>
+            <title>Puestos</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        </h:head>
 
-                <f:facet name="loader">
-                    <p:commandButton type="button" value="More" icon="ui-icon-circle-triangle-s"/>
-                </f:facet>
+        <h:body>
 
-                <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
-                    <p:outputPanel>
-                        <h:panelGrid columns="2" cellpadding="5">
-                            <h:outputText value ="Usuario:"/>
-                            <h:outputText value ="#{com.idPersona.nombreDeUsuario}"/>
-                            <h:outputText value="Comentario:" />
-                            <h:outputText value="#{com.comentario}" style="font-weight: bold"/>
+            <p:layout fullPage="true">
+
+                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                    Header
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
+                    Footer
+                </p:layoutUnit>
+                
+                <p:layoutUnit position="west" size="500" header="Puestos" collapsible="false">
+                    <p:dataScroller value="#{puestoIH.puestos}" var="psto" chunkSize="10">
+                        <f:facet name="loader">
+                            <p:commandButton type="button" value="Más" icon="ui-icon-circle-triangle-s"/>
+                        </f:facet>
+                        
+                        <h:panelGrid columns="1" style="width:100%" columnClasses="logo,detail">
+                            <p:outputPanel>
+                                <h:panelGrid columns="6" cellpadding="5">
+                                    <h:outputText value ="Nombre :" style="font-weight:bold" />
+                                    <h:outputText value ="#{psto.nombre}"/>
+                                    <h:outputText value ="#{psto.imagen}"/>
+                                    <h:outputText value ="#{psto.latitud}"/>
+                                    <h:outputText value ="#{psto.longitud}"/>
+                                    <p:commandButton value="¡Edita!" type="button" onclick="PF('dlg1').show();" /> 
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </h:panelGrid>                        
+                    </p:dataScroller>
+                </p:layoutUnit>
+                
+                <p:layoutUnit position="center" header="Nada">
+                    Nada
+                </p:layoutUnit>
+
+                <p:layoutUnit position="east" header="Acciones">
+                    <h:panelGrid columns="1" cellpadding="5">
+                        <p:commandButton value="¡Agrega Nuevo Puesto!" type="button" onclick="PF('dlg').show();" /> 
+                    </h:panelGrid>
+                    
+                    <p:dialog header="Datos del nuevo puesto" widgetVar="dlg" showEffect="explode" hideEffect="bounce" height="400" width="400">
+                        
+                        <h:panelGrid columns="2" cellpadding="5">                           
+                            <h:outputText value ="Nombre :" style="font-weight:bold" />
+                          
+                          <p:inputText id="nombre"/> 
+                          
+                            
+                            <h:outputText value ="Latitud :" style="font-weight:bold" />
+                             <p:inputText id="lat"/>
+                            
+                            <h:outputText value ="Longitud :" style="font-weight:bold" />
+                            
+                            <p:inputText id="lng"/> 
+                            
+                            <p:commandButton value="Submit" type="button" update="display" icon="ui-icon-check"
+                                             action="#{PuestoIH.AddPuesto(nombre, lat, lng)}" />
                         </h:panelGrid>
-                    </p:outputPanel>
-                </h:panelGrid>
-            </p:dataScroller>
-        </h:form>
-        
-    </h:body>
+                        
+                        Hola Papu
+                    </p:dialog>
+                    
+                    
+                    
+                    
+                    <p:dialog header="Effects" widgetVar="dlg1" showEffect="bounce" hideEffect="explode" height="500" width="500">
+                        <h:panelGrid columns="2" cellpadding="5">
+                                    <h:outputText value ="Nombre :" style="font-weight:bold" />
+                                    <h:outputText value ="#{psto.nombre}"/>
+                                    <h:outputText value ="Calificacion :" style="font-weight:bold" />
+                                    <h:outputText value ="#{psto.calificacion}"/>
+                                    <h:outputText value ="NID :" style="font-weight:bold" />
+                                    <h:outputText value ="#{psto.idPuesto}"/>
+                        </h:panelGrid>
+                        <p:commandButton value="¡Chunquerto!" type="button" onclick="PF('dlg').show();" /> 
+                    </p:dialog>
+                    
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:body>
+
+    </f:view>
 </html>

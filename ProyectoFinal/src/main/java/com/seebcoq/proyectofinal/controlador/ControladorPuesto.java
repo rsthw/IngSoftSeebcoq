@@ -7,6 +7,7 @@ package com.seebcoq.proyectofinal.controlador;
 import com.seebcoq.proyectofinal.modelo.Comentario;
 import com.seebcoq.proyectofinal.modelo.Puesto;
 import com.seebcoq.proyectofinal.modelo.Persona;
+import com.seebcoq.proyectofinal.modelo.jpaControllers.PuestoJpaController;
 import java.util.List;
 import javax.persistence.Persistence;
 import javax.persistence.EntityManagerFactory;
@@ -52,5 +53,10 @@ public class ControladorPuesto {
         } catch(Exception e){
             e.printStackTrace();
         }
+    }
+    
+    public void agregaPuesto(Puesto puesto){
+        PuestoJpaController pjc = new PuestoJpaController(emf);
+        pjc.create(puesto);
     }
 }
