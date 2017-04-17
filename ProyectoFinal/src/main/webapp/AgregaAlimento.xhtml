@@ -28,7 +28,7 @@ and open the template in the editor.
                 </p:layoutUnit>
                 
                 <p:layoutUnit position="center" size="500" header="Puestos" collapsible="false">
-                    <p:dataScroller value="#{creaPlatilloIH.puestos}" var="psto" chunkSize="10">
+                    <p:dataScroller value="#{puestoIH.puestos}" var="psto" chunkSize="10">
                         <f:facet name="loader">
                             <p:commandButton type="button" value="Más" icon="ui-icon-circle-triangle-s"/>
                         </f:facet>
@@ -48,7 +48,7 @@ and open the template in the editor.
                         <h:panelGrid columns="2" cellpadding="5">
                             <h:outputLabel for="nombrePlatillo" value="Nombre del Platillo:  " style="font-weight:bold"/>
                             <p:inputText id="nombrePlatillo" value="#{creaPlatilloIH.nombre}" required="true" label="NombrePlatillo"/>
-                            <p:commandButton value="Agregar" type="button" update="display" icon="ui-icon-check"
+                            <p:commandButton value="Agregar" type="button" update="display" icon="ui-icon-check" onclick="PF('dlg').hide();"
                                              action="#{creaPlatilloIH.agregaPlatillo(psto)}" />
                         </h:panelGrid>
                     </p:dialog>
