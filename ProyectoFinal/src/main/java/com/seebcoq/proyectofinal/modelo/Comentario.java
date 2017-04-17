@@ -63,6 +63,12 @@ public class Comentario implements Serializable {
         this.idComentario = idComentario;
         this.comentario = comentario;
     }
+    
+    public Comentario(Puesto idPuesto, Persona idPersona, String comentario){
+        this.idPuesto= idPuesto;
+        this.idPersona = idPersona;
+        this.comentario = comentario;
+    }
 
     public Long getIdComentario() {
         return idComentario;

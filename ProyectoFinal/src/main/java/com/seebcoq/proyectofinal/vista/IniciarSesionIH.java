@@ -23,7 +23,12 @@ public class IniciarSesionIH implements Serializable {
     private String password;
     
     private Integer valid;
+    private Boolean esAdmin;
     
+    public Boolean getEsAdmin(){
+        return esAdmin;
+    }
+
     public void setValid(Integer valid) {
         this.valid = valid;
     }
@@ -31,7 +36,6 @@ public class IniciarSesionIH implements Serializable {
         return valid;
     }
 
-    
     public String getUsuario(){
         return persona.getNombreDeUsuario();
     }
@@ -61,6 +65,7 @@ public class IniciarSesionIH implements Serializable {
             estado = 0;
         } else{
             boolean admin = persona.getEsAdministrador();
+            UtilidadesSesion.getSession().setAttribute("persona_usuario", persona);
             if(admin) estado = 2;
             else estado = 1;
         }
@@ -76,11 +81,13 @@ public class IniciarSesionIH implements Serializable {
                 session = UtilidadesSesion.getSession();
                 session.setAttribute("correo", correo);
                 valor = "user";
+                esAdmin = false;
                 break;
             case 2: // admin
                 session = UtilidadesSesion.getSession();
                 session.setAttribute("correo", correo);
                 valor = "admin";
+                esAdmin = true;
                 break;
             default: // error
                 FacesContext.getCurrentInstance().addMessage(null,
@@ -88,6 +95,7 @@ public class IniciarSesionIH implements Serializable {
                                 "Correo o contrasenia incorrectos.",
                                 "Por favor, intente nuevamente."));
                 valor = "error";
+                esAdmin = false;
         }
         return "index.xhtml?faces-redirect=true";
 }
@@ -95,8 +103,10 @@ public class IniciarSesionIH implements Serializable {
     public String cerrarSesion() {
         HttpSession session = UtilidadesSesion.getSession();
         session.removeAttribute("correo");
+        session.removeAttribute("persona_usuario");
         persona = null;
         valid = null;
+        esAdmin = false;
         return "logout";
     }
 }

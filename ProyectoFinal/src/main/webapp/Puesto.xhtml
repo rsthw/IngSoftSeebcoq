@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
     <h:head>
         <title>Puesto</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -10,20 +11,60 @@
     <h:body>
         <p:growl id="messages" showDetail="true" />
         
+        <h:form id = "menu">
+            <p:menubar>
+                    <f:facet name="options">
+                        <p:commandButton value="Mapa" 
+                                         action="index.xhtml?faces-redirect=true" />
+                    </f:facet>
+                    <f:facet name="options" >
+                        <h:outputText value="Bienvenido, "
+                                      rendered="#{not empty iniciarSesionIH.valid}" />
+                        <h:outputText value="#{iniciarSesionIH.usuario}"
+                                      rendered="#{not empty iniciarSesionIH.valid}" />
+                        <h:outputText value="   "
+                                      rendered="#{not empty iniciarSesionIH.valid}" />
+                        <p:commandButton value="Cerrar Sesión" 
+                                         action="#{iniciarSesionIH.cerrarSesion}" 
+                                         rendered="#{not empty iniciarSesionIH.valid}" 
+                                         onclick = "$( #menu ).load( index.xhtml #menu );"/>
+                    </f:facet>
+                    <f:facet name="options">
+                        <p:commandButton type="submit" 
+                                         value="Crear Nuevo Usuario" 
+                                         ajax = "false" 
+                                         action="crearCuenta.xhtml?faces-redirect=true"
+                                         rendered="#{empty iniciarSesionIH.valid}"/>
+                        <p:commandButton type="submit" 
+                                         value="Iniciar Sesión" 
+                                         ajax = "false" 
+                                         action="iniciarSesion.xhtml?faces-redirect=true"
+                                         rendered="#{empty iniciarSesionIH.valid}"/>
+                    </f:facet>
+            </p:menubar>
+         </h:form>
         <h:outputText value="#{puestoIH.nombre}" />
-        
-        <h:form>
-                <h3>Comentarios:</h3>
-                <p:inputTextarea rows="5" cols="30" counter="display" maxlength="255" counterTemplate="{0} characters remaining." autoResize="false" 
-                                 />
-                <h:outputText id="display" />
-                
+        <h:form id="comentarioInput">
+            
+            <h:panelGrid id="grid" columns="2" cellpadding="5">
+                <p:inputTextarea maxlength="255" 
+                                 autoResize="true" 
+                                 id="comentario" 
+                                 value="#{puestoIH.comentario}" 
+                                 required="true" label="Comentario"/>
+                <p:commandButton value="Enviar" 
+                             id="botonEnviar"
+                             action="#{puestoIH.guardarComentario}" 
+                             icon="ui-icon-check" 
+                             validateClient="true" 
+                             onclick="$( #comentarios ).load( index.xhtml #comentarios);$( #comentario).load( index.xhtml #comentario );" 
+                             disabled="#{empty iniciarSesionIH.valid}" />
+            </h:panelGrid>
+            
         </h:form>
-        <h:form> 
+        
+        <h:form id="comentarios">
             <p:dataScroller value="#{puestoIH.comentarios}" var="com" chunkSize="10" >
-                <f:facet name="header">
-                    Comentarios
-                </f:facet>
 
                 <f:facet name="loader">
                     <p:commandButton type="button" value="More" icon="ui-icon-circle-triangle-s"/>
@@ -36,6 +77,9 @@
                             <h:outputText value ="#{com.idPersona.nombreDeUsuario}"/>
                             <h:outputText value="Comentario:" />
                             <h:outputText value="#{com.comentario}" style="font-weight: bold"/>
+                            <p:commandButton action="#{puestoIH.eliminarComentario(com)}" value="Eliminar" 
+                                             rendered="#{iniciarSesionIH.valid eq 2}"
+                                             onclick="$( #comentarios ).load( index.xhtml #comentarios);"/>
                         </h:panelGrid>
                     </p:outputPanel>
                 </h:panelGrid>
