@@ -36,11 +36,11 @@ public class PuestoIH implements Serializable {
     private String imagen;
     private Integer rating1;
 
-         
+
     //Double r = puestoCtrl.buscarCalificacion(puesto);
     //private Integer rating4 =r.intValue();
     private Integer rating4;
-    
+
     public PuestoIH(){
         HttpSession hs = UtilidadesSesion.getSession();
         id = (Long) hs.getAttribute("puestoId");
@@ -70,7 +70,7 @@ public class PuestoIH implements Serializable {
     public List<Puesto> getPuestos(){
         return puestoCtrl.buscarPuestos();
     }
-    
+
     public String getNombre(){
         return puesto.getNombre();
     }
@@ -116,10 +116,13 @@ public class PuestoIH implements Serializable {
         return puestoCtrl.buscarCalificaciones(puesto);
     }
 
-    
+
 
     public Double getCalificacion(){
-       Double r = puestoCtrl.buscarCalificacion(puesto);
+       double r = puestoCtrl.buscarCalificacion(puesto);
+            r = r*10;
+            r = Math.round(r);
+            r = r /10;
         return r;
     }
 
@@ -129,6 +132,11 @@ public class PuestoIH implements Serializable {
 
     public String getImagen(){
        String i = puestoCtrl.buscarImagen(puesto);
+       if(i == null){
+           return "http://localhost:8080/ProyectoFinal/resources/images/fast-food.jpg";
+       }
+       int x = i.indexOf("resources");
+       i = "http://localhost:8080/ProyectoFinal/"+i.substring(x);
         return i;
     }
 
@@ -160,7 +168,12 @@ public void setRating1(Integer rating1) {
     public Integer getRating4() {
         System.out.println("hagoalgo");
         Double r = puestoCtrl.buscarCalificacion(puesto);
+         if(r==null){
+
+           return 0;
+       }
     rating4 =r.intValue();
+
         return rating4;
     }
 
