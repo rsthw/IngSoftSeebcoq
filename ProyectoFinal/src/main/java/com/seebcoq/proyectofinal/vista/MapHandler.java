@@ -129,8 +129,9 @@ public class MapHandler {
         p.setNombre(nombre);
         p.setLatitud(lat);
         p.setLongitud(lng);
+        p.setCalificacion(0.0);
         //Ruta donde se guardará la imagen y ruta ue se guardará en la BD
-        Path folder = Paths.get("/home/slf/Documents/Maven/ComidaCiencias/ProyectoFinal/src/main/resources");
+        Path folder = Paths.get("/home/valeria/NetBeansProjects/ProyectoFinal/src/main/webapp/resources/images");
         String filename = FilenameUtils.getBaseName(imagen.getFileName());
         String extension = FilenameUtils.getExtension(imagen.getFileName());
         Path file = Files.createTempFile(folder, filename + "-", "." + extension);
