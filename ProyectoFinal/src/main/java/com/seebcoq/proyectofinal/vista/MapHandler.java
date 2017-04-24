@@ -152,6 +152,7 @@ public class MapHandler {
         p.setNombre(nombre);
         p.setLatitud(lat);
         p.setLongitud(lng);
+        p.setCalificacion(0.0);
         //Ruta donde se guardará la imagen y ruta ue se guardará en la BD
         Path folder = Paths.get("/home/slf/Documents/Maven/IngSoftSeebcoq/ProyectoFinal/src/main/webapp/resources/images");
         String filename = FilenameUtils.getBaseName(imagen.getFileName());
