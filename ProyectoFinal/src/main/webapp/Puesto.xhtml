@@ -9,7 +9,7 @@ and open the template in the editor.
       xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwJznevf6eTmR8HzMtXkrurOkthth1G1s"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwJznevf6eTmR8HzMtXkrurOkthth1G1s"></script>
         <title>Fast Food</title>
         <link rel="stylesheet" type="text/css" href="css/829.css" />
     </h:head>
@@ -17,36 +17,36 @@ and open the template in the editor.
         <div id="wrapper">
             <div id="header">
                 <h:form id ="menu">
-                <p:growl id="messages" showDetail="true" />
-                 <p:menubar>
-                  <f:facet name="options" >
-                  <h:outputText value="Bienvenido, "
-                                rendered="#{not empty iniciarSesionIH.valid}" />
-                  <h:outputText value="#{iniciarSesionIH.usuario}"
-                                rendered="#{not empty iniciarSesionIH.valid}" />
-                  <h:outputText value="   "
-                                rendered="#{not empty iniciarSesionIH.valid}" />
-                  <p:commandButton value="Mapa" 
-                                                 action="index.xhtml?faces-redirect=true" />
-                  <p:commandButton value="Cerrar Sesión"
-                                   action="#{iniciarSesionIH.cerrarSesion}"
-                                   rendered="#{not empty iniciarSesionIH.valid}"
-                                   onclick = "$( #menu ).load( index.xhtml #menu );"/>
-                  
-              </f:facet>
-              <f:facet name="options">
-                  <p:commandButton type="submit"
-                                   value="Crear Nuevo Usuario"
-                                   ajax = "false"
-                                   action="crearCuenta.xhtml?faces-redirect=true"
-                                   rendered="#{empty iniciarSesionIH.valid}"/>
-                  <p:commandButton type="submit"
-                                   value="Iniciar Sesión"
-                                   ajax = "false"
-                                   action="iniciarSesion.xhtml?faces-redirect=true"
-                                   rendered="#{empty iniciarSesionIH.valid}"/>
-              </f:facet>
-      </p:menubar>
+                    <p:growl id="messages" showDetail="true" />
+                    <p:menubar>
+                        <f:facet name="options" >
+                            <h:outputText value="Bienvenido, "
+                                          rendered="#{not empty iniciarSesionIH.valid}" />
+                            <h:outputText value="#{iniciarSesionIH.usuario}"
+                                          rendered="#{not empty iniciarSesionIH.valid}" />
+                            <h:outputText value="   "
+                                          rendered="#{not empty iniciarSesionIH.valid}" />
+                            <p:commandButton value="Mapa" 
+                                             action="index.xhtml?faces-redirect=true" />
+                            <p:commandButton value="Cerrar Sesión"
+                                             action="#{iniciarSesionIH.cerrarSesion}"
+                                             rendered="#{not empty iniciarSesionIH.valid}"
+                                             onclick = "$(#menu).load(index.xhtml #menu);"/>
+
+                        </f:facet>
+                        <f:facet name="options">
+                            <p:commandButton type="submit"
+                                             value="Crear Nuevo Usuario"
+                                             ajax = "false"
+                                             action="crearCuenta.xhtml?faces-redirect=true"
+                                             rendered="#{empty iniciarSesionIH.valid}"/>
+                            <p:commandButton type="submit"
+                                             value="Iniciar Sesión"
+                                             ajax = "false"
+                                             action="iniciarSesion.xhtml?faces-redirect=true"
+                                             rendered="#{empty iniciarSesionIH.valid}"/>
+                        </f:facet>
+                    </p:menubar>
                 </h:form>
 
             </div>
@@ -57,109 +57,109 @@ and open the template in the editor.
 
             <div id="content">
                 <div id ="izq">
-                                       <span class="titulo">  <h:outputText value="#{puestoIH.nombre}" /></span>
+                    <span class="titulo">  <h:outputText value="#{puestoIH.nombre}" /></span>
 
 
                     <div id ="fotos" >
                         <h:form>
-                      <p:lightBox styleClass="imagebox" id="lighbox1">
-  <h:outputLink value="#{puestoIH.imagen}" title="#{puestoIH.nombre}">
-      <h:graphicImage  value="#{puestoIH.imagen}" id="chilaquiles1" style="width: 200px" />
-  </h:outputLink>
-                      </p:lightBox></h:form>
+                            <p:lightBox styleClass="imagebox" id="lighbox1">
+                                <h:outputLink value="#{puestoIH.imagen}" title="#{puestoIH.nombre}">
+                                    <h:graphicImage  value="#{puestoIH.imagen}" id="chilaquiles1" style="width: 200px" />
+                                </h:outputLink>
+                            </p:lightBox></h:form>
                     </div>
 
                     <span class="titulo2">¡Califica este puesto!</span> <br></br>
                     <h:form>
                         <p:growl id="messages" showDetail="true" />
-                          
-                        <h:panelGrid columns="2" cellpadding="5">
-                                                        <p:rating value="#{puestoIH.rating1}" >
-                             <p:ajax event="rate" listener="#{puestoIH.calificar}" disabled="#{empty iniciarSesionIH.valid}"/>
 
-                    </p:rating>
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <p:rating value="#{puestoIH.rating1}" >
+                                <p:ajax event="rate" listener="#{puestoIH.calificar}" disabled="#{empty iniciarSesionIH.valid}"/>
+
+                            </p:rating>
                         </h:panelGrid>
-                         <p:commandButton value="Calificar" update="display" oncomplete="PF('dlg').show()" style="margin:5px"  disabled="#{empty iniciarSesionIH.valid}" />
-                             <p:dialog header="Gracias" widgetVar="dlg" showEffect="fade" hideEffect="fade">
-        <h:panelGrid id="display" columns="2" cellpadding="5">
-            <h:outputText value="Calificaste este puesto con:" />
-            <h:outputText value="#{puestoIH.rating1}" />
-        </h:panelGrid>
-    </p:dialog>
+                        <p:commandButton value="Calificar" update="display" oncomplete="PF('dlg').show()" style="margin:5px"  disabled="#{empty iniciarSesionIH.valid}" />
+                        <p:dialog header="Gracias" widgetVar="dlg" showEffect="fade" hideEffect="fade">
+                            <h:panelGrid id="display" columns="2" cellpadding="5">
+                                <h:outputText value="Calificaste este puesto con:" />
+                                <h:outputText value="#{puestoIH.rating1}" />
+                            </h:panelGrid>
+                        </p:dialog>
 
                     </h:form>
 
 
 
-                    
+
                     <p>
                         <span class="titulo2">Opiniones</span> <br></br>
-                       <h:form id="comentarioInput">
-            
-            <h:panelGrid id="grid" columns="2" cellpadding="5">
-                <p:inputTextarea maxlength="255" 
-                                 autoResize="true" 
-                                 id="comentario" 
-                                 value="#{puestoIH.comentario}" 
-                                 required="true" label="Comentario"/>
-                <p:commandButton value="Enviar" 
-                             id="botonEnviar"
-                             action="#{puestoIH.guardarComentario}" 
-                             icon="ui-icon-check" 
-                             validateClient="true" 
-                             onclick="$( #comentarios ).load( index.xhtml #comentarios);$( #comentario).load( index.xhtml #comentario );" 
-                             disabled="#{empty iniciarSesionIH.valid}" />
-            </h:panelGrid>
-            
-        </h:form>
+                        <h:form id="comentarioInput">
+
+                            <h:panelGrid id="grid" columns="2" cellpadding="5">
+                                <p:inputTextarea maxlength="255" 
+                                                 autoResize="true" 
+                                                 id="comentario" 
+                                                 value="#{puestoIH.comentario}" 
+                                                 required="true" label="Comentario"/>
+                                <p:commandButton value="Enviar" 
+                                                 id="botonEnviar"
+                                                 action="#{puestoIH.guardarComentario}" 
+                                                 icon="ui-icon-check" 
+                                                 validateClient="true" 
+                                                 onclick="$(#comentarios).load(index.xhtml #comentarios); $(#comentario).load(index.xhtml #comentario);" 
+                                                 disabled="#{empty iniciarSesionIH.valid}" />
+                            </h:panelGrid>
+
+                        </h:form>
 
                         <h:form id="comentarios">
-      <p:dataScroller value="#{puestoIH.comentarios}" var="com" chunkSize="10" >
+                            <p:dataScroller value="#{puestoIH.comentarios}" var="com" chunkSize="10" >
 
-          <f:facet name="loader">
-              <p:commandButton type="button" value="More" icon="ui-icon-circle-triangle-s"/>
-          </f:facet>
+                                <f:facet name="loader">
+                                    <p:commandButton type="button" value="More" icon="ui-icon-circle-triangle-s"/>
+                                </f:facet>
 
-          <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
-              <p:outputPanel>
-                  <h:panelGrid columns="2" cellpadding="5">
-                      <h:outputText value ="Usuario:"/>
-                      <h:outputText value ="#{com.idPersona.nombreDeUsuario}"/>
-                      <h:outputText value="Comentario:" />
-                      <h:outputText value="#{com.comentario}" style="font-weight: bold"/>
-                      <p:commandButton action="#{puestoIH.eliminarComentario(com)}" value="Eliminar"
-                                       rendered="#{iniciarSesionIH.valid eq 2}"
-                                       onclick="$( #comentarios ).load( index.xhtml #comentarios);"/>
-                  </h:panelGrid>
-              </p:outputPanel>
-          </h:panelGrid>
-      </p:dataScroller>
-  </h:form>
-<!--
-                                <h:form>
-                                    <p:dataScroller value="{puestoIH.calificaciones}" var="com" chunkSize="10">
-                                        <f:facet name="header">
-                                            calificaciones
-                                        </f:facet>
-
-                                        <f:facet name="loader">
-                                            <p:commandButton type="button" value="More" icon="ui-icon-circle-triangle-s"/>
-                                        </f:facet>
-
-                                        <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
-                                            <p:outputPanel>
-                                                <h:panelGrid columns="2" cellpadding="5">
-                                                    <h:outputText value ="Usuario:"/>
-                                                    <h:outputText value ="{com.idPersona.apPaterno}"/>
-                                                    <h:outputText value="Calificacion:" />
-                                                    <h:outputText value="{com.calificacion}" style="font-weight: bold"/>
-                                                </h:panelGrid>
-                                            </p:outputPanel>
+                                <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
+                                    <p:outputPanel>
+                                        <h:panelGrid columns="2" cellpadding="5">
+                                            <h:outputText value ="Usuario:"/>
+                                            <h:outputText value ="#{com.idPersona.nombreDeUsuario}"/>
+                                            <h:outputText value="Comentario:" />
+                                            <h:outputText value="#{com.comentario}" style="font-weight: bold"/>
+                                            <p:commandButton action="#{puestoIH.eliminarComentario(com)}" value="Eliminar"
+                                                             rendered="#{iniciarSesionIH.valid eq 2}"
+                                                             onclick="$(#comentarios).load(index.xhtml #comentarios);"/>
                                         </h:panelGrid>
-                                    </p:dataScroller>
-                                </h:form>
-
--->
+                                    </p:outputPanel>
+                                </h:panelGrid>
+                            </p:dataScroller>
+                        </h:form>
+                        <!--
+                                                        <h:form>
+                                                            <p:dataScroller value="{puestoIH.calificaciones}" var="com" chunkSize="10">
+                                                                <f:facet name="header">
+                                                                    calificaciones
+                                                                </f:facet>
+                        
+                                                                <f:facet name="loader">
+                                                                    <p:commandButton type="button" value="More" icon="ui-icon-circle-triangle-s"/>
+                                                                </f:facet>
+                        
+                                                                <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
+                                                                    <p:outputPanel>
+                                                                        <h:panelGrid columns="2" cellpadding="5">
+                                                                            <h:outputText value ="Usuario:"/>
+                                                                            <h:outputText value ="{com.idPersona.apPaterno}"/>
+                                                                            <h:outputText value="Calificacion:" />
+                                                                            <h:outputText value="{com.calificacion}" style="font-weight: bold"/>
+                                                                        </h:panelGrid>
+                                                                    </p:outputPanel>
+                                                                </h:panelGrid>
+                                                            </p:dataScroller>
+                                                        </h:form>
+                        
+                        -->
 
                     </p>
                 </div>
@@ -167,71 +167,71 @@ and open the template in the editor.
                 <div id ="der">
                     <span class="titulo2">Localización:</span> <br></br>
                     <h:form>
-                    <p:growl id="messages" showDetail="true" />
-                    <p:gmap id="gmap" center="19.324328359583355,-99.17934268712997" zoom="20"
-                            type="TERRAIN" model="#{mapHandler.advancedModel}"
-                            style="width:100%;height:400px" onPointClick="handlePointClick(event);"
-                            widgetVar="map">
+                        <p:growl id="messages" showDetail="true" />
+                        <p:gmap id="gmap" center="19.324328359583355,-99.17934268712997" zoom="20"
+                                type="TERRAIN" model="#{mapHandler.advancedModel}"
+                                style="width:100%;height:400px" onPointClick="handlePointClick(event);"
+                                widgetVar="map">
 
 
 
 
-                    </p:gmap>
+                        </p:gmap>
 
 
 
 
 
-                    <span class="titulo2"> Rating:</span> <br></br>
+                        <span class="titulo2"> Rating:</span> <br></br>
 
-                    
+
                     </h:form>
-<br></br>
+                    <br></br>
                     <span class="titulo2">Menu:</span> <br></br>
 
-                      <h:form>
-                          <p:dataScroller value="#{puestoIH.menu}" var="com" chunkSize="10">
+                    <h:form>
+                        <p:dataScroller value="#{puestoIH.menu}" var="com" chunkSize="10">
 
 
-                              <f:facet name="loader">
-                                  <p:commandButton type="button" value="More" icon="ui-icon-circle-triangle-s"/>
-                              </f:facet>
+                            <f:facet name="loader">
+                                <p:commandButton type="button" value="More" icon="ui-icon-circle-triangle-s"/>
+                            </f:facet>
 
-                              <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
-                                  <p:outputPanel>
-                                      <h:panelGrid columns="2" cellpadding="5">
-                                          <h:outputText value ="Dia de la Semana:"/>
-                                          <h:outputText value ="#{com.diaDeLaSemana}"/>
-                                          <h:outputText value="Desayuno o Comida:" />
-                                          <h:outputText value="#{com.desayunoOComida}" style="font-weight: bold"/>
-                                      </h:panelGrid>
-                                  </p:outputPanel>
-                              </h:panelGrid>
-                          </p:dataScroller>
-                      </h:form>
-
-
-                                          <span class="titulo2">Platillos:</span> <br></br>
-
-                                            <h:form>
-                                                <p:dataScroller value="#{puestoIH.platillos}" var="com" chunkSize="10">
+                            <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
+                                <p:outputPanel>
+                                    <h:panelGrid columns="2" cellpadding="5">
+                                        <h:outputText value ="Dia de la Semana:"/>
+                                        <h:outputText value ="#{com.diaDeLaSemana}"/>
+                                        <h:outputText value="Desayuno o Comida:" />
+                                        <h:outputText value="#{com.desayunoOComida}" style="font-weight: bold"/>
+                                    </h:panelGrid>
+                                </p:outputPanel>
+                            </h:panelGrid>
+                        </p:dataScroller>
+                    </h:form>
 
 
-                                                    <f:facet name="loader">
-                                                        <p:commandButton type="button" value="More" icon="ui-icon-circle-triangle-s"/>
-                                                    </f:facet>
+                    <span class="titulo2">Platillos:</span> <br></br>
 
-                                                    <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
-                                                        <p:outputPanel>
-                                                            <h:panelGrid columns="2" cellpadding="5">
-                                                                <h:outputText value ="Platillo:"/>
-                                                                <h:outputText value ="#{com.nombre}"/>
+                    <h:form>
+                        <p:dataScroller value="#{puestoIH.platillos}" var="com" chunkSize="10">
 
-                                                            </h:panelGrid>
-                                                        </p:outputPanel>
-                                                    </h:panelGrid>
-                                                </p:dataScroller>
-                                            </h:form>
+
+                            <f:facet name="loader">
+                                <p:commandButton type="button" value="More" icon="ui-icon-circle-triangle-s"/>
+                            </f:facet>
+
+                            <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
+                                <p:outputPanel>
+                                    <h:panelGrid columns="2" cellpadding="5">
+                                        <h:outputText value ="Platillo:"/>
+                                        <h:outputText value ="#{com.nombre}"/>
+
+                                    </h:panelGrid>
+                                </p:outputPanel>
+                            </h:panelGrid>
+                        </p:dataScroller>
+                    </h:form>
 
 
 

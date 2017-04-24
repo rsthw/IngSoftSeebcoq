@@ -153,7 +153,7 @@ public class MapHandler {
         p.setLatitud(lat);
         p.setLongitud(lng);
         //Ruta donde se guardará la imagen y ruta ue se guardará en la BD
-        Path folder = Paths.get("/home/antonio/Imágenes/");
+        Path folder = Paths.get("/home/slf/Documents/Maven/IngSoftSeebcoq/ProyectoFinal/src/main/webapp/resources/images");
         String filename = FilenameUtils.getBaseName(imagen.getFileName());
         String extension = FilenameUtils.getExtension(imagen.getFileName());
         Path file = Files.createTempFile(folder, filename + "-", "." + extension);
@@ -177,7 +177,7 @@ public class MapHandler {
         puesto.setLongitud(lng);
         }
         //Ruta donde se guardará la imagen y ruta ue se guardará en la BD
-        Path folder = Paths.get("/home/antonio/Imágenes/");
+        Path folder = Paths.get("/home/slf/Documents/Maven/IngSoftSeebcoq/ProyectoFinal/src/main/webapp/resources/images");
         String filename = FilenameUtils.getBaseName(imagen.getFileName());
         String extension = FilenameUtils.getExtension(imagen.getFileName());
         Path file = Files.createTempFile(folder, filename + "-", "." + extension);
