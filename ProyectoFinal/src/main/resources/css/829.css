@@ -27,7 +27,7 @@ a {
 }
 #wrapper {
     margin: 0 auto;
-    background-color: #E7E7E7;
+    background-color: red;
     width: 100%;
 }
 
@@ -67,8 +67,12 @@ a {
 #footer {
     height: 180px;
    width: 100%;
-    background: #1C8DC6;
+    background-color: #1C8DC6;
     clear: both;
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
 }
 #footer ul{
  float: left;
@@ -173,16 +177,60 @@ font-size: 18px;
     background-position: center;
 }*/
 
-.ui-panelgrid  {
-    border: none
-    background-color: azul;
+.ui-panelgrid .ui-panelgrid-cell {
+    border: none;
 }
 
 .azul {
-  background-color: azul;
+    background-color: red;
 }
 
 /*primefaces*/
 .ui-menubar,.ui-menu-child,.ui-menu {
-    background: red;
+
+    background: #1C8DC6;
+    color: #ffffff;
+    border: none;
 }
+
+
+
+.ui-menubar .ui-button{
+   font-size:14px;
+   color: #ffffff;
+   background: #0A6999;
+   shadow: none;
+}
+
+.ui-datascroller .ui-button{
+   font-size:14px;
+   color: #ffffff;
+   background: #0A6999;
+   shadow: none;
+}
+
+.ui-datascroller {
+   font-size:14px;
+   color: #ffffff;
+   background: #0A6999;
+   shadow: none;
+}
+
+.ui-panelgrid td, .ui-panelgrid tr {
+    border: none;
+    background-color: blue;
+}
+
+.ui-pabelgrid .ui-button{
+   font-size:14px;
+   color: #ffffff;
+   background: #0A6999;
+   shadow: none;
+}
+
+table tbody .ui-widget-content {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 0 solid #FFFFFF;
+    color: #333333;
+}
+

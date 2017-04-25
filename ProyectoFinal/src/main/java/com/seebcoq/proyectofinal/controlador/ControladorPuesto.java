@@ -88,7 +88,7 @@ public class ControladorPuesto {
       List<Calificacion> calfs = buscarCalificaciones(puesto);
       for(Calificacion c: calfs){
           actual = (actual + c.getCalificacion());
-          //System.out.println(actual);
+          System.out.println(actual);
       }
       actual = (actual)/totalCalfs;
       puesto.setCalificacion(actual);

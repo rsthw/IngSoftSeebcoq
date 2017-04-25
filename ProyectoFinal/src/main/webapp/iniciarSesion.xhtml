@@ -5,13 +5,21 @@
 
       >
     <h:head>
-        <title>login</title>
+        <title>Fast Food : Login</title>
     </h:head>
     <h:body>
+    <h:outputStylesheet name="css/829.css" />
+    <div id="navigation">
+        <span class="titulo">FAST FOOD</span>
+        <i> <br></br>Encuentra la mejor comida en la Facultad de Ciencias, UNAM.</i>
+    </div>
+
+    <div id="content">
         <h:form id="loginForm">
             <p:growl id="msg" showDetail="true" life="3000" />
-            <p:panel header="Login" style="width: 360px;">
+            <p:panel header="Login" style="width: 30%; margin: 40px auto">
 
+                
                 <h:panelGrid id="loginPanel" columns="2" >
 
                     <h:outputText value="Correo" />
@@ -30,18 +38,31 @@
 
                     <p:message for="password"></p:message>
                     <p:spacer></p:spacer>
-                    
-                    
-                        <p:commandButton action="#{iniciarSesionIH.iniciarSesion}" value="Login" update="loginForm" ajax="false"/>
+
+
+                        <p:commandButton action="#{iniciarSesionIH.iniciarSesion}" styleClass="mygreen" value="Login" update="loginForm" ajax="false"/>
 
                         <p:commandButton action="index.xhtml?faces-redirect=true" value="Cancelar" ajax="false"/>
-                        
+
                 </h:panelGrid>
 
             </p:panel>
 
         </h:form>
 
-    </h:body>
+        <div id="footer">
+            <ul>
+                <li><a href="#">Sobre Fast Food </a></li>
+                <li><a href="#">Contacto </a></li>
+                <li><a href="#">Aviso de Privacidad</a></li>
+            </ul>
+            <div id="logo"><p>
+                    Creado por SéebCoq 2017 <br></br>
+                    <img src="3.png" /></p>
 
-</html>
+            </div>
+        </div>
+    </div>
+
+    </h:body>
+    </html>

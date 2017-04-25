@@ -5,7 +5,6 @@ import com.seebcoq.proyectofinal.controlador.ControladorPuesto;
 import com.seebcoq.proyectofinal.controlador.UtilidadesSesion;
 import com.seebcoq.proyectofinal.modelo.jpaControllers.PuestoJpaController;
 import com.seebcoq.proyectofinal.modelo.Puesto;
-import com.seebcoq.proyectofinal.modelo.jpaControllers.exceptions.NonexistentEntityException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,8 +15,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.model.map.DefaultMapModel;
@@ -51,34 +48,14 @@ public class MapHandler {
     private double lat;
     private double lng;
     private UploadedFile imagen;
-    private Long id;
-    private Puesto puesto;
-
-    public Puesto getPuesto() {
-        return puesto;
-    }
-
-    public void setPuesto(Puesto puesto) {
-        this.puesto = puesto;
-    }
     
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-        setPuesto(new ControladorPuesto().buscarPuesto(id));
-    }
-
-    
-    
     @PostConstruct
     public void init() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("comidaCienciasPersistentUnit");
         advancedModel = new DefaultMapModel();
         puestoCtrl = new PuestoJpaController(emf);
-        puesto=new Puesto();
+
         List<Puesto> puestos = puestoCtrl.findPuestoEntities();
         for (Puesto puesto : puestos) {
             Double latitud = puesto.getLatitud();
@@ -96,7 +73,7 @@ public class MapHandler {
     public void onMarkerSelect(OverlaySelectEvent event) {
         marker = (Marker) event.getOverlay();
         System.out.println(marker.getTitle());
-        System.out.println(marker.getData());
+        
         HttpSession hs = UtilidadesSesion.getSession();
         hs.setAttribute("puestoId", (Long)marker.getData());
     }
@@ -143,7 +120,7 @@ public class MapHandler {
     }
 
     public void agregarPuesto() throws IOException{
-        Marker marker = new Marker(new LatLng(lat, lng), nombre, puesto.getIdPuesto());
+        Marker marker = new Marker(new LatLng(lat, lng), nombre);
         //aqui se agrega a la base de datos
         advancedModel.addOverlay(marker);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Marker Added", "Lat:" + lat + ", Lng:" + lng));
@@ -154,7 +131,7 @@ public class MapHandler {
         p.setLongitud(lng);
         p.setCalificacion(0.0);
         //Ruta donde se guardará la imagen y ruta ue se guardará en la BD
-        Path folder = Paths.get("/home/slf/Documents/Maven/IngSoftSeebcoq/ProyectoFinal/src/main/webapp/resources/images");
+        Path folder = Paths.get("/home/valeria/NetBeansProjects/ProyectoFinal/src/main/webapp/resources/images");
         String filename = FilenameUtils.getBaseName(imagen.getFileName());
         String extension = FilenameUtils.getExtension(imagen.getFileName());
         Path file = Files.createTempFile(folder, filename + "-", "." + extension);
@@ -163,37 +140,6 @@ public class MapHandler {
         p.setImagen(file.toString());
         puestoCtrl.agregaPuesto(p);
     }
-    
-        public void modificaPuesto() throws IOException{
-        Marker marker = new Marker(new LatLng(lat, lng), puesto.getNombre());
-        //aqui se agrega a la base de datos
-        advancedModel.addOverlay(marker);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Marker Added", "Lat:" + lat + ", Lng:" + lng));
-          FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_WARN,
-                            "Se ha modificado el puesto "+puesto.getNombre(),
-                            "Gracias"));
-        if(lat!=0&&lng!=0){
-        puesto.setLatitud(lat);
-        puesto.setLongitud(lng);
-        }
-        //Ruta donde se guardará la imagen y ruta ue se guardará en la BD
-        Path folder = Paths.get("/home/slf/Documents/Maven/IngSoftSeebcoq/ProyectoFinal/src/main/webapp/resources/images");
-        String filename = FilenameUtils.getBaseName(imagen.getFileName());
-        String extension = FilenameUtils.getExtension(imagen.getFileName());
-        Path file = Files.createTempFile(folder, filename + "-", "." + extension);
-        InputStream input = imagen.getInputstream();
-        Files.copy(input, file, StandardCopyOption.REPLACE_EXISTING);
-        puesto.setImagen(file.toString());
-        try {
-            String i;
-            puestoCtrl.edit(puesto);
-        } catch (Exception ex) {
-            Logger.getLogger(MapHandler.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    
 
     public void addMarker() {
         Marker marker = new Marker(new LatLng(lat, lng), nombre);

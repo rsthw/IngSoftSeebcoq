@@ -9,22 +9,63 @@
           <f:facet name="first">
                 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwJznevf6eTmR8HzMtXkrurOkthth1G1s"></script>
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-                <title>Modificar Puestos</title>
+                <title>Fast Food : Modificar Puestos</title>
             </f:facet>
         
         </h:head>
 
         <h:body>
+            <h:outputStylesheet name="css/829.css" />
+ <h:form id = "menu">
+            <p:menubar>
 
+                <f:facet name="options">
+                    <p:commandButton value="Mapa"
+                                             action="index.xhtml?faces-redirect=true" />
+                    <p:commandButton value="Agrega un Puesto"
+                                     action="AgregaPuesto.xhtml?faces-redirect=true"
+                                     rendered="#{iniciarSesionIH.valid eq 2}"/>
+                </f:facet>
+
+                <f:facet name="options" >
+                    <h:outputText value="Bienvenido, "
+                                  rendered="#{not empty iniciarSesionIH.valid}" />
+                    <h:outputText value="#{iniciarSesionIH.usuario}"
+                                  rendered="#{not empty iniciarSesionIH.valid}" />
+                    <h:outputText value="   "
+                                  rendered="#{not empty iniciarSesionIH.valid}" />
+                    <p:commandButton value="Cerrar Sesión"
+                                     action="#{iniciarSesionIH.cerrarSesion}"
+                                     rendered="#{not empty iniciarSesionIH.valid}"
+                                     onclick = "$( #menu ).load( index.xhtml #menu );"/>
+                </f:facet>
+                <f:facet name="options">
+                    <p:commandButton type="submit"
+                                     value="Crear Nuevo Usuario"
+                                     ajax = "false"
+                                     action="crearCuenta.xhtml?faces-redirect=true"
+                                     rendered="#{empty iniciarSesionIH.valid}"/>
+                    <p:commandButton type="submit"
+                                     value="Iniciar Sesión"
+                                     ajax = "false"
+                                     action="iniciarSesion.xhtml?faces-redirect=true"
+                                     rendered="#{empty iniciarSesionIH.valid}"/>
+                </f:facet>
+            </p:menubar>
+         </h:form>
+         <div id="navigation">
+             <span class="titulo">FAST FOOD</span>
+             <i> <br></br>Encuentra la mejor comida en la Facultad de Ciencias, UNAM.</i>
+         </div>
+
+         <div id="content">
             
             
             <h:form id="form">
             <p:growl showDetail="true"/>   
 
-    <p:dataTable id="basicDT" style="text-align: center;" var="car" value="#{puestoIH.puestos}">
-        <f:facet name="header">
-           Modificar Puestos
-        </f:facet>
+    <p:dataTable  id="basicDT" style="text-align: center; width: 95%; margin: 0 auto;" var="car" value="#{puestoIH.puestos}">
+       
         <p:column headerText="id"  style="width:1px;text-align: center">
             <h:outputText value="#{car.idPuesto}" />
         </p:column>    
@@ -54,6 +95,7 @@
     
     
         </h:form>  
+         </div>
             
             
             
