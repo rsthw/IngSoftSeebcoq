@@ -9,83 +9,81 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <h:body>
-    <h:outputStylesheet name="css/829.css" />
-    <h:form>
-    <p:menubar>
+        <h:outputStylesheet name="css/829.css" />
+        <h:form>
+            <p:menubar>
 
                 <f:facet name="options">
                     <p:commandButton value="Mapa"
-                                             action="index.xhtml?faces-redirect=true" />
+                                     action="index.xhtml?faces-redirect=true" />
                     <p:commandButton type="submit"
-                                             value="Iniciar Sesión"
-                                             ajax = "false"
-                                             action="iniciarSesion.xhtml?faces-redirect=true"
-                                             rendered="#{empty iniciarSesionIH.valid}"/>
+                                     value="Iniciar Sesión"
+                                     ajax = "false"
+                                     action="iniciarSesion.xhtml?faces-redirect=true"
+                                     rendered="#{empty iniciarSesionIH.valid}"/>
                 </f:facet>
             </p:menubar>
-    </h:form>
-    <div id="navigation">
-        <span class="titulo">FAST FOOD</span>
-        <i> <br></br>Encuentra la mejor comida en la Facultad de Ciencias, UNAM.</i>
-    </div>
+        </h:form>
+        <div id="navigation">
+            <span class="titulo">FAST FOOD</span>
+            <i> <br></br>Encuentra la mejor comida en la Facultad de Ciencias, UNAM.</i>
+        </div>
 
-    <div id="content">
-    <h:form>
-  <p:growl showDetail="true"/>
-  <p:panel header="Crear Cuenta"  style="width: 40%; margin: 40px auto">
-        <h:panelGrid id="grid" columns="2" cellpadding="5">
-            <h:outputLabel for="nombreDeUsuario" value="Nombre de Usuario " style="font-weight:bold"/>
-            <p:inputText id="nombreDeUsuario" value="#{creaSesionIH.nombreDeUsuario}" required="true" label="NombreDeUsuario"/>
-            <p:message for="nombreDeUsuario" />
-            <h:outputText value="#{creaSesionIH.nombreDeUsuario}" />
+        <div id="content">
+            <h:form>
+                
+                <p:panel header="Crear Cuenta"  style="width: 40%; margin: 40px auto">
+                    <h:panelGrid id="grid" columns="2" cellpadding="5">
+                        <h:outputLabel for="nombreDeUsuario" value="Nombre de Usuario " style="font-weight:bold"/>
+                        <p:inputText id="nombreDeUsuario" value="#{creaSesionIH.nombreDeUsuario}" required="true" label="NombreDeUsuario"/>
+                        <p:message for="nombreDeUsuario" />
+                        <h:outputText value="#{creaSesionIH.nombreDeUsuario}" />
 
-            <h:outputLabel for="nombre" value="Nombre " style="font-weight:bold"/>
-            <p:inputText id="nombre" value="#{creaSesionIH.nombre}" required="true" label="Nombre"/>
-            <p:message for="nombre" />
-            <h:outputText value="#{creaSesionIH.nombre}" />
+                        <h:outputLabel for="nombre" value="Nombre " style="font-weight:bold"/>
+                        <p:inputText id="nombre" value="#{creaSesionIH.nombre}" required="true" label="Nombre"/>
+                        <p:message for="nombre" />
+                        <h:outputText value="#{creaSesionIH.nombre}" />
 
-            <h:outputLabel for="apellidoP" value="Apellido Paterno " style="font-weight:bold"/>
-            <p:inputText id="apellidoP" value="#{creaSesionIH.apellidoP}" required="true" label="ApellidoP"/>
-            <p:message for="apellidoP" />
-            <h:outputText value="#{creaSesionIH.apellidoP}" />
+                        <h:outputLabel for="apellidoP" value="Apellido Paterno " style="font-weight:bold"/>
+                        <p:inputText id="apellidoP" value="#{creaSesionIH.apellidoP}" required="true" label="ApellidoP"/>
+                        <p:message for="apellidoP" />
+                        <h:outputText value="#{creaSesionIH.apellidoP}" />
 
-            <h:outputLabel for="apellidoM" value="ApellidoM " style="font-weight:bold"/>
-            <p:inputText id="apellidoM" value="#{creaSesionIH.apellidoM}" required="true" label="ApellidoM"/>
-            <p:message for="apellidoM" />
-            <h:outputText value="#{creaSesionIH.apellidoM}" />
+                        <h:outputLabel for="apellidoM" value="ApellidoM " style="font-weight:bold"/>
+                        <p:inputText id="apellidoM" value="#{creaSesionIH.apellidoM}" required="true" label="ApellidoM"/>
+                        <p:message for="apellidoM" />
+                        <h:outputText value="#{creaSesionIH.apellidoM}" />
 
-            <h:outputLabel for="email1" value="Correo de Ciencias" style="font-weight:bold"/>
-            <p:inputText id="email1" value="#{creaSesionIH.email}" required="true">
-              <f:validator validatorId="crearCuenta.emailValidador" />
-            </p:inputText>
-            <p:message for="email1" display="tooltip" />
-            <h:outputText value="#{creaSesionIH.email}" />
+                        <h:outputLabel for="email1" value="Correo de Ciencias" style="font-weight:bold"/>
+                        <p:inputText id="email1" value="#{creaSesionIH.email}" required="true">
+                            <f:validator validatorId="crearCuenta.emailValidador" />
+                        </p:inputText>
+                        <p:message for="email1" display="tooltip" />
+                        <h:outputText value="#{creaSesionIH.email}" />
 
-            <h:outputLabel for="pwd1" value="Contraseña " style="font-weight:bold"/>
-            <p:password id="pwd1" value="#{creaSesionIH.password}" match="pwd2" label="Password 1" required="true" feedback="true" />
+                        <h:outputLabel for="pwd1" value="Contraseña " style="font-weight:bold"/>
+                        <p:password id="pwd1" value="#{creaSesionIH.password}" match="pwd2" label="Password 1" required="true" feedback="true" />
 
-            <h:outputLabel for="pwd2" value="Repetir la contraseña " style="font-weight:bold"/>
-            <p:password id="pwd2" value="#{creaSesionIH.password}" label="Password 2" required="true" />
-        </h:panelGrid>
-          <br/>
-      <p:commandButton value="Crear Cuenta" action="#{creaSesionIH.creaCuenta}" ajax="false" icon="ui-icon-check" validateClient="true"/>
+                        <h:outputLabel for="pwd2" value="Repetir la contraseña " style="font-weight:bold"/>
+                        <p:password id="pwd2" value="#{creaSesionIH.password}" label="Password 2" required="true" />
+                    </h:panelGrid>
+                    <br/>
+                    <p:commandButton value="Crear Cuenta" action="#{creaSesionIH.creaCuenta}" ajax="false" icon="ui-icon-check" validateClient="true"/>
+                </p:panel>
+            </h:form>
+            <div id="footer">
+                <ul>
+                    <li><a href="#">Sobre Fast Food </a></li>
+                    <li><a href="#">Contacto </a></li>
+                    <li><a href="#">Aviso de Privacidad</a></li>
+                </ul>
+                <div id="logo"><p>
+                        Creado por SéebCoq 2017 <br></br>
+                        <img src="3.png" /></p>
 
-      <p:commandButton action="index.xhtml?faces-redirect=true" value="Cancelar" ajax="false"/>
-  </p:panel>
-</h:form>
-<div id="footer">
-    <ul>
-        <li><a href="#">Sobre Fast Food </a></li>
-        <li><a href="#">Contacto </a></li>
-        <li><a href="#">Aviso de Privacidad</a></li>
-    </ul>
-    <div id="logo"><p>
-            Creado por SéebCoq 2017 <br></br>
-            <img src="3.png" /></p>
-
-    </div>
-</div>
-</div>
+                </div>
+            </div>
+        </div>
 
     </h:body>
 </html>

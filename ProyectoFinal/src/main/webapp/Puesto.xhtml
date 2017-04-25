@@ -11,10 +11,10 @@ and open the template in the editor.
     <h:head>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwJznevf6eTmR8HzMtXkrurOkthth1G1s"></script>
         <title>Fast Food</title>
-      
+
     </h:head>
     <h:body>
-    <h:outputStylesheet name="css/829.css" />
+        <h:outputStylesheet name="css/829.css" />
         <div id="wrapper">
             <div id="header">
                 <h:form id ="menu">
@@ -27,9 +27,9 @@ and open the template in the editor.
                                           rendered="#{not empty iniciarSesionIH.valid}" />
                             <h:outputText value="   "
                                           rendered="#{not empty iniciarSesionIH.valid}" />
-                             <p:commandButton value="Lista de Puestos"
-                                                 action="modificaPuesto.xhtml?faces-redirect=true"
-                                                 rendered="#{iniciarSesionIH.valid eq 2}"/>
+                            <p:commandButton value="Lista de Puestos"
+                                             action="modificaPuesto.xhtml?faces-redirect=true"
+                                             rendered="#{iniciarSesionIH.valid eq 2}"/>
                             <p:commandButton value="Mapa"
                                              action="index.xhtml?faces-redirect=true" />
                             <p:commandButton value="Cerrar Sesión"
@@ -80,7 +80,6 @@ and open the template in the editor.
                         <h:panelGrid columns="2" cellpadding="5">
                             <p:rating value="#{puestoIH.rating1}" >
                                 <p:ajax event="rate" listener="#{puestoIH.calificar}" disabled="#{empty iniciarSesionIH.valid}"/>
-
                             </p:rating>
                         </h:panelGrid>
                         <p:commandButton styleClass="styleGreen" value="Calificar" update="display" oncomplete="PF('dlg').show()" style="margin:5px"  disabled="#{empty iniciarSesionIH.valid}" />
@@ -128,10 +127,10 @@ and open the template in the editor.
                                 <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
                                     <p:outputPanel>
                                         <h:panelGrid columns="1" cellpadding="1">
-                                            
+
                                             <h:outputText value ="#{com.idPersona.nombreDeUsuario} comentó:" style="font-style: italic; color:#5cc194"/>
-                                            
-                                          
+
+
                                             <h:outputText value="#{com.comentario}" />
                                             <p:commandButton action="#{puestoIH.eliminarComentario(com)}" value="Eliminar"
                                                              rendered="#{iniciarSesionIH.valid eq 2}"
@@ -188,8 +187,8 @@ and open the template in the editor.
 
 
 
-                        
-<span class="titulo2"> Rating:</span> <br></br>
+
+                        <span class="titulo2"> Rating:</span> <br></br>
                         <p:rating value="#{puestoIH.rating4}" readonly="true" />
                         <h:outputText value="~ #{puestoIH.calificacion}" style="font-weight: bold"/>
 
@@ -231,11 +230,11 @@ and open the template in the editor.
 
                             <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
                                 <p:outputPanel>
-                                    
-                                        
-                                        ~ #{com.nombre}
 
-                                   
+
+                                    ~ #{com.nombre}
+
+
                                 </p:outputPanel>
                             </h:panelGrid>
                         </p:dataScroller>

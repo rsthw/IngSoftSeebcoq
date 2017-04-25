@@ -87,7 +87,9 @@
                         </p:column>
 
                         <p:column headerText="Platillos" style="width:1px;text-align: center">
-                            <p:commandButton ajax="false" icon="ui-icon-check" validateClient="true"/>                         
+                            <p:button outcome="AgregaPlatillo"  icon="ui-icon-pencil">
+                                <f:param name="productId" value="#{car.idPuesto}" />
+                            </p:button>
                         </p:column>
 
                         <p:column headerText="Eliminar" style="width:1px;text-align: center">

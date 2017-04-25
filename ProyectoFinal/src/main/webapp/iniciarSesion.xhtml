@@ -1,68 +1,103 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-
-      >
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Fast Food : Login</title>
     </h:head>
     <h:body>
-    <h:outputStylesheet name="css/829.css" />
-    <div id="navigation">
-        <span class="titulo">FAST FOOD</span>
-        <i> <br></br>Encuentra la mejor comida en la Facultad de Ciencias, UNAM.</i>
-    </div>
+        <h:outputStylesheet name="css/829.css" />
+        <div id="header">
+            <h:form id ="menu">
+                <p:growl id="messages" showDetail="true" />
+                <p:menubar>
+                    <f:facet name="options" >
+                        <h:outputText value="Bienvenido, "
+                                      rendered="#{not empty iniciarSesionIH.valid}" />
+                        <h:outputText value="#{iniciarSesionIH.usuario}"
+                                      rendered="#{not empty iniciarSesionIH.valid}" />
+                        <h:outputText value="   "
+                                      rendered="#{not empty iniciarSesionIH.valid}" />
+                        <p:commandButton value="Lista de Puestos"
+                                         action="modificaPuesto.xhtml?faces-redirect=true"
+                                         rendered="#{iniciarSesionIH.valid eq 2}"/>
+                        <p:commandButton value="Mapa"
+                                         action="index.xhtml?faces-redirect=true" />
+                        <p:commandButton value="Cerrar Sesión"
+                                         action="#{iniciarSesionIH.cerrarSesion}"
+                                         rendered="#{not empty iniciarSesionIH.valid}"
+                                         onclick = "$(#menu).load(index.xhtml #menu);"/>
 
-    <div id="content">
-        <h:form id="loginForm">
-            <p:growl id="msg" showDetail="true" life="3000" />
-            <p:panel header="Login" style="width: 30%; margin: 40px auto">
+                    </f:facet>
+                    <f:facet name="options">
+                        <p:commandButton type="submit"
+                                         value="Crear Nuevo Usuario"
+                                         ajax = "false"
+                                         action="crearCuenta.xhtml?faces-redirect=true"
+                                         rendered="#{empty iniciarSesionIH.valid}"/>
+                        <p:commandButton type="submit"
+                                         value="Iniciar Sesión"
+                                         ajax = "false"
+                                         action="iniciarSesion.xhtml?faces-redirect=true"
+                                         rendered="#{empty iniciarSesionIH.valid}"/>
+                    </f:facet>
+                </p:menubar>
+            </h:form>
 
-                
-                <h:panelGrid id="loginPanel" columns="2" >
+        </div>
+        <div id="navigation">
+            <span class="titulo">FAST FOOD</span>
+            <i> <br></br>Encuentra la mejor comida en la Facultad de Ciencias, UNAM.</i>
+        </div>
 
-                    <h:outputText value="Correo" />
+        <div id="content">
+            <h:form id="loginForm">
+                <p:growl id="msg" showDetail="true" life="3000" />
+                <p:panel header="Login" style="width: 30%; margin: 40px auto">
 
-                    <p:inputText id="correo" value="#{iniciarSesionIH.correo}" required="true"></p:inputText>
 
-                    <p:spacer></p:spacer>
+                    <h:panelGrid id="loginPanel" columns="2" >
 
-                    <p:message for="correo" ></p:message>
+                        <h:outputText value="Correo" />
 
-                    <h:outputText value="Contrasenia" />
+                        <p:inputText id="correo" value="#{iniciarSesionIH.correo}" required="true"></p:inputText>
 
-                    <p:password id="password" value="#{iniciarSesionIH.password}"  feedback="false" required="true"></p:password>
+                        <p:spacer></p:spacer>
 
-                    <p:spacer></p:spacer>
+                        <p:message for="correo" ></p:message>
 
-                    <p:message for="password"></p:message>
-                    <p:spacer></p:spacer>
+                        <h:outputText value="Contraseña" />
+
+                        <p:password id="password" value="#{iniciarSesionIH.password}"  feedback="false" required="true"></p:password>
+
+                        <p:spacer></p:spacer>
+
+                        <p:message for="password"></p:message>
+                        <p:spacer></p:spacer>
 
 
                         <p:commandButton action="#{iniciarSesionIH.iniciarSesion}" styleClass="mygreen" value="Login" update="loginForm" ajax="false"/>
 
-                        <p:commandButton action="index.xhtml?faces-redirect=true" value="Cancelar" ajax="false"/>
+                    </h:panelGrid>
 
-                </h:panelGrid>
+                </p:panel>
 
-            </p:panel>
+            </h:form>
 
-        </h:form>
+            <div id="footer">
+                <ul>
+                    <li><a href="#">Sobre Fast Food </a></li>
+                    <li><a href="#">Contacto </a></li>
+                    <li><a href="#">Aviso de Privacidad</a></li>
+                </ul>
+                <div id="logo"><p>
+                        Creado por SéebCoq 2017 <br></br>
+                        <img src="3.png" /></p>
 
-        <div id="footer">
-            <ul>
-                <li><a href="#">Sobre Fast Food </a></li>
-                <li><a href="#">Contacto </a></li>
-                <li><a href="#">Aviso de Privacidad</a></li>
-            </ul>
-            <div id="logo"><p>
-                    Creado por SéebCoq 2017 <br></br>
-                    <img src="3.png" /></p>
-
+                </div>
             </div>
         </div>
-    </div>
 
     </h:body>
-    </html>
+</html>
