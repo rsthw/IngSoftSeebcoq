@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <f:view contentType="text/html">
+        <h:head>
+            <title>Puestos</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        </h:head>
+
+        <h:body>
+    <!-- 
+        Se separa la pagina en 5 secciones (layouts): north, south, west, east, center
+        A la izquierda hay un dataScroller de todos los puestos, cada uno con:
+            - Nombre, imagen y un boton que muestra:
+                - Los datos del puesto (no funciona) y un boton que muestra:
+                    - Una dialog para agregar un nuevo puesto
+        A la derecha hay un boton que te muestra:
+            - Una dialog para agregar un nuevo puesto
+    -->
+            <p:layout fullPage="true">
+                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                    <h:form id = "menu">
+                        <p:menubar>
+
+                            <f:facet name="options">
+                                <p:commandButton value="Mapa" 
+                                                 action="index.xhtml?faces-redirect=true" />
+                            </f:facet>
+
+                            <f:facet name="options" >
+                                <h:outputText value="Bienvenido, "
+                                              rendered="#{not empty iniciarSesionIH.valid}" />
+                                <h:outputText value="#{iniciarSesionIH.usuario}"
+                                              rendered="#{not empty iniciarSesionIH.valid}" />
+                                <h:outputText value="   "
+                                              rendered="#{not empty iniciarSesionIH.valid}" />
+                                <p:commandButton value="Cerrar Sesión" 
+                                                 action="#{iniciarSesionIH.cerrarSesion}" 
+                                                 ajax="false"
+                                                 rendered="#{not empty iniciarSesionIH.valid}" />
+                            </f:facet>
+                            <f:facet name="options">
+                                <p:commandButton type="submit" 
+                                                 value="Crear Nuevo Usuario" 
+                                                 ajax = "false" 
+                                                 action="crearCuenta.xhtml?faces-redirect=true"
+                                                 rendered="#{empty iniciarSesionIH.valid}"/>
+                                <p:commandButton type="submit" 
+                                                 value="Iniciar Sesión" 
+                                                 ajax = "false" 
+                                                 action="iniciarSesion.xhtml?faces-redirect=true"
+                                                 rendered="#{empty iniciarSesionIH.valid}"/>
+                            </f:facet>
+                        </p:menubar>
+                     </h:form>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
+                </p:layoutUnit>
+
+                <p:layoutUnit id="listaDePuestos" position="west" size="50%" header="Puestos" collapsible="false">
+                    <p:dataScroller value="#{puestoIH.puestos}" var="psto" chunkSize="10">
+                        <f:facet name="loader">
+                            <p:commandButton type="button" value="Más" icon="ui-icon-circle-triangle-s"/>
+                        </f:facet>
+
+                        <h:panelGrid columns="1" style="width:100%" columnClasses="logo,detail">
+                            <p:outputPanel>
+                                <h:panelGrid columns="6" cellpadding="5">
+                                    <h:outputText value ="#{psto.nombre}"/>
+                                    <h:outputText value ="#{psto.imagen}"/>
+                                    <p:commandButton value="¡Edita!" type="button" onclick="PF('dlg1').show();" /> 
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </h:panelGrid>                        
+                    </p:dataScroller>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center" >
+                </p:layoutUnit>
+
+                <p:layoutUnit position="east" header="Acciones" size="50%">
+                    <h:panelGrid columns="1" cellpadding="5">
+                        <h:form>
+                            <p:commandButton value="¡Agrega Nuevo Puesto!" type="submit" action="AgregaPuesto.xhtml?faces-redirect=true" ajax="false"/> 
+                        </h:form>
+                    </h:panelGrid>
+
+
+                    <p:dialog header="Effects" widgetVar="dlg1" showEffect="bounce" hideEffect="explode" height="500" width="500">
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputText value ="Nombre :" style="font-weight:bold" />
+                            <h:outputText value ="#{psto.nombre}"/>
+                            <h:outputText value ="Calificacion :" style="font-weight:bold" />
+                            <h:outputText value ="#{psto.calificacion}"/>
+                            <h:outputText value ="NID :" style="font-weight:bold" />
+                            <h:outputText value ="#{psto.idPuesto}"/>
+                        </h:panelGrid>
+                    </p:dialog>
+
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:body>
+
+    </f:view>
+</html>
