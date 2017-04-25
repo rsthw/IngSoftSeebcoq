@@ -1,11 +1,9 @@
 package com.seebcoq.proyectofinal.vista;
 
-
 import com.seebcoq.proyectofinal.controlador.ControladorPuesto;
 import com.seebcoq.proyectofinal.controlador.UtilidadesSesion;
 import com.seebcoq.proyectofinal.modelo.jpaControllers.PuestoJpaController;
 import com.seebcoq.proyectofinal.modelo.Puesto;
-import com.seebcoq.proyectofinal.modelo.jpaControllers.exceptions.NonexistentEntityException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,13 +21,11 @@ import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
-import org.primefaces.model.map.Marker;
-import org.primefaces.context.RequestContext;
+import org.primefaces.model.map.Marker;;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManagerFactory;
@@ -38,7 +34,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FilenameUtils;
 import org.primefaces.model.UploadedFile;
-
 
 @ManagedBean
 @SessionScoped
@@ -61,7 +56,7 @@ public class MapHandler {
     public void setPuesto(Puesto puesto) {
         this.puesto = puesto;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -71,20 +66,18 @@ public class MapHandler {
         setPuesto(new ControladorPuesto().buscarPuesto(id));
     }
 
-    
-    
     @PostConstruct
     public void init() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("comidaCienciasPersistentUnit");
         advancedModel = new DefaultMapModel();
         puestoCtrl = new PuestoJpaController(emf);
-        puesto=new Puesto();
+        puesto = new Puesto();
         List<Puesto> puestos = puestoCtrl.findPuestoEntities();
         for (Puesto puesto : puestos) {
             Double latitud = puesto.getLatitud();
             Double longitud = puesto.getLongitud();
             String nombre = puesto.getNombre();
-            
+
             advancedModel.addOverlay(new Marker(new LatLng(latitud, longitud), nombre, puesto.getIdPuesto()));
         }
     }
@@ -98,7 +91,7 @@ public class MapHandler {
         System.out.println(marker.getTitle());
         System.out.println(marker.getData());
         HttpSession hs = UtilidadesSesion.getSession();
-        hs.setAttribute("puestoId", (Long)marker.getData());
+        hs.setAttribute("puestoId", (Long) marker.getData());
     }
 
     public Marker getMarker() {
@@ -116,7 +109,7 @@ public class MapHandler {
     public String getNombre() {
         return nombre;
     }
-    
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -137,16 +130,13 @@ public class MapHandler {
         this.lng = lng;
     }
 
-    public List<Puesto> getPuestos(){
+    public List<Puesto> getPuestos() {
         ControladorPuesto puestoCtrl = new ControladorPuesto();
         return puestoCtrl.buscarPuestos();
     }
 
-    public void agregarPuesto() throws IOException{
-        Marker marker = new Marker(new LatLng(lat, lng), nombre, puesto.getIdPuesto());
-        //aqui se agrega a la base de datos
-        advancedModel.addOverlay(marker);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Marker Added", "Lat:" + lat + ", Lng:" + lng));
+    public void agregarPuesto() throws IOException {
+        //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Marker Added", "Lat:" + lat + ", Lng:" + lng));
         ControladorPuesto puestoCtrl = new ControladorPuesto();
         Puesto p = new Puesto();
         p.setNombre(nombre);
@@ -162,20 +152,31 @@ public class MapHandler {
         Files.copy(input, file, StandardCopyOption.REPLACE_EXISTING);
         p.setImagen(file.toString());
         puestoCtrl.agregaPuesto(p);
+        System.out.println(p.getIdPuesto());
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("comidaCienciasPersistentUnit");
+        PuestoJpaController pja = new PuestoJpaController(emf);
+
+        List<Puesto> pst = pja.findPuestoEntities();
+
+        p = pst.get(pst.size() - 1);
+
+        Marker marker = new Marker(new LatLng(lat, lng), nombre, puesto.getIdPuesto());
+        advancedModel.addOverlay(marker);
     }
-    
-        public void modificaPuesto() throws IOException{
-        Marker marker = new Marker(new LatLng(lat, lng), puesto.getNombre());
+
+    public void modificaPuesto() throws IOException {
+        Marker marker = new Marker(new LatLng(lat, lng), puesto.getNombre(), puesto.getIdPuesto());
         //aqui se agrega a la base de datos
         advancedModel.addOverlay(marker);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Marker Added", "Lat:" + lat + ", Lng:" + lng));
-          FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_WARN,
-                            "Se ha modificado el puesto "+puesto.getNombre(),
-                            "Gracias"));
-        if(lat!=0&&lng!=0){
-        puesto.setLatitud(lat);
-        puesto.setLongitud(lng);
+        FacesContext.getCurrentInstance().addMessage(null,
+                new FacesMessage(FacesMessage.SEVERITY_WARN,
+                        "Se ha modificado el puesto " + puesto.getNombre(),
+                        "Gracias"));
+        if (lat != 0 && lng != 0) {
+            puesto.setLatitud(lat);
+            puesto.setLongitud(lng);
         }
         //Ruta donde se guardará la imagen y ruta ue se guardará en la BD
         Path folder = Paths.get("/home/slf/Documents/Maven/IngSoftSeebcoq/ProyectoFinal/src/main/webapp/resources/images");
@@ -192,8 +193,6 @@ public class MapHandler {
             Logger.getLogger(MapHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
 
     public void addMarker() {
         Marker marker = new Marker(new LatLng(lat, lng), nombre);
@@ -203,5 +202,3 @@ public class MapHandler {
     }
 
 }
-    
-
