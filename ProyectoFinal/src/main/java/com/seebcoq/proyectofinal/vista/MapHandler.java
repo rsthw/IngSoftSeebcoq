@@ -154,6 +154,9 @@ public class MapHandler {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Marker Added", "Lat:" + lat + ", Lng:" + lng));
     }
 
+    public void resetMarker(){
+        lat = 0.0; lng = 0.0;
+    }
     /* SETTERS & GETTERS */
     public Puesto getPuesto() {
         return puesto;

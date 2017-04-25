@@ -53,13 +53,19 @@ public class PuestoIH implements Serializable {
     public void eliminarPuesto(Puesto puesto){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("comidaCienciasPersistentUnit");
         List<Calificacion> calificaciones = puesto.getCalificacionList();
+        List<Comentario> comentarios = puesto.getComentarioList();
         
         try{
             PuestoJpaController pja = new PuestoJpaController(emf);
             CalificacionJpaController cja = new CalificacionJpaController(emf);
+            ComentarioJpaController coa = new ComentarioJpaController(emf);
             
             for(Calificacion ca : calificaciones){
                 cja.destroy(ca.getCalificacionPK());
+            }
+            
+            for(Comentario co: comentarios){
+                coa.destroy(co.getIdComentario());
             }
             
             puesto = pja.findPuesto(puesto.getIdPuesto());

@@ -7,10 +7,10 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <f:view contentType="text/html">
-     <f:metadata>
-         <f:viewParam name="productId" value="#{mapHandler.id}" />
-    </f:metadata>  
-        
+        <f:metadata>
+            <f:viewParam name="productId" value="#{mapHandler.id}" />
+        </f:metadata>  
+
         <h:head>
             <f:facet name="first">
                 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwJznevf6eTmR8HzMtXkrurOkthth1G1s"></script>
@@ -18,14 +18,14 @@
                 <title>Modificar el puesto #{mapHandler.puesto.nombre} </title>
             </f:facet>
         </h:head>
-        
+
         <h:body>
-            
-            
+
+
             <p:layout fullPage="true">
                 <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
-                    
-                    
+
+
                     <h:form id = "menu">
                         <p:menubar>
 
@@ -62,69 +62,65 @@
                                                  rendered="#{empty iniciarSesionIH.valid}"/>
                             </f:facet>
                         </p:menubar>
-                     </h:form>
-                    
-                    
-                    
-                    
+                    </h:form>
+
+
+
+
                 </p:layoutUnit>
 
                 <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
                 </p:layoutUnit>
-                
+
                 <p:layoutUnit position="center" header="Modifica el puesto  #{mapHandler.puesto.nombre}" size="250" collapsible="false">
                     <h:form enctype="multipart/form-data">
                         <p:growl showDetail="true"/>
-                        
-            <p:outputPanel id="carDetail" style="text-align:center;">
-            <p:panelGrid  columns="2" rendered="#{not empty mapHandler.puesto}" columnClasses="label,value">
-         
-         <h:outputLabel for="nombrei" value="indice"/>
-        <p:inplace id="id">
-            <p:inputText value="#{mapHandler.puesto.idPuesto}" />
-        </p:inplace>
-                   
-         <h:outputLabel for="nombre" value="Nombre"/>
-        <p:inplace id="nombre">
-            <p:inputText value="#{mapHandler.puesto.nombre}" />
-        </p:inplace>
-                
-                     
-        <p:fileUpload value="#{mapHandler.imagen}" mode="simple"/>
 
-         
-         
-       </p:panelGrid>
-            
-            
-            
-                <p:commandButton value="edita" action="#{mapHandler.modificaPuesto}" ajax="false" icon="ui-icon-check"/>
-                                 
-            
-     
-        </p:outputPanel>
-   
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+                        <p:outputPanel id="carDetail" style="text-align:center;">
+                            <p:panelGrid  columns="2" rendered="#{not empty mapHandler.puesto}" columnClasses="label,value">
+
+
+                                <h:outputLabel for="nombre" value="Nombre"/>
+                                <p:inplace id="nombre">
+                                    <p:inputText value="#{mapHandler.puesto.nombre}" />
+                                </p:inplace>
+
+
+                                <p:fileUpload value="#{mapHandler.imagen}" mode="simple"/>
+
+
+
+                            </p:panelGrid>
+
+
+
+                            <p:commandButton value="edita" action="#{mapHandler.modificaPuesto}" ajax="false" icon="ui-icon-check"/>
+
+
+
+                        </p:outputPanel>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     </h:form>
                 </p:layoutUnit>
-                
+
                 <p:layoutUnit position="east" header="Ubicación" size="700" closable="false" collapsible="false">                     
                     <p:growl id="messages" showDetail="true" />
                     <p:gmap id="gmap" center="19.324328359583355,-99.17934268712997" zoom="18"
@@ -141,14 +137,14 @@
                         </p:gmapInfoWindow>
                     </p:gmap>
 
-                    <p:dialog widgetVar="dlg" showEffect="fade">
+                    <p:dialog widgetVar="dlg" showEffect="fade" closable="false">
                         <h:form prependId="false">
                             <h:panelGrid columns="2">
                                 <f:facet name="footer">                                                  
                                     <h:outputText value="¿Es ésta la ubicación del puesto #{mapHandler.puesto.nombre}?"/> 
                                     <br></br>
                                     <p:commandButton value="Sí" onclick="PF.hide('dlg')" actionListener="#{mapHandler.addMarker}" update=":messages" oncomplete="markerAddComplete()" />
-                                    <p:commandButton value="No" onclick="return cancel()" />
+                                    <p:commandButton value="No" onclick="return cancel()" action="#{mapHandler.resetMarker}"/>
                                 </f:facet>
                             </h:panelGrid>
                             <h:inputHidden id="lat" value="#{mapHandler.lat}" />
