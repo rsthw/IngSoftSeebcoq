@@ -26,6 +26,18 @@ public class ControladorPersona{
       
       personaCtrl.create(persona);
   }
+  
+  public void borrarPersona(String correo){
+    EntityManager em = emf.createEntityManager();
+    em.getTransaction().begin();
+    TypedQuery<Persona> q1 = em.createNamedQuery( "Persona.findByCorreo", Persona.class).setParameter("correo", correo);
+    List<Persona> ps = q1.getResultList();
+    Persona p=ps.get(0);
+    em.remove(p);
+    em.getTransaction().commit();
+    em.close();
+
+  }
 
   public boolean existeCorreo(String correo){
     EntityManager em = emf.createEntityManager();
