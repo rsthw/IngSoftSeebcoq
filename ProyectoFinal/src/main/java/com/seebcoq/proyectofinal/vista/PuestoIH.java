@@ -7,7 +7,9 @@ package com.seebcoq.proyectofinal.vista;
 
 import com.seebcoq.proyectofinal.modelo.Comentario;
 import com.seebcoq.proyectofinal.modelo.Puesto;
+import com.seebcoq.proyectofinal.modelo.Calificacion;
 import com.seebcoq.proyectofinal.modelo.*;
+import com.seebcoq.proyectofinal.modelo.jpaControllers.*;
 import com.seebcoq.proyectofinal.controlador.ControladorPuesto;
 import com.seebcoq.proyectofinal.controlador.UtilidadesSesion;
 import java.util.List;
@@ -20,7 +22,10 @@ import com.seebcoq.proyectofinal.controlador.ControladorPuesto;
 import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.persistence.Persistence;
 import org.primefaces.event.RateEvent;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityManager;
 
 /**
  *
@@ -45,6 +50,26 @@ public class PuestoIH implements Serializable {
         id = (Long) hs.getAttribute("puestoId");
         System.out.println(id);
     }
+    
+    public void eliminarPuesto(Puesto puesto){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("comidaCienciasPersistentUnit");
+        List<Calificacion> calificaciones = puesto.getCalificacionList();
+        
+        try{
+            PuestoJpaController pja = new PuestoJpaController(emf);
+            CalificacionJpaController cja = new CalificacionJpaController(emf);
+            
+            for(Calificacion ca : calificaciones){
+                cja.destroy(ca.getCalificacionPK());
+            }
+            
+            puesto = pja.findPuesto(puesto.getIdPuesto());
+            
+            pja.destroy(puesto.getIdPuesto());
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 
     public String getComentario() {
         return comentario;
@@ -61,7 +86,10 @@ public class PuestoIH implements Serializable {
             puesto = puestoCtrl.buscarPuesto(id);
             comentarios = puestoCtrl.buscarComentarios(puesto);
             imagen = puesto.getImagen();
-            imagen = "http://localhost:8084/ProyectoFinal/"+imagen.substring(imagen.indexOf("resources"));
+            if(imagen != null)
+                imagen = "http://localhost:8084/ProyectoFinal/"+imagen.substring(imagen.indexOf("resources"));
+            else
+                imagen = "http://localhost:8084/ProyectoFinal/resources/images/fast-food.jpg";
         } else {
             imagen = "http://localhost:8084/ProyectoFinal/resources/images/fast-food.jpg";
         }

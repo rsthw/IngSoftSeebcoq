@@ -97,6 +97,7 @@ public class IniciarSesionIH implements Serializable {
                 valor = "error";
                 esAdmin = false;
         }
+        if(valid == 0) valid = null;
         return "index.xhtml?faces-redirect=true";
 }
 

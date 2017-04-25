@@ -27,6 +27,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -36,7 +37,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.primefaces.model.UploadedFile;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class MapHandler {
 
     private MapModel advancedModel;
@@ -48,24 +49,7 @@ public class MapHandler {
     private UploadedFile imagen;
     private Long id;
     private Puesto puesto;
-
-    public Puesto getPuesto() {
-        return puesto;
-    }
-
-    public void setPuesto(Puesto puesto) {
-        this.puesto = puesto;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-        setPuesto(new ControladorPuesto().buscarPuesto(id));
-    }
-
+    
     @PostConstruct
     public void init() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("comidaCienciasPersistentUnit");
@@ -81,7 +65,52 @@ public class MapHandler {
             advancedModel.addOverlay(new Marker(new LatLng(latitud, longitud), nombre, puesto.getIdPuesto()));
         }
     }
-
+    
+    /* SETTERS & GETTERS */
+    public Puesto getPuesto() {
+        return puesto;
+    }
+    public void setPuesto(Puesto puesto) {
+        this.puesto = puesto;
+    }
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+        setPuesto(new ControladorPuesto().buscarPuesto(id));
+    }
+    public UploadedFile getImagen() {
+        return imagen;
+    }
+    public void setImagen(UploadedFile imagen) {
+        this.imagen = imagen;
+    }
+    public double getLat() {
+        return lat;
+    }
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+    public double getLng() {
+        return lng;
+    }
+    public void setLng(double lng) {
+        this.lng = lng;
+    }
+    public String getNombre() {
+        return nombre;
+    }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    public Marker getMarker() {
+        return marker;
+    }
+    public void setMarker(Marker marker){
+        this.marker = marker;
+    }
+    
     public MapModel getAdvancedModel() {
         return advancedModel;
     }
@@ -94,41 +123,9 @@ public class MapHandler {
         hs.setAttribute("puestoId", (Long) marker.getData());
     }
 
-    public Marker getMarker() {
-        return marker;
-    }
+    
 
-    public UploadedFile getImagen() {
-        return imagen;
-    }
-
-    public void setImagen(UploadedFile imagen) {
-        this.imagen = imagen;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public double getLat() {
-        return lat;
-    }
-
-    public void setLat(double lat) {
-        this.lat = lat;
-    }
-
-    public double getLng() {
-        return lng;
-    }
-
-    public void setLng(double lng) {
-        this.lng = lng;
-    }
+    
 
     public List<Puesto> getPuestos() {
         ControladorPuesto puestoCtrl = new ControladorPuesto();
@@ -160,7 +157,7 @@ public class MapHandler {
         List<Puesto> pst = pja.findPuestoEntities();
 
         p = pst.get(pst.size() - 1);
-
+        
         Marker marker = new Marker(new LatLng(lat, lng), nombre, puesto.getIdPuesto());
         advancedModel.addOverlay(marker);
     }

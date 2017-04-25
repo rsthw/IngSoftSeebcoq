@@ -63,6 +63,7 @@ public class Puesto implements Serializable {
     @Column(name = "calificacion")
     private Double calificacion;
     @OneToMany(mappedBy = "idPuesto")
+    
     private List<Platillo> platilloList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "puesto")
     private List<Calificacion> calificacionList;

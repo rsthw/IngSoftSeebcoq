@@ -1,65 +1,71 @@
-    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <f:view contentType="text/html">
         <h:head>
-        
-          <f:facet name="first">
+
+            <f:facet name="first">
                 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwJznevf6eTmR8HzMtXkrurOkthth1G1s"></script>
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
                 <title>Modificar Puestos</title>
             </f:facet>
-        
+
         </h:head>
 
         <h:body>
 
-            
-            
-            <h:form id="form">
-            <p:growl showDetail="true"/>   
 
-    <p:dataTable id="basicDT" style="text-align: center;" var="car" value="#{puestoIH.puestos}">
-        <f:facet name="header">
-           Modificar Puestos
-        </f:facet>
-        <p:column headerText="id"  style="width:1px;text-align: center">
-            <h:outputText value="#{car.idPuesto}" />
-        </p:column>    
-        <p:column headerText="Puesto" style="width:50px;text-align: center">
-            <h:outputText value="#{car.nombre}" />
-        </p:column>
-        <p:column headerText="Latitud" style="width:50px;text-align: center">
-            <h:outputText value="#{car.latitud}" />
-        </p:column>
-        <p:column headerText="Longitud" style="width:50px;text-align: center">
-            <h:outputText value="#{car.longitud}" />
-        </p:column>
-       
-        
-        <p:column headerText="Edita" style="width:1px;text-align: center">
-            <p:button outcome="modificaPuesto2"  icon="ui-icon-pencil">
-                <f:param name="productId" value="#{car.idPuesto}" />
-          </p:button>
-        </p:column>
-        
-        <p:column headerText="Platillos" style="width:1px;text-align: center">
-        <p:commandButton ajax="false" icon="ui-icon-check" validateClient="true"/>                         
-        </p:column>
-        
-        
-    </p:dataTable>
-    
-    
-        </h:form>  
-            
-            
-            
-            
-            
-            
+
+            <h:form id="form">
+                <p:growl showDetail="true"/>   
+
+                <p:dataTable id="basicDT" style="text-align: center;" var="car" value="#{puestoIH.puestos}">
+                    <f:facet name="header">
+                        Modificar Puestos
+                    </f:facet>
+                    <p:column headerText="id"  style="width:1px;text-align: center">
+                        <h:outputText value="#{car.idPuesto}" />
+                    </p:column>    
+                    <p:column headerText="Puesto" style="width:50px;text-align: center">
+                        <h:outputText value="#{car.nombre}" />
+                    </p:column>
+                    <p:column headerText="Latitud" style="width:50px;text-align: center">
+                        <h:outputText value="#{car.latitud}" />
+                    </p:column>
+                    <p:column headerText="Longitud" style="width:50px;text-align: center">
+                        <h:outputText value="#{car.longitud}" />
+                    </p:column>
+                    
+
+                    <p:column headerText="Edita" style="width:1px;text-align: center">
+                        <p:button outcome="modificaPuesto2"  icon="ui-icon-pencil">
+                            <f:param name="productId" value="#{car.idPuesto}" />
+                        </p:button>
+                    </p:column>
+
+                    <p:column headerText="Platillos" style="width:1px;text-align: center">
+                        <p:button outcome="AgregaPlatillo"  icon="ui-icon-pencil">
+                            <f:param name="productId" value="#{car.idPuesto}" />
+                        </p:button>
+                    </p:column>
+                    
+                    <p:column headerText="Eliminar" style="width:1px;text-align: center">
+                        <p:commandButton value="X" action="#{puestoIH.eliminarPuesto(car)}" ajax="false" 
+                                         onclick="$(#basicDT).load(modificaPuesto.xhtml #basicDT);" />
+                    </p:column>
+
+                </p:dataTable>
+
+
+            </h:form>  
+
+
+
+
+
+
         </h:body>
 
     </f:view>
