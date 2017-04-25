@@ -173,9 +173,8 @@ font-size: 18px;
     background-position: center;
 }*/
 
-.ui-panelgrid  {
-    border: none
-    background-color: azul;
+.ui-panelgrid .ui-panelgrid-cell {
+    border: none;
 }
 
 .azul {
@@ -184,5 +183,5 @@ font-size: 18px;
 
 /*primefaces*/
 .ui-menubar,.ui-menu-child,.ui-menu {
-    background: red;
+    background: #004e8e !important;
 }

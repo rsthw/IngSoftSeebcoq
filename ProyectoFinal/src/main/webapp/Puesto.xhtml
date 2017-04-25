@@ -11,9 +11,10 @@ and open the template in the editor.
     <h:head>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwJznevf6eTmR8HzMtXkrurOkthth1G1s"></script>
         <title>Fast Food</title>
-        <link rel="stylesheet" type="text/css" href="css/829.css" />
+      
     </h:head>
     <h:body>
+    <h:outputStylesheet name="css/829.css" />
         <div id="wrapper">
             <div id="header">
                 <h:form id ="menu">
@@ -26,7 +27,10 @@ and open the template in the editor.
                                           rendered="#{not empty iniciarSesionIH.valid}" />
                             <h:outputText value="   "
                                           rendered="#{not empty iniciarSesionIH.valid}" />
-                            <p:commandButton value="Mapa" 
+                             <p:commandButton value="Lista de Puestos"
+                                                 action="modificaPuesto.xhtml?faces-redirect=true"
+                                                 rendered="#{iniciarSesionIH.valid eq 2}"/>
+                            <p:commandButton value="Mapa"
                                              action="index.xhtml?faces-redirect=true" />
                             <p:commandButton value="Cerrar Sesión"
                                              action="#{iniciarSesionIH.cerrarSesion}"
@@ -64,7 +68,7 @@ and open the template in the editor.
                         <h:form>
                             <p:lightBox styleClass="imagebox" id="lighbox1">
                                 <h:outputLink value="#{puestoIH.imagen}" title="#{puestoIH.nombre}">
-                                    <h:graphicImage  value="#{puestoIH.imagen}" id="chilaquiles1" style="width: 200px" />
+                                    <h:graphicImage  value="#{puestoIH.imagen}" id="chilaquiles1" style="width: 500px" />
                                 </h:outputLink>
                             </p:lightBox></h:form>
                     </div>
@@ -79,7 +83,7 @@ and open the template in the editor.
 
                             </p:rating>
                         </h:panelGrid>
-                        <p:commandButton value="Calificar" update="display" oncomplete="PF('dlg').show()" style="margin:5px"  disabled="#{empty iniciarSesionIH.valid}" />
+                        <p:commandButton styleClass="styleGreen" value="Calificar" update="display" oncomplete="PF('dlg').show()" style="margin:5px"  disabled="#{empty iniciarSesionIH.valid}" />
                         <p:dialog header="Gracias" widgetVar="dlg" showEffect="fade" hideEffect="fade">
                             <h:panelGrid id="display" columns="2" cellpadding="5">
                                 <h:outputText value="Calificaste este puesto con:" />
@@ -97,17 +101,18 @@ and open the template in the editor.
                         <h:form id="comentarioInput">
 
                             <h:panelGrid id="grid" columns="2" cellpadding="5">
-                                <p:inputTextarea maxlength="255" 
-                                                 autoResize="true" 
-                                                 id="comentario" 
-                                                 value="#{puestoIH.comentario}" 
+                                <p:inputTextarea maxlength="255"
+                                                 autoResize="true"
+                                                 id="comentario"
+                                                 style="width: 500px;"
+                                                 value="#{puestoIH.comentario}"
                                                  required="true" label="Comentario"/>
-                                <p:commandButton value="Enviar" 
+                                <p:commandButton value="Enviar" styleClass="styleGreen" 
                                                  id="botonEnviar"
-                                                 action="#{puestoIH.guardarComentario}" 
-                                                 icon="ui-icon-check" 
-                                                 validateClient="true" 
-                                                 onclick="$(#comentarios).load(index.xhtml #comentarios); $(#comentario).load(index.xhtml #comentario);" 
+                                                 action="#{puestoIH.guardarComentario}"
+                                                 icon="ui-icon-check"
+                                                 validateClient="true"
+                                                 onclick="$(#comentarios).load(index.xhtml #comentarios); $(#comentario).load(index.xhtml #comentario);"
                                                  disabled="#{empty iniciarSesionIH.valid}" />
                             </h:panelGrid>
 
@@ -117,16 +122,17 @@ and open the template in the editor.
                             <p:dataScroller value="#{puestoIH.comentarios}" var="com" chunkSize="10" >
 
                                 <f:facet name="loader">
-                                    <p:commandButton type="button" value="More" icon="ui-icon-circle-triangle-s"/>
+                                    <p:commandButton type="button" value="Mostrar Mas" icon="ui-icon-circle-triangle-s"/>
                                 </f:facet>
 
                                 <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
                                     <p:outputPanel>
-                                        <h:panelGrid columns="2" cellpadding="5">
-                                            <h:outputText value ="Usuario:"/>
-                                            <h:outputText value ="#{com.idPersona.nombreDeUsuario}"/>
-                                            <h:outputText value="Comentario:" />
-                                            <h:outputText value="#{com.comentario}" style="font-weight: bold"/>
+                                        <h:panelGrid columns="1" cellpadding="1">
+                                            
+                                            <h:outputText value ="#{com.idPersona.nombreDeUsuario} comentó:" style="font-style: italic; color:#5cc194"/>
+                                            
+                                          
+                                            <h:outputText value="#{com.comentario}" />
                                             <p:commandButton action="#{puestoIH.eliminarComentario(com)}" value="Eliminar"
                                                              rendered="#{iniciarSesionIH.valid eq 2}"
                                                              onclick="$(#comentarios).load(index.xhtml #comentarios);"/>
@@ -141,11 +147,11 @@ and open the template in the editor.
                                                                 <f:facet name="header">
                                                                     calificaciones
                                                                 </f:facet>
-                        
+
                                                                 <f:facet name="loader">
                                                                     <p:commandButton type="button" value="More" icon="ui-icon-circle-triangle-s"/>
                                                                 </f:facet>
-                        
+
                                                                 <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
                                                                     <p:outputPanel>
                                                                         <h:panelGrid columns="2" cellpadding="5">
@@ -158,7 +164,7 @@ and open the template in the editor.
                                                                 </h:panelGrid>
                                                             </p:dataScroller>
                                                         </h:form>
-                        
+
                         -->
 
                     </p>
@@ -182,9 +188,10 @@ and open the template in the editor.
 
 
 
-                        <span class="titulo2"> Rating:</span> <br></br>
+                        
+<span class="titulo2"> Rating:</span> <br></br>
                         <p:rating value="#{puestoIH.rating4}" readonly="true" />
-                        <h:outputText value="#{puestoIH.calificacion}" style="font-weight: bold"/>
+                        <h:outputText value="~ #{puestoIH.calificacion}" style="font-weight: bold"/>
 
                     </h:form>
                     <br></br>
@@ -195,7 +202,7 @@ and open the template in the editor.
 
 
                             <f:facet name="loader">
-                                <p:commandButton type="button" value="More" icon="ui-icon-circle-triangle-s"/>
+                                <p:commandButton type="button" value="Mas" icon="ui-icon-circle-triangle-s"/>
                             </f:facet>
 
                             <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
@@ -219,16 +226,16 @@ and open the template in the editor.
 
 
                             <f:facet name="loader">
-                                <p:commandButton type="button" value="More" icon="ui-icon-circle-triangle-s"/>
+                                <p:commandButton type="button" value="Mas" icon="ui-icon-circle-triangle-s"/>
                             </f:facet>
 
                             <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
                                 <p:outputPanel>
-                                    <h:panelGrid columns="2" cellpadding="5">
-                                        <h:outputText value ="Platillo:"/>
-                                        <h:outputText value ="#{com.nombre}"/>
+                                    
+                                        
+                                        ~ #{com.nombre}
 
-                                    </h:panelGrid>
+                                   
                                 </p:outputPanel>
                             </h:panelGrid>
                         </p:dataScroller>

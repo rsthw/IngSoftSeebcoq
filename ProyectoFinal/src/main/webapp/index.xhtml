@@ -5,23 +5,24 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwJznevf6eTmR8HzMtXkrurOkthth1G1s"></script>
-        <title>Start Page</title>
+        <title>Fast Food</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     </h:head>
     <h:body>
+    <h:outputStylesheet name="css/829.css" />
         <p:growl id="messages" showDetail="true" />
         <h:form id = "menu">
             <p:menubar>
-                
+
                 <f:facet name="options">
-                    <p:commandButton value="Lista de Puestos" 
-                                     action="modificaPuesto.xhtml?faces-redirect=true" 
+                    <p:commandButton value="Lista de Puestos"
+                                     action="modificaPuesto.xhtml?faces-redirect=true"
                                      rendered="#{iniciarSesionIH.valid eq 2}"/>
-                    <p:commandButton value="Agrega un Puesto" 
-                                     action="AgregaPuesto.xhtml?faces-redirect=true" 
+                    <p:commandButton value="Agrega un Puesto"
+                                     action="AgregaPuesto.xhtml?faces-redirect=true"
                                      rendered="#{iniciarSesionIH.valid eq 2}"/>
                 </f:facet>
-                
+
                 <f:facet name="options" >
                     <h:outputText value="Bienvenido, "
                                   rendered="#{not empty iniciarSesionIH.valid}" />
@@ -29,25 +30,31 @@
                                   rendered="#{not empty iniciarSesionIH.valid}" />
                     <h:outputText value="   "
                                   rendered="#{not empty iniciarSesionIH.valid}" />
-                    <p:commandButton value="Cerrar Sesión" 
-                                     action="#{iniciarSesionIH.cerrarSesion}" 
-                                     rendered="#{not empty iniciarSesionIH.valid}" 
+                    <p:commandButton value="Cerrar Sesión"
+                                     action="#{iniciarSesionIH.cerrarSesion}"
+                                     rendered="#{not empty iniciarSesionIH.valid}"
                                      onclick = "$( #menu ).load( index.xhtml #menu );"/>
                 </f:facet>
                 <f:facet name="options">
-                    <p:commandButton type="submit" 
-                                     value="Crear Nuevo Usuario" 
-                                     ajax = "false" 
+                    <p:commandButton type="submit"
+                                     value="Crear Nuevo Usuario"
+                                     ajax = "false"
                                      action="crearCuenta.xhtml?faces-redirect=true"
                                      rendered="#{empty iniciarSesionIH.valid}"/>
-                    <p:commandButton type="submit" 
-                                     value="Iniciar Sesión" 
-                                     ajax = "false" 
+                    <p:commandButton type="submit"
+                                     value="Iniciar Sesión"
+                                     ajax = "false"
                                      action="iniciarSesion.xhtml?faces-redirect=true"
                                      rendered="#{empty iniciarSesionIH.valid}"/>
                 </f:facet>
             </p:menubar>
          </h:form>
+         <div id="navigation">
+             <span class="titulo">FAST FOOD</span>
+             <i> <br></br>Encuentra la mejor comida en la Facultad de Ciencias, UNAM.</i>
+         </div>
+
+         <div id="content">
         <h:form>
             <p:gmap id="gmap" center="19.324328359583355,-99.17934268712997" zoom="18"
                     type="TERRAIN" model="#{mapHandler.advancedModel}"
@@ -61,18 +68,32 @@
 
                   <h:outputText value="#{mapHandler.marker.title}" />
                    <br/>
-                    <p:commandButton type="submit" 
-                                         value="Ir al puesto" 
-                                         ajax = "false" 
+                    <p:commandButton type="submit"
+                                         value="Ir al puesto"
+                                         ajax = "false"
                                          action="Puesto.xhtml?faces-redirect=true" />
 
                 </p:outputPanel>
-              </p:gmapInfoWindow>  
+              </p:gmapInfoWindow>
             </p:gmap>
         </h:form>
-        
+
         <h:outputLabel for="nombre" value="#{IniciarSesionIH.sesionIniciada}" />
         <script src="mapHandler.js"></script>
+         </div>
+        <div id="footer">
+            <ul>
+                <li><a href="#">Sobre Fast Food </a></li>
+                <li><a href="#">Contacto </a></li>
+                <li><a href="#">Aviso de Privacidad</a></li>
+            </ul>
+            <div id="logo"><p>
+                    Creado por SéebCoq 2017 <br></br>
+                    <img src="3.png" /></p>
+
+            </div>
+        </div>
+
 
     </h:body>
 </html>

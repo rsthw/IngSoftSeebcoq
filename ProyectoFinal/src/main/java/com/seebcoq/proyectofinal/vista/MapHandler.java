@@ -14,8 +14,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.model.map.DefaultMapModel;
@@ -50,6 +48,7 @@ public class MapHandler {
     private Long id;
     private Puesto puesto;
     
+
     @PostConstruct
     public void init() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("comidaCienciasPersistentUnit");
@@ -70,8 +69,10 @@ public class MapHandler {
     public Puesto getPuesto() {
         return puesto;
     }
+
     public void setPuesto(Puesto puesto) {
         this.puesto = puesto;
+
     }
     public Long getId() {
         return id;
@@ -141,7 +142,7 @@ public class MapHandler {
         p.setLongitud(lng);
         p.setCalificacion(0.0);
         //Ruta donde se guardará la imagen y ruta ue se guardará en la BD
-        Path folder = Paths.get("/home/slf/Documents/Maven/IngSoftSeebcoq/ProyectoFinal/src/main/webapp/resources/images");
+        Path folder = Paths.get("/home/valeria/NetBeansProjects/ProyectoFinal/src/main/webapp/resources/images");
         String filename = FilenameUtils.getBaseName(imagen.getFileName());
         String extension = FilenameUtils.getExtension(imagen.getFileName());
         Path file = Files.createTempFile(folder, filename + "-", "." + extension);
@@ -161,6 +162,7 @@ public class MapHandler {
         Marker marker = new Marker(new LatLng(lat, lng), nombre, puesto.getIdPuesto());
         advancedModel.addOverlay(marker);
     }
+
 
     public void modificaPuesto() throws IOException {
         Marker marker = new Marker(new LatLng(lat, lng), puesto.getNombre(), puesto.getIdPuesto());
@@ -187,9 +189,10 @@ public class MapHandler {
             String i;
             puestoCtrl.edit(puesto);
         } catch (Exception ex) {
-            Logger.getLogger(MapHandler.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
+
 
     public void addMarker() {
         Marker marker = new Marker(new LatLng(lat, lng), nombre);

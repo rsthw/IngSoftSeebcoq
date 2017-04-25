@@ -48,7 +48,6 @@ public class PuestoIH implements Serializable {
     public PuestoIH() {
         HttpSession hs = UtilidadesSesion.getSession();
         id = (Long) hs.getAttribute("puestoId");
-        System.out.println(id);
     }
     
     public void eliminarPuesto(Puesto puesto){
@@ -205,6 +204,7 @@ public class PuestoIH implements Serializable {
             return 0;
         }
         rating4 = r.intValue();
+
 
         return rating4;
     }
