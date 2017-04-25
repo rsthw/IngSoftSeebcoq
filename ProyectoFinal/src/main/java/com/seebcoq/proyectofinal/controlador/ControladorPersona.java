@@ -45,6 +45,15 @@ public class ControladorPersona{
     List<Persona> ps = q1.getResultList();
     return !ps.isEmpty();
   }
+  
+  public boolean buscarCorreo(String correo){
+      EntityManager em = emf.createEntityManager();
+      TypedQuery<Persona> query = em.createQuery("SELECT p FROM Persona p WHERE p.correo = \'"+correo+"\'" , Persona.class);
+      List<Persona> results = query.getResultList();
+      
+      if(results.size() == 0) return false;
+      return true;
+  }
 
   public Persona buscarPersona(String correo, String password){
       EntityManager em = emf.createEntityManager();
