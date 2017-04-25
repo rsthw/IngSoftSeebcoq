@@ -44,6 +44,7 @@ public class PuestoIH implements Serializable {
     public PuestoIH(){
         HttpSession hs = UtilidadesSesion.getSession();
         id = (Long) hs.getAttribute("puestoId");
+        System.out.println(id);
     }
 
     public String getComentario(){
@@ -169,7 +170,6 @@ public void setRating1(Integer rating1) {
         System.out.println("hagoalgo");
         Double r = puestoCtrl.buscarCalificacion(puesto);
          if(r==null){
-
            return 0;
        }
     rating4 =r.intValue();

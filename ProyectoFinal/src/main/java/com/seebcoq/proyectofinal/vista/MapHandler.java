@@ -96,7 +96,7 @@ public class MapHandler {
     public void onMarkerSelect(OverlaySelectEvent event) {
         marker = (Marker) event.getOverlay();
         System.out.println(marker.getTitle());
-        
+        System.out.println(marker.getData());
         HttpSession hs = UtilidadesSesion.getSession();
         hs.setAttribute("puestoId", (Long)marker.getData());
     }
@@ -143,7 +143,7 @@ public class MapHandler {
     }
 
     public void agregarPuesto() throws IOException{
-        Marker marker = new Marker(new LatLng(lat, lng), nombre);
+        Marker marker = new Marker(new LatLng(lat, lng), nombre, puesto.getIdPuesto());
         //aqui se agrega a la base de datos
         advancedModel.addOverlay(marker);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Marker Added", "Lat:" + lat + ", Lng:" + lng));
