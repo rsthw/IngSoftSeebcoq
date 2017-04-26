@@ -91,7 +91,7 @@ public class PuestoIH implements Serializable {
             puesto = puestoCtrl.buscarPuesto(id);
             comentarios = puestoCtrl.buscarComentarios(puesto);
             imagen = puesto.getImagen();
-            if(imagen != null)
+            if(imagen != null && imagen.length() > 0)
                 imagen = "http://localhost:8084/ProyectoFinal/"+imagen.substring(imagen.indexOf("resources"));
             else
                 imagen = "http://localhost:8084/ProyectoFinal/resources/images/fast-food.jpg";
@@ -126,21 +126,6 @@ public class PuestoIH implements Serializable {
     public void eliminarComentario(Comentario com) {
         puestoCtrl.eliminarComentario(com);
         comentarios.remove(com);
-    }
-
-    /**
-     * Añade un puesto con los parametros dados
-     *
-     * @param nombre nombre del puesto
-     * @param lat latitud donde se encuentra
-     * @param lng longitud donde se enecuentra
-     */
-    public void AddPuesto(String nombre, double lat, double lng) {
-        Puesto p = new Puesto();
-        p.setNombre(nombre);
-        p.setLatitud(lat);
-        p.setLongitud(lng);
-        puestoCtrl.agregaPuesto(puesto);
     }
 
     public List<Menu> getMenu() {
@@ -184,22 +169,11 @@ public class PuestoIH implements Serializable {
         this.imagen = imagen;
     }
 
-    public void onrate(RateEvent rateEvent) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Rate Event", "You rated:" + ((Integer) rateEvent.getRating()).intValue());
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
-
-    public void oncancel() {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cancel Event", "Rate Reset");
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
-
     public Integer getRating1() {
         return rating1;
     }
 
     public void setRating1(Integer rating1) {
-
         this.rating1 = rating1;
     }
 
@@ -220,11 +194,20 @@ public class PuestoIH implements Serializable {
         this.rating4 = rating4;
     }
 
-    public String calificar() {
+    public void calificar() {
         HttpSession hs = UtilidadesSesion.getSession();
         Persona persona = (Persona) hs.getAttribute("persona_usuario");
-        puestoCtrl.guardarCalificacion(rating1, puesto, persona);
-        return "se guardo la calificacion";
+        if (persona != null && rating1 != null && rating1>0) {
+            puestoCtrl.guardarCalificacion(rating1, puesto, persona);
+            // Actualizar valor del puesto y rating4
+            Double d = puestoCtrl.buscarCalificacion(puesto);
+            d = Math.floor(d+0.5);
+            rating4.intValue();
+        }
+        
     }
-
+    
+    public Puesto getPuesto(){
+        return puesto;
+    }
 }

@@ -11,6 +11,13 @@
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
+        <from-view-id>/Puesto.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>logout</from-outcome>
+            <to-view-id>/Puesto.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
         <from-view-id>/DespliegaPuestos.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>logout</from-outcome>

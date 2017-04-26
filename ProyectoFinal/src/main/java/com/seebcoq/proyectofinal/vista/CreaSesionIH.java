@@ -75,9 +75,9 @@ public class CreaSesionIH {
                   "Por favor, intente iniciar sesion con su correo y contasenia."));
                   return "";
       }else{
-        cp.guardarPersona(nombre,apellidoP,apellidoM,email,password,nombreDeUsuario);
+            cp.guardarPersona(nombre,apellidoP,apellidoM,email,password,nombreDeUsuario);
       }
       cp.ControladorPersonaCerrar();
-      return "exito";
+      return "iniciarSesion.xhtml?faces-redirect=true";
     }
 }

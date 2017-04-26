@@ -79,26 +79,25 @@ public class ControladorPuesto {
     }
 
     public List<Calificacion> buscarCalificaciones(Puesto puesto) {
-        List<Calificacion> calificaciones = new ArrayList<Calificacion>();
-        calificaciones.addAll(puesto.getCalificacionList());
-        return calificaciones;
+        return puesto.getCalificacionList();
     }
 
     public Double buscarCalificacion(Puesto puesto) {
-        Double actual = puesto.getCalificacion();
+        Double actual = 0.0;
         int totalCalfs = buscarCalificaciones(puesto).size();
-        List<Calificacion> calfs = buscarCalificaciones(puesto);
-        for (Calificacion c : calfs) {
-            actual = (actual + c.getCalificacion());
-            System.out.println(actual);
-        }
-        actual = (actual) / totalCalfs;
-        puesto.setCalificacion(actual);
-        PuestoJpaController ctrl_puesto = new PuestoJpaController(emf);
-        try {
-            ctrl_puesto.edit(puesto);
-        } catch (Exception e) {
-            System.out.println("no se pudo actualizar la calificacion");
+        if (totalCalfs > 0) {
+            List<Calificacion> calfs = buscarCalificaciones(puesto);
+            for (Calificacion c : calfs) {
+                actual = (actual + c.getCalificacion());
+            }
+            actual = (actual) / totalCalfs;
+            puesto.setCalificacion(actual);
+            PuestoJpaController ctrl_puesto = new PuestoJpaController(emf);
+            try {
+                ctrl_puesto.edit(puesto);
+            } catch (Exception e) {
+                System.out.println("no se pudo actualizar la calificacion");
+            }
         }
         return actual;
     }
@@ -109,37 +108,32 @@ public class ControladorPuesto {
     }
 
     public void guardarCalificacion(int c, Puesto puesto, Persona persona) {
-        PuestoJpaController ctrl_puesto = new PuestoJpaController(emf);
-
-        Long idPuesto = puesto.getIdPuesto();
-        Long idUsuario = persona.getIdPersona();
-
-        System.out.println(idPuesto);
-        System.out.println(idUsuario);
-        System.out.println(c);
-        System.out.println("trabajando");
-
-        CalificacionPK pk = new CalificacionPK(idPuesto, idUsuario);
-        Calificacion nueva = new Calificacion(pk, c);
-
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-
-        em.persist(nueva);
-        System.out.println("trabajando calificacion");
-        em.getTransaction().commit();
-        em.close();
-
-        
-        System.out.println("sigo trabajando");
-        try {
-            ctrl_puesto.edit(puesto);
-            Double actual = puesto.getCalificacion();
-            actual = (actual + c) / 2;
-            puesto.setCalificacion(actual);
-        } catch (Exception ex) {
-            System.out.println("no se pudo actualizar el puesto");
-            ex.printStackTrace();
+        CalificacionJpaController ctrl_cal = new CalificacionJpaController(emf);
+        boolean esNueva = false;
+        Calificacion anterior = ctrl_cal.findCalificacion(new CalificacionPK(puesto.getIdPuesto(), persona.getIdPersona()));
+        if (anterior == null) {
+            esNueva = true;
         }
+
+        if (esNueva) {
+            Calificacion cal = new Calificacion();
+            cal.setCalificacion(c);
+            cal.setPersona(persona);
+            cal.setPuesto(puesto);
+
+            try {
+                ctrl_cal.create(cal);
+            } catch (Exception e) {
+                System.out.println("No se guarda calificacion");
+            }
+        } else {
+            anterior.setCalificacion(c);
+            try {
+                ctrl_cal.edit(anterior);
+            } catch (Exception e) {
+                System.out.println("No se guarda calificacion");
+            }
+        }
+
     }
 }

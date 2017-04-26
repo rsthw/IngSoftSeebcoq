@@ -11,6 +11,7 @@
     <h:body>
         <h:outputStylesheet name="css/829.css" />
         <h:form>
+            
             <p:menubar>
 
                 <f:facet name="options">
@@ -31,6 +32,7 @@
 
         <div id="content">
             <h:form>
+                <p:growl id="msg" showDetail="true" life="3000" />
                 
                 <p:panel header="Crear Cuenta"  style="width: 40%; margin: 40px auto">
                     <h:panelGrid id="grid" columns="2" cellpadding="5">
@@ -84,6 +86,7 @@
                 </div>
             </div>
         </div>
-
+        
+        <h:commandButton action="index" />
     </h:body>
 </html>
