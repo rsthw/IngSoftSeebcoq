@@ -15,6 +15,9 @@
             <p:menubar>
 
                 <f:facet name="options">
+                    <p:commandButton value="Elimina un usuario"
+                                     action="eliminar_usuario.xhtml?faces-redirect=true"
+                                     rendered="#{iniciarSesionIH.valid eq 2}"/>
                     <p:commandButton value="Lista de Puestos"
                                      action="modificaPuesto.xhtml?faces-redirect=true"
                                      rendered="#{iniciarSesionIH.valid eq 2}"/>

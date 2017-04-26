@@ -130,12 +130,13 @@ public class ControladorPuesto {
         em.getTransaction().commit();
         em.close();
 
-        Double actual = puesto.getCalificacion();
-        actual = (actual + c) / 2;
-        puesto.setCalificacion(actual);
+        
         System.out.println("sigo trabajando");
         try {
             ctrl_puesto.edit(puesto);
+            Double actual = puesto.getCalificacion();
+            actual = (actual + c) / 2;
+            puesto.setCalificacion(actual);
         } catch (Exception ex) {
             System.out.println("no se pudo actualizar el puesto");
             ex.printStackTrace();
