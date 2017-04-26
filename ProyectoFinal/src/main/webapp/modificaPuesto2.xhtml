@@ -21,61 +21,65 @@
 
         <h:body>
 
-
-            <p:layout fullPage="true">
-                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
-
-
-                    <h:form id = "menu">
-                        <p:menubar>
-
-                            <f:facet name="options">
-                                <p:commandButton value="Lista de Puestos" 
-                                                 action="DespliegaPuestos.xhtml?faces-redirect=true" 
-                                                 rendered="#{iniciarSesionIH.valid eq 2}"/>
-                                <p:commandButton value="Mapa" 
-                                                 action="index.xhtml?faces-redirect=true" />
-                            </f:facet>
-
-                            <f:facet name="options" >
-                                <h:outputText value="Bienvenido, "
-                                              rendered="#{not empty iniciarSesionIH.valid}" />
-                                <h:outputText value="#{iniciarSesionIH.usuario}"
-                                              rendered="#{not empty iniciarSesionIH.valid}" />
-                                <h:outputText value="   "
-                                              rendered="#{not empty iniciarSesionIH.valid}" />
-                                <p:commandButton value="Cerrar Sesión" 
-                                                 action="#{iniciarSesionIH.cerrarSesion}" 
-                                                 ajax="false"
-                                                 rendered="#{not empty iniciarSesionIH.valid}" />
-                            </f:facet>
-                            <f:facet name="options">
-                                <p:commandButton type="submit" 
-                                                 value="Crear Nuevo Usuario" 
-                                                 ajax = "false" 
-                                                 action="crearCuenta.xhtml?faces-redirect=true"
-                                                 rendered="#{empty iniciarSesionIH.valid}"/>
-                                <p:commandButton type="submit" 
-                                                 value="Iniciar Sesión" 
-                                                 ajax = "false" 
-                                                 action="iniciarSesion.xhtml?faces-redirect=true"
-                                                 rendered="#{empty iniciarSesionIH.valid}"/>
-                            </f:facet>
-                        </p:menubar>
-                    </h:form>
+               
+            <h:outputStylesheet name="css/829.css" />
 
 
 
 
-                </p:layoutUnit>
 
-                <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
-                </p:layoutUnit>
 
-                <p:layoutUnit position="center" header="Modifica el puesto  #{mapHandler.puesto.nombre}" size="250" collapsible="false">
+
+
+            <h:form id = "menu">
+                <p:menubar>
+
+                    <f:facet name="options">
+                        <p:commandButton value="Lista de Puestos"
+                                         action="modificaPuesto.xhtml?faces-redirect=true"
+                                         rendered="#{iniciarSesionIH.valid eq 2}"/>
+                        <p:commandButton value="Mapa"
+                                         action="index.xhtml?faces-redirect=true" />
+                    </f:facet>
+
+                    <f:facet name="options" >
+                        <h:outputText value="Bienvenido, "
+                                      rendered="#{not empty iniciarSesionIH.valid}" />
+                        <h:outputText value="#{iniciarSesionIH.usuario}"
+                                      rendered="#{not empty iniciarSesionIH.valid}" />
+                        <h:outputText value="   "
+                                      rendered="#{not empty iniciarSesionIH.valid}" />
+                        <p:commandButton value="Cerrar Sesión"
+                                         action="#{iniciarSesionIH.cerrarSesion}"
+                                         ajax="false"
+                                         rendered="#{not empty iniciarSesionIH.valid}" />
+                    </f:facet>
+                    <f:facet name="options">
+                        <p:commandButton type="submit"
+                                         value="Crear Nuevo Usuario"
+                                         ajax = "false"
+                                         action="crearCuenta.xhtml?faces-redirect=true"
+                                         rendered="#{empty iniciarSesionIH.valid}"/>
+                        <p:commandButton type="submit"
+                                         value="Iniciar Sesión"
+                                         ajax = "false"
+                                         action="iniciarSesion.xhtml?faces-redirect=true"
+                                         rendered="#{empty iniciarSesionIH.valid}"/>
+                    </f:facet>
+                </p:menubar>
+            </h:form>
+
+            <div id="navigation">
+                <span class="titulo">FAST FOOD</span>
+                <i> <br></br>Encuentra la mejor comida en la Facultad de Ciencias, UNAM.</i>
+            </div>
+
+            <div id="content">
+                <p:layout>
+                <p:layoutUnit position="center" size="250" collapsible="false">
                     <h:form enctype="multipart/form-data">
                         <p:growl showDetail="true"/>
-
+                        <p:panel header="Modifica un Puesto">
                         <p:outputPanel id="carDetail" style="text-align:center;">
                             <p:panelGrid  columns="2" rendered="#{not empty mapHandler.puesto}" columnClasses="label,value">
 
@@ -98,7 +102,7 @@
 
 
 
-                        </p:outputPanel>
+                        </p:outputPanel></p:panel>
 
 
 
@@ -121,8 +125,9 @@
                     </h:form>
                 </p:layoutUnit>
 
-                <p:layoutUnit position="east" header="Ubicación" size="700" closable="false" collapsible="false">                     
+                <p:layoutUnit position="east" size="700" closable="false" collapsible="false">                     
                     <p:growl id="messages" showDetail="true" />
+                    <p:panel header="Modifica la ubicación">
                     <p:gmap id="gmap" center="19.324328359583355,-99.17934268712997" zoom="18"
                             type="TERRAIN" model="#{mapHandler.advancedModel}"
                             style="width:100%;height:400px" onPointClick="handlePointClick(event);"
@@ -152,8 +157,10 @@
                         </h:form>
                     </p:dialog>
                     <script src="mapHandler.js"></script>
+                    </p:panel>
                 </p:layoutUnit>
             </p:layout>
+            </div>
         </h:body>
     </f:view>
 </html>

@@ -8,7 +8,7 @@
     <f:view contentType="text/html">
         <f:metadata>
             <f:viewParam name="productId" value="#{editorDePlatillos.id}" />
-        </f:metadata>  
+        </f:metadata>
         <h:head>
             <f:facet name="first">
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
@@ -17,50 +17,74 @@
         </h:head>
 
         <h:body>
+        <h:outputStylesheet name="css/829.css" />
 
-            <p:layout fullPage="true">
 
-                <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
-                    <h:form id ="menu">
-                        <p:growl id="messages" showDetail="true" />
-                        <p:menubar>
-                            <f:facet name="options" >
-                                <h:outputText value="Bienvenido, "
-                                              rendered="#{not empty iniciarSesionIH.valid}" />
-                                <h:outputText value="#{iniciarSesionIH.usuario}"
-                                              rendered="#{not empty iniciarSesionIH.valid}" />
-                                <h:outputText value="   "
-                                              rendered="#{not empty iniciarSesionIH.valid}" />
-                                <p:commandButton value="Mapa" 
-                                                 action="index.xhtml?faces-redirect=true" />
-                                <p:commandButton value="Cerrar Sesión"
-                                                 action="#{iniciarSesionIH.cerrarSesion}"
-                                                 rendered="#{not empty iniciarSesionIH.valid}"
-                                                 onclick = "$(#menu).load(index.xhtml #menu);"/>
 
-                            </f:facet>
-                            <f:facet name="options">
-                                <p:commandButton type="submit"
-                                                 value="Crear Nuevo Usuario"
-                                                 ajax = "false"
-                                                 action="crearCuenta.xhtml?faces-redirect=true"
-                                                 rendered="#{empty iniciarSesionIH.valid}"/>
-                                <p:commandButton type="submit"
-                                                 value="Iniciar Sesión"
-                                                 ajax = "false"
-                                                 action="iniciarSesion.xhtml?faces-redirect=true"
-                                                 rendered="#{empty iniciarSesionIH.valid}"/>
-                            </f:facet>
-                        </p:menubar>
+
+
+
+
+
+        <h:form id = "menu">
+            <p:menubar>
+
+                <f:facet name="options">
+                    <p:commandButton value="Lista de Puestos"
+                                     action="modificaPuesto.xhtml?faces-redirect=true"
+                                     rendered="#{iniciarSesionIH.valid eq 2}"/>
+                    <p:commandButton value="Mapa"
+                                     action="index.xhtml?faces-redirect=true" />
+                </f:facet>
+
+                <f:facet name="options" >
+                    <h:outputText value="Bienvenido, "
+                                  rendered="#{not empty iniciarSesionIH.valid}" />
+                    <h:outputText value="#{iniciarSesionIH.usuario}"
+                                  rendered="#{not empty iniciarSesionIH.valid}" />
+                    <h:outputText value="   "
+                                  rendered="#{not empty iniciarSesionIH.valid}" />
+                    <p:commandButton value="Cerrar Sesión"
+                                     action="#{iniciarSesionIH.cerrarSesion}"
+                                     ajax="false"
+                                     rendered="#{not empty iniciarSesionIH.valid}" />
+                </f:facet>
+                <f:facet name="options">
+                    <p:commandButton type="submit"
+                                     value="Crear Nuevo Usuario"
+                                     ajax = "false"
+                                     action="crearCuenta.xhtml?faces-redirect=true"
+                                     rendered="#{empty iniciarSesionIH.valid}"/>
+                    <p:commandButton type="submit"
+                                     value="Iniciar Sesión"
+                                     ajax = "false"
+                                     action="iniciarSesion.xhtml?faces-redirect=true"
+                                     rendered="#{empty iniciarSesionIH.valid}"/>
+                </f:facet>
+            </p:menubar>
+        </h:form>
+
+        <div id="navigation">
+            <span class="titulo">FAST FOOD</span>
+            <i> <br></br>Encuentra la mejor comida en la Facultad de Ciencias, UNAM.</i>
+        </div>
+
+        <div id="content">
+
+            
+                    <h:form id="platillos"  style="margin: 0 auto; width: 40%;">
+                         <span class="titulo">#{editorDePlatillos.puesto.nombre}</span>
+                         <p:panel header="Ingresa el alimento">
+                            <h:panelGrid columns="2"  cellpadding="5">
+                                <p:outputLabel for="nombrePlatillo" value="Nombre: " />
+                                <p:inputText id="nombrePlatillo" value="#{editorDePlatillos.nuevoNombre}"  required="true" />
+                            </h:panelGrid>
+                            <p:commandButton value="Agregar" action="#{editorDePlatillos.agregaPlatillo()}" ajax="false" icon="ui-icon-check"
+                                             onclick="$(#platillos).load(AgregaPlatillo.xhtml #platillos);"/>
+                        </p:panel>
                     </h:form>
-                </p:layoutUnit>
-
-                <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
-                </p:layoutUnit>
-
-                <p:layoutUnit position="east" size="700" closable="false" collapsible="false">
-                    <h:form id="platillos">
-                        <p:dataScroller value="#{editorDePlatillos.platillos}" var="platillo" chunkSize="10" >
+            <h:form  style="margin: 0 auto; width: 40%;">
+                        <p:dataScroller value="#{editorDePlatillos.platillos}" var="platillo" chunkSize="10">
 
                             <f:facet name="loader">
                                 <p:commandButton type="button" value="More" icon="ui-icon-circle-triangle-s"/>
@@ -78,24 +102,13 @@
                             </h:panelGrid>
                         </p:dataScroller>
                     </h:form>
-                </p:layoutUnit>
+                
+                    
+                    
+               
 
-                <p:layoutUnit position="center" header="Registra un platillo" size="250" collapsible="false">
-                    <p:outputLabel value="Puesto: " />
-                    <p:outputLabel value="#{editorDePlatillos.puesto.nombre}" />
-                    <h:form>
-                        <p:panel>
-                            <h:panelGrid columns="2" cellpadding="5">
-                                <p:outputLabel for="nombrePlatillo" value="Nombre: " />
-                                <p:inputText id="nombrePlatillo" value="#{editorDePlatillos.nuevoNombre}"  required="true" />    
-                            </h:panelGrid>
-                            <p:commandButton value="Agregar" action="#{editorDePlatillos.agregaPlatillo()}" ajax="false" icon="ui-icon-check"
-                                             onclick="$(#platillos).load(AgregaPlatillo.xhtml #platillos);"/>
-                        </p:panel>
-                    </h:form>
-                </p:layoutUnit>
-
-            </p:layout>
+            
+        </div>
 
         </h:body>
 
