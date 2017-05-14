@@ -1,5 +1,6 @@
 package com.seebcoq.proyectofinal.vista;
 
+import com.seebcoq.proyectofinal.controlador.SendMail;
 import com.seebcoq.proyectofinal.controlador.EmailValidador;
 import com.seebcoq.proyectofinal.controlador.ControladorPersona;
 import javax.faces.application.FacesMessage;
@@ -76,6 +77,8 @@ public class CreaSesionIH {
                   return "";
       }else{
             cp.guardarPersona(nombre,apellidoP,apellidoM,email,password,nombreDeUsuario);
+            SendMail mail = new SendMail();
+            mail.envioCorreo("Verificaion de Correo, FastFood.",nombre+":\n  Si recibiste este correo entonces tu cuenta ha sido creada con exito.\n\n\n Saludos, el equipo de SeebCoq.",email);
       }
       cp.ControladorPersonaCerrar();
       return "iniciarSesion.xhtml?faces-redirect=true";
