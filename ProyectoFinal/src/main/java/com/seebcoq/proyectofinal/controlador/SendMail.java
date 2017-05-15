@@ -14,7 +14,7 @@ import javax.mail.internet.MimeMessage;
 public class SendMail {
 
   final static String USERNAME = "seebCoq@gmail.com";
-  final static String PASSWORD = "CambienEsto";
+  final static String PASSWORD = "MeCagasUlises";
 
   public void envioCorreo(String asunto,String mensaje,String destino){
     Properties props = new Properties();

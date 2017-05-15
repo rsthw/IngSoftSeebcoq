@@ -85,17 +85,17 @@
       <type>jar</type>
     </dependency>
     <dependency>
-      <groupId>com.sun.mail</groupId>
-      <artifactId>javax.mail</artifactId>
-      <version>1.6.0-rc1</version>
-    </dependency>
-    <dependency>
       <groupId>javax</groupId>
       <artifactId>javaee-web-api</artifactId>
       <version>7.0</version>
       <scope>provided</scope>
     </dependency>
-  </dependencies>
+    <dependency>
+        <groupId>javax.mail</groupId>
+     <artifactId>mail</artifactId>
+     <version>1.4</version>
+        </dependency>
+    </dependencies>
 
   <build>
     <plugins>
