@@ -92,11 +92,11 @@ public class PuestoIH implements Serializable {
             comentarios = puestoCtrl.buscarComentarios(puesto);
             imagen = puesto.getImagen();
             if(imagen != null && imagen.length() > 0)
-                imagen = "http://localhost:8084/ProyectoFinal/"+imagen.substring(imagen.indexOf("resources"));
+                imagen = "http://localhost:8080/ProyectoFinal/"+imagen.substring(imagen.indexOf("resources"));
             else
-                imagen = "http://localhost:8084/ProyectoFinal/resources/images/fast-food.jpg";
+                imagen = "http://localhost:8080/ProyectoFinal/resources/images/fast-food.jpg";
         } else {
-            imagen = "http://localhost:8084/ProyectoFinal/resources/images/fast-food.jpg";
+            imagen = "http://localhost:8080/ProyectoFinal/resources/images/fast-food.jpg";
         }
         System.out.println(imagen);
     }

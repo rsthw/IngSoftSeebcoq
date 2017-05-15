@@ -1,0 +1,113 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Crear Cuenta</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <h:outputStylesheet name="css/829.css" />
+        <h:form>
+
+            <p:menubar>
+
+                <f:facet name="options">
+                    <p:commandButton value="Mapa"
+                                     action="index.xhtml?faces-redirect=true" />
+                    <p:commandButton type="submit"
+                                     value="Iniciar Sesión"
+                                     ajax = "false"
+                                     action="iniciarSesion.xhtml?faces-redirect=true"
+                                     rendered="#{empty iniciarSesionIH.valid}"/>
+                </f:facet>
+            </p:menubar>
+        </h:form>
+        <div id="navigation">
+            <span class="titulo">FAST FOOD</span>
+            <i> <br></br>Encuentra la mejor comida en la Facultad de Ciencias, UNAM.</i>
+        </div>
+
+        <div id="content">
+                <h:form enctype="multipart/form-data">
+                        <p:growl showDetail="true"/>
+                        <p:panel header="Editar Cuenta" style="width: 40%; margin: 40px auto">
+                       <h:panelGrid columns="2" columnClasses="column" cellpadding="5">
+                            <h:outputLabel for="basic" value="Nombre de Usuario:" />
+                                <p:inplace id="nombreDeUsuario">
+                                    <p:inputText value="#{usuarioIH.nombreDeUsuario}" />
+                                </p:inplace>
+                            
+                            <h:outputLabel for="basic" value="Nombre:" />
+                                <p:inplace id="nombre">
+                                    <p:inputText value="#{usuarioIH.nombre}" />
+                                </p:inplace>
+                            
+                            <h:outputLabel for="basic" value="Apellido Paterno:" />
+                                <p:inplace id="apellidoP">
+                                    <p:inputText value="#{usuarioIH.apellidoP}" />
+                                </p:inplace>
+                            
+                            <h:outputLabel for="basic" value="Apellido Materno:" />
+                                <p:inplace id="apellidoM">
+                                    <p:inputText value="#{usuarioIH.apellidoM}" />
+                                </p:inplace>
+                            
+                             <h:outputLabel for="basic" value="Contraseña:" />
+                                
+                                    <p:inputText type ="password" value="#{usuarioIH.password}" />
+                                
+                        <!--
+
+                        <h:outputLabel for="nombre" value="Nombre " style="font-weight:bold"/>
+                        <p:inputText id="nombre" value="{creaSesionIH.nombre}" required="true" label="Nombre"/>
+                        <p:message for="nombre" />
+                        <h:outputText value="{creaSesionIH.nombre}" />
+
+                        <h:outputLabel for="apellidoP" value="Apellido Paterno " style="font-weight:bold"/>
+                        <p:inputText id="apellidoP" value="{creaSesionIH.apellidoP}" required="true" label="ApellidoP"/>
+                        <p:message for="apellidoP" />
+                        <h:outputText value="{creaSesionIH.apellidoP}" />
+
+                        <h:outputLabel for="apellidoM" value="ApellidoM " style="font-weight:bold"/>
+                        <p:inputText id="apellidoM" value="{creaSesionIH.apellidoM}" required="true" label="ApellidoM"/>
+                        <p:message for="apellidoM" />
+                        <h:outputText value="{creaSesionIH.apellidoM}" />
+
+                        <h:outputLabel for="email1" value="Correo de Ciencias" style="font-weight:bold"/>
+                        <p:inputText id="email1" value="{creaSesionIH.email}" required="true">
+                            <f:validator validatorId="crearCuenta.emailValidador" />
+                        </p:inputText>
+                        <p:message for="email1" display="tooltip" />
+                        <h:outputText value="{creaSesionIH.email}" />
+
+                        <h:outputLabel for="pwd1" value="Contraseña " style="font-weight:bold"/>
+                        <p:password id="pwd1" value="{creaSesionIH.password}" match="pwd2" label="Password 1" required="true" feedback="true" />
+
+                        <h:outputLabel for="pwd2" value="Repetir la contraseña " style="font-weight:bold"/>
+                        <p:password id="pwd2" value="{creaSesionIH.password}" label="Password 2" required="true" />-->
+                    </h:panelGrid>
+                    <br/>
+                    <p:commandButton value="Guardar Cambios" action="#{usuarioIH.modificaUsuario}" ajax="false" icon="ui-icon-check" validateClient="true"/>
+                
+                        </p:panel>
+            </h:form>
+            <div id="footer">
+                <ul>
+                    <li><a href="#">Sobre Fast Food </a></li>
+                    <li><a href="#">Contacto </a></li>
+                    <li><a href="#">Aviso de Privacidad</a></li>
+                </ul>
+                <div id="logo"><p>
+                        Creado por SéebCoq 2017 <br></br>
+                        <img src="3.png" /></p>
+
+                </div>
+            </div>
+        </div>
+
+        
+    </h:body>
+</html>
