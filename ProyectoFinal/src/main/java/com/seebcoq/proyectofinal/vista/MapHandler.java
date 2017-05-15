@@ -85,7 +85,7 @@ public class MapHandler {
             p.setCalificacion(0.0);
             // Se guarda la imagen si existe
             if(imagen.getSize() > 0){
-                Path folder = Paths.get("/home/slf/Documents/Maven/IngSoftSeebcoq/ProyectoFinal/src/main/webapp/resources/images");
+                Path folder = Paths.get("/home/valeria/NetBeansProjects/ProyectoFinal/src/main/webapp/resources/images");
                 String filename = FilenameUtils.getBaseName(imagen.getFileName());
                 String extension = FilenameUtils.getExtension(imagen.getFileName());
                 Path file = Files.createTempFile(folder, filename + "-", "." + extension);

@@ -75,10 +75,10 @@
 
                         <p:message for="password"></p:message>
                         <p:spacer></p:spacer>
-
-
+                        
                         <p:commandButton action="#{iniciarSesionIH.iniciarSesion}" styleClass="mygreen" value="Login" update="loginForm" ajax="false"/>
-
+                        <p:commandLink id="ajax" value="Olvidaste tu contrasenia?" action="#{iniciarSesionIH.contraseniaOlvidada}" ajax="false"/>
+                        
                     </h:panelGrid>
 
                 </p:panel>
@@ -98,6 +98,8 @@
                 </div>
             </div>
         </div>
+        
+        
 
     </h:body>
 </html>

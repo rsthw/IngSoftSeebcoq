@@ -1,9 +1,11 @@
 package com.seebcoq.proyectofinal.vista;
 
 import com.seebcoq.proyectofinal.controlador.ControladorPersona;
+import com.seebcoq.proyectofinal.controlador.SendMail;
 import com.seebcoq.proyectofinal.controlador.UtilidadesSesion;
 import com.seebcoq.proyectofinal.modelo.Persona;
 import java.io.Serializable;
+import javax.faces.event.ActionEvent;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -109,5 +111,28 @@ public class IniciarSesionIH implements Serializable {
         valid = null;
         esAdmin = false;
         return "logout";
+    }
+    
+    public String contraseniaOlvidada(){
+        SendMail mail = new SendMail();
+        ControladorPersona cp = new ControladorPersona();
+        String contr = cp.buscarPersonaCorreogPass(correo);
+        if(contr == null){
+            addWarning("No existe cuenta con dicho correo.");
+            return "login";
+        }
+        mail.envioCorreo("Contrasenia Olvidada - FastFood", "FastFood :\n  Tu contrasenia es"+ contr +".\n\n\n Saludos, el equipo de SeebCoq.",correo);
+        addMessage("Correo enviado a "+correo+" con contrasenia olvidada.");
+        return "login";
+    }
+    
+     public void addMessage(String summary) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary,  null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+     
+     public void addWarning(String summary) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, summary,  null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 }
