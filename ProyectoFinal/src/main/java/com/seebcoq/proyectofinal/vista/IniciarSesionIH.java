@@ -113,16 +113,17 @@ public class IniciarSesionIH implements Serializable {
         return "logout";
     }
     
-    public void contraseniaOlvidada(ActionEvent actionEvent){
+    public String contraseniaOlvidada(){
         SendMail mail = new SendMail();
         ControladorPersona cp = new ControladorPersona();
         String contr = cp.buscarPersonaCorreogPass(correo);
         if(contr == null){
             addWarning("No existe cuenta con dicho correo.");
-            return;
+            return "login";
         }
         mail.envioCorreo("Contrasenia Olvidada - FastFood", "FastFood :\n  Tu contrasenia es"+ contr +".\n\n\n Saludos, el equipo de SeebCoq.",correo);
         addMessage("Correo enviado a "+correo+" con contrasenia olvidada.");
+        return "login";
     }
     
      public void addMessage(String summary) {
