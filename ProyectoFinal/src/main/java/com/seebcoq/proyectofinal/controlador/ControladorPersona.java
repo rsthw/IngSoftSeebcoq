@@ -100,4 +100,22 @@ public class ControladorPersona {
         Persona persona = buscarPersona(correo, password);
         return persona;
     }
+
+
+    public void cambiarUsername(String usuario, String nombre, String apellidoP, String apellidoM, String pass, Persona persona){
+      PersonaJpaController personaCtrl = new PersonaJpaController(emf);
+      persona.setNombreDeUsuario(usuario);
+      persona.setNombre(nombre);
+      persona.setApPaterno(apellidoP);
+      persona.setApPaterno(apellidoM);
+      persona.setContraseña(pass);
+      try{
+      personaCtrl.edit(persona);
+      }
+      catch (Exception e) {
+                System.out.println("no se pudo");;
+
+
+    }
+}
 }

@@ -29,10 +29,13 @@
                 <f:facet name="options" >
                     <h:outputText value="Bienvenido, "
                                   rendered="#{not empty iniciarSesionIH.valid}" />
-                    <h:outputText value="#{iniciarSesionIH.usuario}"
+                    <h:outputText value="#{usuarioIH.nombreDeUsuario}"
                                   rendered="#{not empty iniciarSesionIH.valid}" />
                     <h:outputText value="   "
                                   rendered="#{not empty iniciarSesionIH.valid}" />
+                    <p:commandButton value="Configuración"
+                                      action="config.xhtml?faces-redirect=true"
+                                      rendered="#{not empty iniciarSesionIH.valid}" />
                     <p:commandButton value="Cerrar Sesión"
                                      action="#{iniciarSesionIH.cerrarSesion}"
                                      rendered="#{not empty iniciarSesionIH.valid}"
