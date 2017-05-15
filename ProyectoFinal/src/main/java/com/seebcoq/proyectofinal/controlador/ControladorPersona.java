@@ -95,6 +95,17 @@ public class ControladorPersona {
         }
         return results.get(0);
     }
+    
+    public String buscarPersonaCorreogPass(String correo) {
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Persona> query = em.createQuery("SELECT p FROM Persona p WHERE p.correo = \'" + correo + "\'", Persona.class);
+        List<Persona> results = query.getResultList();
+
+        if (results.isEmpty()) {
+            return null;
+        }
+        return results.get(0).getContraseña();
+    }
 
     public Persona iniciarSesion(String correo, String password) {
         Persona persona = buscarPersona(correo, password);
