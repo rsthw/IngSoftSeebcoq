@@ -52,10 +52,10 @@
         </div>
 
         <div id="content">
-            <h:form id="loginForm">
+
                 <p:growl id="msg" showDetail="true" life="3000" />
                 <p:panel header="Login" style="width: 30%; margin: 40px auto">
-
+                <h:form id="loginForm">
 
                     <h:panelGrid id="loginPanel" columns="2" >
 
@@ -75,15 +75,35 @@
 
                         <p:message for="password"></p:message>
                         <p:spacer></p:spacer>
-                        
+
                         <p:commandButton action="#{iniciarSesionIH.iniciarSesion}" styleClass="mygreen" value="Login" update="loginForm" ajax="false"/>
-                        <p:commandLink id="ajax" value="Olvidaste tu contrasenia?" action="#{iniciarSesionIH.contraseniaOlvidada}" ajax="false"/>
-                        
-                    </h:panelGrid>
+                          </h:panelGrid>
+                          </h:form>
 
-                </p:panel>
 
-            </h:form>
+
+                        <h:form id="contrOlvidada">
+                          
+
+                          <p:commandLink value="Olvidaste tu contrasenia?" onclick="PF('dlg1').show();"/>
+
+
+
+                          <p:dialog header="Olvide mi contrasenia." widgetVar="dlg1" minHeight="40">
+                            <h:outputText value="Correo " />
+                            <p:inputText id="correo" value="#{contraseniaOlvidada.correoContrOlv}" required="true"></p:inputText>
+                            <p:spacer></p:spacer>
+                            <p:commandButton action="#{contraseniaOlvidada.contraseniaOlvidada}" value="Enviar Correo de recuperacion de contrasenia" update="contrOlvidada"  icon="ui-icon-check" />
+                          </p:dialog>
+
+                        </h:form>
+
+                      </p:panel>
+
+
+
+
+
 
             <div id="footer">
                 <ul>
@@ -98,8 +118,8 @@
                 </div>
             </div>
         </div>
-        
-        
+
+
 
     </h:body>
 </html>
