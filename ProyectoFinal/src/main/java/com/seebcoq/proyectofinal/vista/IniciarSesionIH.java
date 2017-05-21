@@ -20,13 +20,14 @@ public class IniciarSesionIH implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private Persona persona;
-    
+
     private String correo;
     private String password;
-    
+
     private Integer valid;
     private Boolean esAdmin;
-    
+
+
     public Boolean getEsAdmin(){
         return esAdmin;
     }
@@ -41,7 +42,7 @@ public class IniciarSesionIH implements Serializable {
     public String getUsuario(){
         return persona.getNombreDeUsuario();
     }
-    
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -61,7 +62,7 @@ public class IniciarSesionIH implements Serializable {
     public String iniciarSesion() {
         ControladorPersona personaCtrl = new ControladorPersona();
         persona = personaCtrl.iniciarSesion(correo, password);
-        
+
         int estado;
         if(persona == null){
             estado = 0;
@@ -72,12 +73,12 @@ public class IniciarSesionIH implements Serializable {
             else estado = 1;
         }
         personaCtrl.ControladorPersonaCerrar();
-        
+
         valid = estado;
-        
+
         String valor = "";
         HttpSession session = null;
-        
+
         switch (estado){
             case 1: // usuario
                 session = UtilidadesSesion.getSession();
@@ -112,27 +113,6 @@ public class IniciarSesionIH implements Serializable {
         esAdmin = false;
         return "logout";
     }
+
     
-    public String contraseniaOlvidada(){
-        SendMail mail = new SendMail();
-        ControladorPersona cp = new ControladorPersona();
-        String contr = cp.buscarPersonaCorreogPass(correo);
-        if(contr == null){
-            addWarning("No existe cuenta con dicho correo.");
-            return "login";
-        }
-        mail.envioCorreo("Contrasenia Olvidada - FastFood", "FastFood :\n  Tu contrasenia es"+ contr +".\n\n\n Saludos, el equipo de SeebCoq.",correo);
-        addMessage("Correo enviado a "+correo+" con contrasenia olvidada.");
-        return "login";
-    }
-    
-     public void addMessage(String summary) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary,  null);
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
-     
-     public void addWarning(String summary) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, summary,  null);
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
 }
