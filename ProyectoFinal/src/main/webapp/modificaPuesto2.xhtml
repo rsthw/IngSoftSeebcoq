@@ -75,12 +75,11 @@
             </div>
 
             <div id="content">
-                <p:layout>
-                <p:layoutUnit position="center" size="250" collapsible="false">
+               <div id="color4">
                     <h:form enctype="multipart/form-data">
                         <p:growl showDetail="true"/>
                         <p:panel header="Modifica un Puesto">
-                        <p:outputPanel id="carDetail" style="text-align:center;">
+                        <p:outputPanel id="carDetail" style="text-align:center; ">
                             <p:panelGrid  columns="2" rendered="#{not empty mapHandler.puesto}" columnClasses="label,value">
 
 
@@ -106,26 +105,10 @@
 
 
 
+                    </h:form></div>
+               
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    </h:form>
-                </p:layoutUnit>
-
-                <p:layoutUnit position="east" size="700" closable="false" collapsible="false">                     
+                       <div id ="color4">    
                     <p:growl id="messages" showDetail="true" />
                     <p:panel header="Modifica la ubicación">
                     <p:gmap id="gmap" center="19.324328359583355,-99.17934268712997" zoom="18"
@@ -158,8 +141,7 @@
                     </p:dialog>
                     <script src="mapHandler.js"></script>
                     </p:panel>
-                </p:layoutUnit>
-            </p:layout>
+            </div>
             </div>
         </h:body>
     </f:view>

@@ -4,6 +4,27 @@
         <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
     <!-- Context -->
+<error-page>
+        <error-code>404</error-code>
+        <location>/faces/error.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/faces/error.xhtml</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/faces/error.xhtml</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.io.FileNotFoundException</exception-type>
+        <location>/faces/error.xhtml</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/faces/error.xhtml</location>
+    </error-page>
+    
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>

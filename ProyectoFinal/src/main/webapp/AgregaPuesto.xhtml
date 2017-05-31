@@ -69,12 +69,7 @@
             </div>
 
             <div id="content">
-                <p:layout>
-
-
-
-
-                    <p:layoutUnit position="west"   collapsible="false">
+                <div id="color4">
                         <h:form enctype="multipart/form-data">
                             <p:growl showDetail="true"/>
                             <p:panel header="Añadir un Puesto">
@@ -88,9 +83,9 @@
                                 <p:commandButton value="Crear Puesto" action="#{mapHandler.agregarPuesto()}" ajax="false" icon="ui-icon-check"/>
                             </p:panel>
                         </h:form>
-                    </p:layoutUnit>
+                    </div>
 
-                    <p:layoutUnit position="center"   >
+                    <div id="color4">
                         <p:panel header="Selecciona la posición del puesto">
                             <p:growl id="messages" showDetail="true" />
                             <p:gmap id="gmap" center="19.324328359583355,-99.17934268712997" zoom="18"
@@ -122,21 +117,9 @@
                             </p:dialog>
                             <script src="mapHandler.js"></script>
                         </p:panel>
-                    </p:layoutUnit>
-                </p:layout>
+                    </div>
             </div>
-            <div id="footer">
-                <ul>
-                    <li><a href="#">Sobre Fast Food </a></li>
-                    <li><a href="#">Contacto </a></li>
-                    <li><a href="#">Aviso de Privacidad</a></li>
-                </ul>
-                <div id="logo"><p>
-                        Creado por SéebCoq 2017 <br></br>
-                        <img src="3.png" /></p>
-
-                </div>
-            </div>
+           
 
 
         </h:body>

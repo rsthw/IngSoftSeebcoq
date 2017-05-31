@@ -46,9 +46,9 @@ public class MapHandler {
     private String nombre;
     private double lat;
     private double lng;
-
+    private Cambios cambios;
     private PuestoJpaController puestoCtrl;
-
+    private ContraseniaOlvidada con;
     private UploadedFile imagen;
     private Long id;
     private Puesto puesto;
@@ -96,7 +96,7 @@ public class MapHandler {
                 p.setImagen("");
             }
             puestoCtrl.agregaPuesto(p);
-            
+            //cambios.mandarCorreo("juanita");
             // Se agrega el Marker al mapa, con el Id nuevo
             
             EntityManagerFactory emf = Persistence.createEntityManagerFactory("comidaCienciasPersistentUnit");

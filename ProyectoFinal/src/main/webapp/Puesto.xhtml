@@ -56,6 +56,7 @@
 
             <div id="content">
                 <div id ="izq">
+                    <div id="color1">
                     <span class="titulo">  <h:outputText value="#{puestoIH.nombre}" /></span>
 
                     <div id ="fotos" >
@@ -66,7 +67,8 @@
                                 </h:outputLink>
                             </p:lightBox></h:form>
                     </div>
-
+                    </div>
+                    <div id="color2">
                     <span class="titulo2">¡Califica este puesto!</span> <br></br>
                     <h:form id="Calificar">
                         <!--p:growl id="messages" showDetail="true" /-->
@@ -89,18 +91,21 @@
                         </p:dialog>
 
                     </h:form>
+                    </div>
 
                     <p>
+                        <div id="color3">
                         <span class="titulo2">Opiniones</span> <br></br>
                         <h:form id="comentarioInput">
 
-                            <h:panelGrid id="grid" columns="2" cellpadding="5">
+                            <h:panelGrid id="grid" columns="1" cellpadding="5" style=" width: 100%;">
                                 <p:inputTextarea maxlength="255"
-                                                 autoResize="true"
+                                                 autoResize="true0"
                                                  id="comentario"
-                                                 style="width: 500px;"
+                                                 style="width:95%; "
                                                  value="#{puestoIH.comentario}"
                                                  required="true" label="Comentario"/>
+                                
                                 <p:commandButton value="Enviar" styleClass="styleGreen" 
                                                  id="botonEnviar"
                                                  action="#{puestoIH.guardarComentario}"
@@ -135,10 +140,12 @@
                                 </h:panelGrid>
                             </p:dataScroller>
                         </h:form>
+                        </div>
                     </p>
                 </div>
 
                 <div id ="der">
+                    
                     <span class="titulo2">Localización:</span> <br></br>
                     <h:form id="Mapa">
                         <p:growl id="messages" showDetail="true" />
@@ -187,16 +194,17 @@
 
             </div>
             <div id="footer">
+                
                 <ul>
                     <li><a href="#">Sobre Fast Food </a></li>
                     <li><a href="#">Contacto </a></li>
                     <li><a href="#">Aviso de Privacidad</a></li>
                 </ul>
-                <div id="logo"><p>
+               
                         Creado por SéebCoq 2017 <br></br>
-                        <img src="3.png" /></p>
+                        
 
-                </div>
+                
             </div>
         </div>
     </h:body>
