@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwJznevf6eTmR8HzMtXkrurOkthth1G1s"></script>
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Agregar Puestos</title>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+            <h:outputStylesheet name="css/829.css" />
+
+
+
+
+
+
+
+
+            <h:form id = "menu">
+                <p:menubar>
+
+                    <f:facet name="options">
+                        <p:commandButton value="Lista de Puestos"
+                                         action="modificaPuesto.xhtml?faces-redirect=true"
+                                         rendered="#{iniciarSesionIH.valid eq 2}"/>
+                        <p:commandButton value="Mapa"
+                                         action="index.xhtml?faces-redirect=true" />
+                    </f:facet>
+
+                    <f:facet name="options" >
+                        <h:outputText value="Bienvenido, "
+                                      rendered="#{not empty iniciarSesionIH.valid}" />
+                        <h:outputText value="#{iniciarSesionIH.usuario}"
+                                      rendered="#{not empty iniciarSesionIH.valid}" />
+                        <h:outputText value="   "
+                                      rendered="#{not empty iniciarSesionIH.valid}" />
+                        <p:commandButton value="Cerrar Sesión"
+                                         action="#{iniciarSesionIH.cerrarSesion}"
+                                         ajax="false"
+                                         rendered="#{not empty iniciarSesionIH.valid}" />
+                    </f:facet>
+                    <f:facet name="options">
+                        <p:commandButton type="submit"
+                                         value="Crear Nuevo Usuario"
+                                         ajax = "false"
+                                         action="crearCuenta.xhtml?faces-redirect=true"
+                                         rendered="#{empty iniciarSesionIH.valid}"/>
+                        <p:commandButton type="submit"
+                                         value="Iniciar Sesión"
+                                         ajax = "false"
+                                         action="iniciarSesion.xhtml?faces-redirect=true"
+                                         rendered="#{empty iniciarSesionIH.valid}"/>
+                    </f:facet>
+                </p:menubar>
+            </h:form>
+
+            <div id="navigation">
+                <span class="titulo">FAST FOOD</span>
+                <i> <br></br>Encuentra la mejor comida en la Facultad de Ciencias, UNAM.</i>
+            </div>
+
+            <div id="content">
+               AVISO DE PRIVACIDAD<br/>
+
+
+De acuerdo a lo previsto en la "LEY FEDERAL de Protección de Datos Personales" Fast Food declara ser una empresa legalmente constituida de conformidad con las leyes mexicanas, con domicilio ubicado en, Ciudad Universitaria, CDMX. así como manifestar ser la responsable del tratamiento de sus datos personales.
+
+Oficina de privacidad ubicada en: Mismo domicilio.<br/>
+
+Teléfonos de la oficina de privacidad:<br/>
+
+Correo electrónico: seebcoq@gmail.com .<br/>
+
+DEFINICIONES:<br/>
+
+Datos personales.- Cualquier información concerniente a una persona física identificada o identificable.<br/>
+
+Titular.- La persona física (TITULAR) a quien identifica o corresponden los datos personales.<br/>
+
+Responsable.- Persona física o moral de carácter privado que decide sobre el tratamiento de los datos personales.<br/>
+
+Tratamiento.- La obtención, uso (que incluye el acceso, manejo, aprovechamiento, transferencia o disposición de datos personales), divulgación o almacenamiento de datos personales por cualquier medio.<br/>
+
+Transferencia.- Toda comunicación de datos realizada a persona distinta del responsable o encargado del tratamiento.<br/>
+
+Derechos ARCO.- Derechos de acceso, rectificación, cancelación y oposición.<br/>
+
+Consentimiento Tácito.- Se entenderá que el titular ha consentido en el tratamiento de los datos, cuando habiéndose puesto a su disposición el Aviso de Privacidad, no manifieste su oposición.<br/>
+
+FINALIDADES PRIMARIAS.- Los datos personales que recabamos de usted, los utilizaremos solo para fines informativos. <br/>
+
+
+           
+
+            </div>
+        </h:body>
+    </f:view>
+</html>

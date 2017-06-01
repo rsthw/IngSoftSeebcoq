@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwJznevf6eTmR8HzMtXkrurOkthth1G1s"></script>
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Agregar Puestos</title>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+            <h:outputStylesheet name="css/829.css" />
+
+
+
+
+
+
+
+
+            <h:form id = "menu">
+                <p:menubar>
+
+                    <f:facet name="options">
+                        <p:commandButton value="Lista de Puestos"
+                                         action="modificaPuesto.xhtml?faces-redirect=true"
+                                         rendered="#{iniciarSesionIH.valid eq 2}"/>
+                        <p:commandButton value="Mapa"
+                                         action="index.xhtml?faces-redirect=true" />
+                    </f:facet>
+
+                    <f:facet name="options" >
+                        <h:outputText value="Bienvenido, "
+                                      rendered="#{not empty iniciarSesionIH.valid}" />
+                        <h:outputText value="#{iniciarSesionIH.usuario}"
+                                      rendered="#{not empty iniciarSesionIH.valid}" />
+                        <h:outputText value="   "
+                                      rendered="#{not empty iniciarSesionIH.valid}" />
+                        <p:commandButton value="Cerrar Sesión"
+                                         action="#{iniciarSesionIH.cerrarSesion}"
+                                         ajax="false"
+                                         rendered="#{not empty iniciarSesionIH.valid}" />
+                    </f:facet>
+                    <f:facet name="options">
+                        <p:commandButton type="submit"
+                                         value="Crear Nuevo Usuario"
+                                         ajax = "false"
+                                         action="crearCuenta.xhtml?faces-redirect=true"
+                                         rendered="#{empty iniciarSesionIH.valid}"/>
+                        <p:commandButton type="submit"
+                                         value="Iniciar Sesión"
+                                         ajax = "false"
+                                         action="iniciarSesion.xhtml?faces-redirect=true"
+                                         rendered="#{empty iniciarSesionIH.valid}"/>
+                    </f:facet>
+                </p:menubar>
+            </h:form>
+
+            <div id="navigation">
+                <span class="titulo">FAST FOOD</span>
+                <i> <br></br>Encuentra la mejor comida en la Facultad de Ciencias, UNAM.</i>
+            </div>
+
+            <div id="content">
+               ¡CONTACTANOS!<br/>
+
+
+               <p>Correo: seebcoq@gmail.com<br/>
+                   Telefono: 55 25 27 20 88 <br/></p>
+
+           
+
+            </div>
+        </h:body>
+    </f:view>
+</html>
