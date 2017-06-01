@@ -72,7 +72,7 @@
         <div id="content">
 
             
-                    <h:form id="platillos"  style="margin: 0 auto; width: 40%;">
+                    <h:form id="platillos"  style="margin: 0 auto; ">
                          <span class="titulo">#{editorDePlatillos.puesto.nombre}</span>
                          <p:panel header="Ingresa el alimento">
                             <h:panelGrid columns="2"  cellpadding="5">
@@ -83,17 +83,17 @@
                                              onclick="$(#platillos).load(AgregaPlatillo.xhtml #platillos);"/>
                         </p:panel>
                     </h:form>
-            <h:form  style="margin: 0 auto; width: 40%;">
-                        <p:dataScroller value="#{editorDePlatillos.platillos}" var="platillo" chunkSize="10">
+            <h:form  style="margin: 0 auto; " id="data">
+                        <p:dataScroller value="#{editorDePlatillos.platillos}" var="platillo" chunkSize="10" >
 
                             <f:facet name="loader">
-                                <p:commandButton type="button" value="More" icon="ui-icon-circle-triangle-s"/>
+                                <p:commandButton type="button" value="Mas" icon="ui-icon-circle-triangle-s"/>
                             </f:facet>
 
                             <h:panelGrid columns="2" style="width:50%" columnClasses="logo,detail">
                                 <p:outputPanel>
                                     <h:panelGrid columns="2" cellpadding="5">
-                                        <h:outputText value ="Platillo:"/>
+                                        
                                         <h:outputText value ="#{platillo.nombre}"/>
                                         <p:commandButton action="#{editorDePlatillos.eliminarPlatillo(platillo)}" value="Eliminar"
                                                          onclick="$(#platillos).load(AgregaPlatillo.xhtml #platillos);"/>

@@ -8,9 +8,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
 @ManagedBean
-public class ContraseniaOlvidada {
+public class Cambios{
 
-        private String correoContrOlv;
+        private String correoContrOlv = "amour.pale@gmail.com";
+        private String name;
 
       public String getCorreoContrOlv(){
         return correoContrOlv;
@@ -19,25 +20,22 @@ public class ContraseniaOlvidada {
       public void setCorreoContrOlv(String correoOlv){
         this.correoContrOlv = correoOlv;
       }
+      
+       public String name(){
+        return name;
+      }
 
-      public String contraseniaOlvidada(){
+      public void setName(String name){
+        this.name = name;
+      }
+
+    public String mandarCorreo(String nombre){
           SendMail mail = new SendMail();
 
-          System.out.println(correoContrOlv);
-
-          ControladorPersona cp = new ControladorPersona();
-          String contr = cp.buscarPersonaCorreogPass(correoContrOlv);
-          if(contr == null){
-              mail.envioCorreo("Contrasenia Olvidada - FastFood", "FastFood :\n  No tenemos este correo registrado en nuestra base de datos, Ste recomendamos crear una cuenta en nustro sitio! .\n\n\n Saludos, el equipo de SeebCoq.",correoContrOlv);
-              addWarning("No existe cuenta con dicho correo.");
-              return "login";
-          }
-          mail.envioCorreo("Contrasenia Olvidada - FastFood", "FastFood :\n  Tu contrasenia es " + contr + ".\n\n\n Saludos, el equipo de SeebCoq.",correoContrOlv);
-          addMessage("Correo enviado a " + correoContrOlv + " con contrasenia olvidada.");
+          mail.envioCorreo("Cambios - FastFood", "Se agregó el siguiente puesto en la webapp FastFood :\n  " + nombre + ".\n Para ver mas detalles, ingrese a la aplicación. \n\n Saludos, el equipo de SeebCoq.",correoContrOlv);
+          addMessage("Correo enviado a  con contrasenia olvidada.");
           return "login";
       }
-      
-      
 
        public void addMessage(String summary) {
           FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary,  null);
