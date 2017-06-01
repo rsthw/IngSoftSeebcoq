@@ -27,7 +27,7 @@
                 </f:facet>
 
                 <f:facet name="options" >
-                    <h:outputText value="Bienvenido, "
+                    <h:outputText value="Bienvenido(a), "
                                   rendered="#{not empty iniciarSesionIH.valid}" />
                     <h:outputText value="#{usuarioIH.nombreDeUsuario}"
                                   rendered="#{not empty iniciarSesionIH.valid}" />
@@ -64,7 +64,7 @@
             <h:form>
                 <p:gmap id="gmap" center="19.324328359583355,-99.17934268712997" zoom="18"
                         type="TERRAIN" model="#{mapHandler.advancedModel}"
-                        style="width:100%;height:700px;"
+                        style="width:100%;height:80vh;"
                         widgetVar="map">
 
                     <p:ajax event="overlaySelect" listener="#{mapHandler.onMarkerSelect}"/>

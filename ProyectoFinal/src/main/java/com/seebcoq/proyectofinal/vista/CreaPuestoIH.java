@@ -92,7 +92,7 @@ public class CreaPuestoIH {
         p.setLatitud(mh.getLat());
         p.setLongitud(mh.getLng());
         //Ruta donde se guardará la imagen y ruta ue se guardará en la BD
-        Path folder = Paths.get("/home/Ulises/GitHub/IngSoftSeebcoq/ProyectoFinal/src/main/resources");
+        Path folder = Paths.get(Variantes.URLImagenes);
         String filename = FilenameUtils.getBaseName(imagen.getFileName());
         String extension = FilenameUtils.getExtension(imagen.getFileName());
         Path file = Files.createTempFile(folder, filename + "-", "." + extension);

@@ -64,12 +64,7 @@ a {
     float: left;
 }
 
-#footer {
-    height: 180px;
-   width: 100%;
-    background: #1C8DC6;
-    clear: both;
-}
+
 #footer ul{
  float: left;
 }

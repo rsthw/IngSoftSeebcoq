@@ -16,7 +16,7 @@
                     <!--p:growl id="messages" showDetail="true" /-->
                     <p:menubar>
                         <f:facet name="options" >
-                            <h:outputText value="Bienvenido, "
+                            <h:outputText value="Bienvenido(a), "
                                           rendered="#{not empty iniciarSesionIH.valid}" />
                             <h:outputText value="#{iniciarSesionIH.usuario}"
                                           rendered="#{not empty iniciarSesionIH.valid}" />
@@ -79,7 +79,7 @@
                         <p:commandButton styleClass="styleGreen" 
                                          value="Calificar" 
                                          update="display" 
-                                         oncomplete="$(#Mapa).load(index.xhtml #Mapa);"
+                                         oncomplete="location.reload()"
                                          style="margin:5px"
                                          action="#{puestoIH.calificar}"
                                          disabled="#{empty iniciarSesionIH.valid}" />
@@ -153,6 +153,20 @@
                                 type="TERRAIN" model="#{mapHandler.advancedModel}"
                                 style="width:100%;height:400px" onPointClick="handlePointClick(event);"
                                 widgetVar="map">
+                            <p:ajax event="overlaySelect" listener="#{mapHandler.onMarkerSelect}"/>
+
+                            <p:gmapInfoWindow id="infoWindow">
+                                <p:outputPanel style="text-align: center; display: block; margin: auto">
+
+                                    <h:outputText value="#{mapHandler.marker.title}" />
+                                    <br/>
+                                    <p:commandButton type="submit"
+                                                     value="Ir al puesto"
+                                                     ajax = "false"
+                                                     action="Puesto.xhtml?faces-redirect=true" />
+
+                                </p:outputPanel>
+                            </p:gmapInfoWindow>
 
                         </p:gmap>
 

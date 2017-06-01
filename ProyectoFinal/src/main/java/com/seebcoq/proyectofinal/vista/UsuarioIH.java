@@ -127,7 +127,7 @@ public UsuarioIH(){
    public void modificaUsuario(){
      System.out.println("holi");
        personaCtrl.cambiarUsername(nombreDeUsuario, nombre, apellidoP, apellidoM, password, persona);
-       personaCtrl.ControladorPersonaCerrar();
+       //personaCtrl.ControladorPersonaCerrar();
        System.out.println("bye");
    }
 }

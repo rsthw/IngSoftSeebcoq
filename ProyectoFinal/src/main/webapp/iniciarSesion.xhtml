@@ -53,15 +53,15 @@
 
         <div id="content">
 
-                <p:growl id="msg" showDetail="true" life="3000" />
-                <p:panel header="Login" style="width: 30%; margin: 40px auto">
+            <p:growl id="msg" showDetail="true" life="3000" />
+            <p:panel header="Login" >
                 <h:form id="loginForm">
 
                     <h:panelGrid id="loginPanel" columns="2" >
 
                         <h:outputText value="Correo" />
 
-                        <p:inputText id="correo" value="#{iniciarSesionIH.correo}" required="true"></p:inputText>
+                        <p:inputText id="correo" value="#{iniciarSesionIH.correo}" required="true" style="width:95%"></p:inputText>
 
                         <p:spacer></p:spacer>
 
@@ -69,7 +69,7 @@
 
                         <h:outputText value="Contraseña" />
 
-                        <p:password id="password" value="#{iniciarSesionIH.password}"  feedback="false" required="true"></p:password>
+                        <p:password id="password" value="#{iniciarSesionIH.password}"  feedback="false" required="true" style="width:95%"></p:password>
 
                         <p:spacer></p:spacer>
 
@@ -77,45 +77,45 @@
                         <p:spacer></p:spacer>
 
                         <p:commandButton action="#{iniciarSesionIH.iniciarSesion}" styleClass="mygreen" value="Login" update="loginForm" ajax="false"/>
-                          </h:panelGrid>
-                          </h:form>
+                    </h:panelGrid>
+                </h:form>
 
 
 
-                        <h:form id="contrOlvidada">
-                          
-
-                          <p:commandLink value="¿Olvidaste tu contraseña?" onclick="PF('dlg1').show();"/>
+                <h:form id="contrOlvidada">
 
 
-
-                          <p:dialog header="Ingresa el correo de tu cuenta" widgetVar="dlg1" minHeight="40">
-                            <h:outputText value="Correo " />
-                            <p:inputText id="correo" value="#{contraseniaOlvidada.correoContrOlv}" required="true"></p:inputText>
-                            <p:spacer></p:spacer>
-                            <p:commandButton action="#{contraseniaOlvidada.contraseniaOlvidada}" value="Enviar Correo de recuperacion de contrasenia" update="contrOlvidada"  icon="ui-icon-check" />
-                          </p:dialog>
-
-                        </h:form>
-
-                      </p:panel>
+                    <p:commandLink value="¿Olvidaste tu contraseña?" onclick="PF('dlg1').show();"/>
 
 
+
+                    <p:dialog header="Ingresa el correo de tu cuenta" widgetVar="dlg1" minHeight="40">
+                        <h:outputText value="Correo " />
+                        <p:inputText id="correo" value="#{contraseniaOlvidada.correoContrOlv}" required="true"></p:inputText>
+                        <p:spacer></p:spacer>
+                        <p:commandButton action="#{contraseniaOlvidada.contraseniaOlvidada}" value="Enviar Correo de recuperacion de contrasenia" update="contrOlvidada"  icon="ui-icon-check" />
+                    </p:dialog>
+
+                </h:form>
+
+            </p:panel>
 
 
 
 
-               <div id="footer2">
+
+
+            <div id="footer">
                 <ul>
                     <li><a href="#">Sobre Fast Food </a></li>
                     <li><a href="#">Contacto </a></li>
                     <li><a href="#">Aviso de Privacidad</a></li>
                 </ul>
-               
-                        | Creado por SéebCoq 2017 
-                        
 
-               
+                | Creado por SéebCoq 2017 
+
+
+
             </div>
         </div>
 

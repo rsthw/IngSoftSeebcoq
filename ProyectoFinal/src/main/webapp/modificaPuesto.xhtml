@@ -28,7 +28,7 @@
                     </f:facet>
 
                     <f:facet name="options" >
-                        <h:outputText value="Bienvenido, "
+                        <h:outputText value="Bienvenido(a), "
                                       rendered="#{not empty iniciarSesionIH.valid}" />
                         <h:outputText value="#{iniciarSesionIH.usuario}"
                                       rendered="#{not empty iniciarSesionIH.valid}" />
@@ -64,35 +64,29 @@
                 <h:form id="form">
                     <p:growl showDetail="true"/>   
 
-                    <p:dataTable  id="basicDT" style="text-align: center; width: 95%; margin: 0 auto;" var="car" value="#{puestoIH.puestos}">
+                    <p:dataTable  id="basicDT" style="text-align: center; width: 97%; margin: 0 auto;" var="car" value="#{puestoIH.puestos}">
 
-                        <p:column headerText="id"  style="width:1px;text-align: center;">
+                        <p:column headerText="id"  style="width:5vw;text-align: center;">
                             <h:outputText value="#{car.idPuesto}" />
                         </p:column>    
-                        <p:column headerText="Puesto" style="width:50px;text-align: center">
+                        <p:column headerText="Puesto" style="width:20vw;text-align: center">
                             <h:outputText value="#{car.nombre}" />
                         </p:column>
-                        <p:column headerText="Latitud" style="width:50px;text-align: center">
-                            <h:outputText value="#{car.latitud}" />
-                        </p:column>
-                        <p:column headerText="Longitud" style="width:50px;text-align: center">
-                            <h:outputText value="#{car.longitud}" />
-                        </p:column>
 
 
-                        <p:column headerText="Edita" style="width:1px;text-align: center">
+                        <p:column headerText="Edita" style="width:5vw;text-align: center">
                             <p:button outcome="modificaPuesto2"  icon="ui-icon-pencil">
                                 <f:param name="productId" value="#{car.idPuesto}" />
                             </p:button>
                         </p:column>
 
-                        <p:column headerText="Platillos" style="width:1px;text-align: center">
+                        <p:column headerText="Platillos" style="width:5vw;text-align: center">
                             <p:button outcome="AgregaPlatillo"  icon="ui-icon-pencil">
                                 <f:param name="productId" value="#{car.idPuesto}" />
                             </p:button>
                         </p:column>
 
-                        <p:column headerText="Eliminar" style="width:1px;text-align: center">
+                        <p:column headerText="Eliminar" style="width:5vw;text-align: center">
                             <p:commandButton value="X" action="#{puestoIH.eliminarPuesto(car)}" ajax="false" 
                                              onclick="$(#basicDT).load(modificaPuesto.xhtml #basicDT);" />
                         </p:column>

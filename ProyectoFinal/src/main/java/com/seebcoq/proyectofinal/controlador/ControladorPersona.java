@@ -118,7 +118,7 @@ public class ControladorPersona {
       persona.setNombreDeUsuario(usuario);
       persona.setNombre(nombre);
       persona.setApPaterno(apellidoP);
-      persona.setApPaterno(apellidoM);
+      persona.setApMaterno(apellidoM);
       persona.setContraseña(pass);
       try{
       personaCtrl.edit(persona);
